@@ -1,6 +1,6 @@
 @startuml D-SEC-VEN-004 — Diagrama de Secuencia: Confirmar Pedido
 
-title SAP-TFI-2026 — Diagrama de Secuencia: Confirmar Pedido de Venta (CU-VEN-004)
+title SAP-TFI-2026 — Diagrama de Secuencia - Confirmar Pedido de Venta (CU-VEN-004)
 
 skinparam shadowing false
 skinparam handwritten false

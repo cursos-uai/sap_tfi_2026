@@ -1,4 +1,4 @@
-@startuml D-CLA-INT-001 — Diagrama de Clases: Integración Venta/Stock/Contabilidad
+@startuml D-CLA-INT-001 — Diagrama de Clases - Integracion Venta-Stock-Contabilidad
 
 title SAP-TFI-2026 — Diagrama de Clases Técnicas (Integración Venta/Stock/Contabilidad)
 

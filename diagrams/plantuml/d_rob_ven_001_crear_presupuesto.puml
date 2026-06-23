@@ -1,0 +1,48 @@
+@startuml D-ROB-VEN-001 — Diagrama de Robustez: Crear Presupuesto
+
+title SAP-TFI-2026 — Diagrama de Robustez - Crear Presupuesto (CU-VEN-001)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Vendedor" as V
+
+boundary "Boton Nuevo\n(sale.menu)" as B_New
+boundary "Form\n(view_sale_order_form)" as B_Form
+
+control "SaleOrder\n(action_quotation_send)" as C_Send
+control "Mail Compose\n(mail.compose.message)" as C_Mail
+
+entity "sale.order\n(draft)" as E_SO
+entity "mail.mail" as E_Mail
+
+V --> B_New : 1. Click "Nuevo"
+B_New --> E_SO : 2. Crea sale.order en draft
+E_SO --> B_Form : 3. Abre form
+B_Form --> V : 4. Muestra form
+
+V --> B_Form : 5. Completa cliente y lineas
+B_Form --> E_SO : 6. Actualiza partner_id y order_line
+E_SO --> B_Form : 7. Calcula totales (_compute_amounts)
+
+opt Si envia por email
+    V --> B_Form : 8. Click "Enviar"
+    B_Form --> C_Send : 9. action_quotation_send()
+    C_Send --> E_SO : 10. Cambia estado a 'sent'
+    C_Send --> C_Mail : 11. Crea mail.compose.message
+    C_Mail --> E_Mail : 12. Genera mail.mail
+    E_Mail --> V : 13. Envia email
+end
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml

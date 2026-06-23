@@ -87,6 +87,16 @@
 | EV-COD-018 | EV-COD | `state` field (account.move) | `addons/account/models/account_move.py:129` |
 | EV-COD-019 | EV-COD | `action_register_payment` | `addons/account/models/account_move.py:6022` |
 | EV-COD-020 | EV-COD | `payment_state` field | `addons/account/models/account_move.py:600` |
+| EV-COD-021 | EV-COD | `_action_confirm` stub | `addons/sale/models/sale_order.py:1231-1235` |
+| EV-COD-022 | EV-COD | `action_assign` cuerpo | `addons/stock/models/stock_picking.py:1195-1208` |
+| EV-COD-023 | EV-COD | `picking_ids` (sale_stock) | `addons/sale_stock/models/sale_order.py:31` |
+| EV-COD-024 | EV-COD | `PAYMENT_STATE_SELECTION` | `addons/account/models/account_move.py:48-56` |
+| EV-COD-025 | EV-COD | `payment_state` (computed) | `addons/account/models/account_move.py:600-606` |
+| EV-COD-026 | EV-COD | `action_post` cuerpo | `addons/account/models/account_move.py:6101-6122` |
+| EV-COD-027 | EV-COD | `_send_order_confirmation_mail` | `addons/sale/models/sale_order.py:1237-1244` |
+| EV-COD-028 | EV-COD | `_trigger_scheduler()` | `addons/sale/models/sale_order.py:1192` |
+| EV-COD-029 | EV-COD | `action_cancel` (stock) | `addons/stock/models/stock_picking.py:1210-1214` |
+| EV-COD-030 | EV-COD | `_should_be_locked` | `addons/sale/models/sale_order.py:1198-1201` |
 
 ## Inferencias pendientes (EV-INF)
 

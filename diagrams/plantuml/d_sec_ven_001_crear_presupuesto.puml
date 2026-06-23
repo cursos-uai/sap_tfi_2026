@@ -1,0 +1,81 @@
+@startuml D-SEC-VEN-001 — Diagrama de Secuencia: Crear Presupuesto
+
+title SAP-TFI-2026 — Diagrama de Secuencia - Crear Presupuesto (CU-VEN-001)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Vendedor" as V
+participant "Form\n(view_sale_order_form)" as Form
+participant "SaleOrder\nORM" as SO
+participant "Mail\nComposer" as Mail
+database "PostgreSQL" as DB
+
+V -> Form : 1. Click "Nuevo"
+activate Form
+Form -> SO : 2. Create({})
+activate SO
+SO -> DB : 3. INSERT sale.order (state='draft')
+DB --> SO : 4. id
+SO --> Form : 5. sale.order record
+deactivate SO
+
+V -> Form : 6. Selecciona partner_id
+Form -> SO : 7. write({partner_id: ...})
+activate SO
+SO -> DB : 8. UPDATE sale.order SET partner_id=...
+DB --> SO : 9. OK
+SO -> SO : 10. _onchange_partner_id() carga pricelist
+SO -> DB : 11. SELECT product.pricelist
+DB --> SO : 12. pricelist
+SO --> Form : 13. pricelist_id actualizado
+deactivate SO
+
+V -> Form : 14. Agrega lineas
+loop Por cada linea
+    Form -> SO : 15. order_line = [(0, 0, {product_id, qty})]
+    SO -> DB : 16. INSERT sale.order.line
+    DB --> SO : 17. id
+end
+
+V -> Form : 18. Sistema recalcula totales
+Form -> SO : 19. _compute_amounts()
+activate SO
+SO -> DB : 20. SELECT tax, discount
+DB --> SO : 21. datos
+SO -> DB : 22. UPDATE amounts
+SO --> Form : 23. amount_untaxed, amount_tax, amount_total
+deactivate SO
+
+opt Si envia por email
+    V -> Form : 24. Click "Enviar"
+    Form -> SO : 25. action_quotation_send()
+    activate SO
+    SO -> SO : 26. _validate_analytic_distribution()
+    SO -> SO : 27. mark_so_as_sent = True
+    SO -> DB : 28. UPDATE state='sent'
+    SO -> Mail : 29. mail.compose.message.create
+    activate Mail
+    Mail -> DB : 30. INSERT mail.mail
+    DB --> Mail : 31. id
+    Mail --> SO : 32. OK
+    deactivate Mail
+    SO --> Form : 33. wizard closed
+    deactivate SO
+end
+
+Form --> V : 34. Estado actualizado
+deactivate Form
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml

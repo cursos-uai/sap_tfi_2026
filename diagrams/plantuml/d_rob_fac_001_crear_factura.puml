@@ -1,0 +1,57 @@
+@startuml D-ROB-FAC-001 — Diagrama de Robustez: Crear Factura
+
+title SAP-TFI-2026 — Diagrama de Robustez - Crear Factura desde Pedido (CU-FAC-001)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Facturador\n(o Vendedor)" as A
+
+boundary "Boton Crear Factura\n(en sale.order)" as B_Btn
+
+control "SaleOrder\n(_create_invoices)" as C_Inv
+
+entity "sale.order\n(state=sale)" as E_SO
+entity "sale.order.line" as E_Line
+entity "account.move\n(draft)" as E_AM
+entity "account.move.line" as E_AML
+entity "account.tax" as E_Tax
+
+A --> B_Btn : 1. Click "Crear Factura"
+B_Btn --> C_Inv : 2. _create_invoices()
+C_Inv --> E_SO : 3. Lee pedido
+E_SO --> C_Inv : 4. order, lines, taxes
+
+C_Inv --> E_SO : 5. Verifica invoice_status
+alt Si hay lineas a facturar
+    C_Inv --> E_Line : 6a. Lee lineas pendientes
+    C_Inv --> E_Tax : 7a. Aplica impuestos
+    
+    loop Por cada linea
+        C_Inv --> E_AML : 8a. Crea account.move.line
+        E_AML --> C_Inv : 9a. OK
+    end
+    
+    C_Inv --> E_AM : 10a. Crea account.move (draft)
+    E_AM --> C_Inv : 11a. id, name (sequence)
+    
+    C_Inv --> E_SO : 12a. Asocia invoice_ids
+    C_Inv --> E_SO : 13a. Actualiza invoice_status
+else Si nada que facturar
+    C_Inv --> A : 6b. Mensaje "Nothing to invoice"
+end
+
+C_Inv --> A : 14. Resultado (OK o error)
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml
