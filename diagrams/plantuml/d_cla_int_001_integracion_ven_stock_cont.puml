@@ -1,0 +1,111 @@
+@startuml D-CLA-INT-001 — Diagrama de Clases: Integración Venta/Stock/Contabilidad
+
+title SAP-TFI-2026 — Diagrama de Clases Técnicas (Integración Venta/Stock/Contabilidad)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+
+' ─── sale.order ───
+class "<sale.order>" as SO {
+    +_name = "sale.order"
+    +_inherit = ["portal.mixin", "mail.thread", ...]
+    --
+    +name: Char
+    +partner_id: Many2one(res.partner)
+    +state: Selection
+    +invoice_status: Selection
+    +amount_untaxed: Monetary
+    +amount_total: Monetary
+    --
+    +action_confirm()
+    +action_quotation_send()
+    +_create_invoices()
+}
+
+' ─── sale.order.line ───
+class "<sale.order.line>" as SOL {
+    +_name = "sale.order.line"
+    --
+    +order_id: Many2one(sale.order)
+    +product_id: Many2one(product.product)
+    +product_uom_qty: Float
+    +price_unit: Float
+    +discount: Float
+    +price_subtotal: Monetary
+}
+
+' ─── stock.picking ───
+class "<stock.picking>" as SP {
+    +_name = "stock.picking"
+    +_inherit = ["mail.thread"]
+    --
+    +name: Char
+    +partner_id: Many2one(res.partner)
+    +state: Selection
+    +picking_type_id: Many2one(stock.picking.type)
+    --
+    +action_confirm()
+    +action_assign()
+    +button_validate()
+}
+
+' ─── stock.move ───
+class "<stock.move>" as SM {
+    +_name = "stock.move"
+    --
+    +picking_id: Many2one(stock.picking)
+    +product_id: Many2one(product.product)
+    +product_uom_qty: Float
+    +state: Selection
+    --
+    +action_confirm()
+}
+
+' ─── account.move ───
+class "<account.move>" as AM {
+    +_name = "account.move"
+    --
+    +name: Char
+    +partner_id: Many2one(res.partner)
+    +move_type: Selection
+    +state: Selection
+    +invoice_date: Date
+    +payment_state: Selection
+    --
+    +action_post()
+    +action_register_payment()
+}
+
+' ─── account.move.line ───
+class "<account.move.line>" as AML {
+    +_name = "account.move.line"
+    --
+    +move_id: Many2one(account.move)
+    +product_id: Many2one(product.product)
+    +quantity: Float
+    +price_unit: Float
+    +price_subtotal: Monetary
+}
+
+' ─── Relaciones ───
+SO "1" *-- "*" SOL : order_line
+SO "1" *-- "*" AM : invoice_ids
+SP "*" --> "1" SO : sale_id
+SP "1" *-- "*" SM : move_ids
+SM "*" --> "1" SOL : sale_line_id
+AM "1" *-- "*" AML : line_ids
+AM "*" --> "1" SOL : invoice_line_ids
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+Solo campos y métodos relevantes para el flujo de venta
+endlegend
+
+@enduml

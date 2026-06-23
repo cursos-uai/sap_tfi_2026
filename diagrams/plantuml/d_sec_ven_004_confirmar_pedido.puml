@@ -1,0 +1,80 @@
+@startuml D-SEC-VEN-004 — Diagrama de Secuencia: Confirmar Pedido
+
+title SAP-TFI-2026 — Diagrama de Secuencia: Confirmar Pedido de Venta (CU-VEN-004)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Vendedor" as V
+participant "Form\n(view_sale_order_form)" as Form
+participant "SaleOrder\n(action_confirm)" as SO
+participant "Validator\n(_confirmation_error_message)" as Val
+participant "Conf. Values\n(_prepare_confirmation_values)" as CV
+participant "Stock Layer\n(_action_confirm)" as Stock
+participant "Invoice Layer\n(_create_invoices)" as Inv
+database "PostgreSQL" as DB
+
+V -> Form : 1. Click "Confirmar"
+activate Form
+
+Form -> SO : 2. action_confirm()
+activate SO
+
+SO -> Val : 3. _confirmation_error_message()
+activate Val
+Val -> DB : 4. SELECT state, lines
+DB --> Val : 5. estado + líneas
+alt Si estado OK y líneas OK
+    Val --> SO : 6a. error_msg = None (OK)
+else Si error
+    Val --> SO : 6b. error_msg (UserError)
+    SO --> Form : 7b. raise UserError
+    Form --> V : 8b. Muestra error
+end
+deactivate Val
+
+SO -> DB : 9. SELECT order_line for analytic validation
+DB --> SO : 10. líneas
+
+SO -> CV : 11. _prepare_confirmation_values()
+activate CV
+CV --> SO : 12. {'state': 'sale', 'date_order': now}
+deactivate CV
+
+SO -> DB : 13. UPDATE sale.order SET state='sale', date_order=...
+DB --> SO : 14. OK
+
+SO -> Stock : 15. _action_confirm()
+activate Stock
+Stock -> DB : 16. INSERT stock.picking, stock.move
+DB --> Stock : 17. OK
+Stock --> SO : 18. pickings creados
+deactivate Stock
+
+opt Si auto-factura configurada
+    SO -> Inv : 19. _create_invoices()
+    activate Inv
+    Inv -> DB : 20. INSERT account.move
+    DB --> Inv : 21. OK
+    Inv --> SO : 22. factura creada
+    deactivate Inv
+end
+
+SO --> Form : 23. return True
+deactivate SO
+
+Form --> V : 24. Estado actualizado a "sale"
+deactivate Form
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+endlegend
+
+@enduml

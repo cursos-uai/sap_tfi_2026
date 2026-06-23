@@ -1,0 +1,139 @@
+@startuml D-CLA-CON-GEN-001 — Modelo de Dominio (Conceptual)
+
+title SAP-TFI-2026 — Modelo de Dominio Conceptual
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+
+' ─── Conceptos del dominio (separados de clases técnicas Odoo) ───
+
+class "Cliente" as C {
+    +nombre: String
+    +direccion: String
+    +lista_precios: PriceList
+    +condicion_pago: PaymentTerm
+}
+
+class "Producto" as P {
+    +nombre: String
+    +descripcion: String
+    +precio: Money
+    +categoria: Category
+    +impuestos: Tax*
+}
+
+class "Presupuesto" as Q {
+    +nombre: String
+    +fecha: DateTime
+    +estado: QuotationState
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "PedidoVenta" as O {
+    +nombre: String
+    +fecha_confirmacion: DateTime
+    +estado: OrderState
+    +estado_facturacion: InvoiceStatus
+    +estado_entrega: DeliveryStatus
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "LineaPedido" as OL {
+    +producto: Producto
+    +cantidad: Float
+    +unidad: Unit
+    +precio_unitario: Money
+    +descuento: Float
+    +impuestos: Tax*
+    +subtotal: Money
+}
+
+class "Transferencia" as T {
+    +nombre: String
+    +estado: PickingState
+    +origen: Warehouse
+    +destino: Warehouse
+    +lineas: MoveLine*
+}
+
+class "LineaMovimiento" as ML {
+    +producto: Producto
+    +cantidad: Float
+    +cantidad_reservada: Float
+    +cantidad_entregada: Float
+    +estado: MoveState
+}
+
+class "Factura" as I {
+    +numero: String
+    +fecha: Date
+    +estado: InvoiceState
+    +estado_pago: PaymentState
+    +cliente: Cliente
+    +lineas: InvoiceLine*
+    +total: Money
+}
+
+class "LineaFactura" as IL {
+    +producto: Producto
+    +cantidad: Float
+    +precio_unitario: Money
+    +impuestos: Tax*
+    +subtotal: Money
+    +cuenta_contable: Account
+}
+
+class "Pago" as Pm {
+    +fecha: Date
+    +monto: Money
+    +metodo: PaymentMethod
+    +diario: Journal
+    +factura: Factura
+}
+
+class "Almacen" as W {
+    +nombre: String
+    +codigo: String
+    +direccion: String
+}
+
+class "Ubicacion" as L {
+    +nombre: String
+    +almacen: Almacen
+    +tipo: LocationType
+}
+
+' ─── Relaciones ───
+
+Cliente "1" --> "*" Presupuesto : solicita
+Cliente "1" --> "*" PedidoVenta : compra
+Cliente "1" --> "*" Factura : recibe
+Presupuesto "1" --> "0..1" PedidoVenta : se convierte en
+PedidoVenta "1" --> "*" LineaPedido : contiene
+PedidoVenta "1" --> "*" Transferencia : genera
+PedidoVenta "1" --> "*" Factura : origina
+Producto "1" --> "*" LineaPedido : aparece en
+LineaPedido "1" --> "*" LineaMovimiento : se convierte en
+Transferencia "1" --> "*" LineaMovimiento : contiene
+Almacen "1" --> "*" Ubicacion : tiene
+Transferencia "*" --> "2" Almacen : origen/destino
+Factura "1" --> "*" LineaFactura : contiene
+Factura "1" --> "*" Pago : recibe
+LineaPedido "1" --> "*" LineaFactura : se factura en
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+Modelo conceptual (separado del técnico)
+endlegend
+
+@enduml

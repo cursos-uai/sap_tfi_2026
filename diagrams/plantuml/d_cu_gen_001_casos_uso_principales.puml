@@ -1,0 +1,57 @@
+@startuml D-CU-GEN-001 — Diagrama General de Casos de Uso
+
+title SAP-TFI-2026 — Casos de Uso del Flujo Principal
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Vendedor" as V
+actor "Operario\nde Almacén" as OA
+actor "Facturador" as F
+
+rectangle "Módulo sale" {
+    usecase "CU-VEN-001\nCrear presupuesto" as CU1
+    usecase "CU-VEN-004\nConfirmar pedido" as CU4
+}
+
+rectangle "Módulo stock" {
+    usecase "CU-ENT-002\nReservar productos" as CU2
+    usecase "CU-ENT-004\nValidar entrega" as CU3
+}
+
+rectangle "Módulo account" {
+    usecase "CU-FAC-001\nCrear factura" as CU5
+    usecase "CU-FAC-002\nPublicar factura" as CU6
+    usecase "CU-FAC-003\nRegistrar pago" as CU7
+}
+
+V --> CU1
+V --> CU4
+OA --> CU2
+OA --> CU3
+F --> CU5
+F --> CU6
+F --> CU7
+
+CU1 ..> CU4 : <<flujo>>
+CU4 ..> CU2 : <<dispara>>
+CU2 ..> CU3 : <<precondición>>
+CU3 ..> CU5 : <<opcionalmente>>
+CU5 ..> CU6 : <<flujo>>
+CU6 ..> CU7 : <<flujo>>
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+endlegend
+
+@enduml
