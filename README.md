@@ -75,12 +75,25 @@ Los 7 CU modelo están en **`docs/02_casos_uso/`**. Cada uno tiene la estructura
 
 ### Paso 3: Estudiar los diagramas
 
-Los diagramas están en **`diagrams/plantuml/`** (código fuente) y **`diagrams/pdf/`** (versión renderizada).
+Los diagramas están en **`diagrams/plantuml/`** (código fuente) y en los formatos renderizados **`diagrams/pdf/`** (PDF), **`diagrams/png/`** (PNG) y **`diagrams/svg/`** (SVG).
 
-Para visualizar:
-- Abrí los PDFs directamente.
-- Para regenerar: instalá PlantUML (`apt-get install plantuml` o descargá el jar).
-- Para modificar: editá los `.puml` y regenerá.
+**Formatos recomendados para abrir los diagramas**:
+
+- **SVG** — formato vectorial recomendado para visualizar diagramas en el navegador o en visores SVG. Permite zoom sin pérdida de calidad, ideal para revisar diagramas grandes con muchos elementos. Se puede abrir directamente en cualquier navegador moderno (Chrome, Firefox, Edge, Safari) o en visores como Inkscape.
+- **PDF** — formato portable para imprimir o compartir. Mantiene la calidad vectorial pero es de solo lectura.
+- **PNG** — formato rasterizado para incrustar en documentos o presentaciones.
+
+**Para visualizar**:
+
+1. **Abrir el SVG**: hacé doble click en cualquier archivo de `diagrams/svg/` o arrastralo a tu navegador. Es la opción recomendada para estudiar los diagramas porque mantiene la calidad al hacer zoom y permite copiar elementos como texto.
+2. **Abrir el PDF**: doble click en cualquier archivo de `diagrams/pdf/` (se abre en cualquier lector de PDF).
+3. **Abrir el PNG**: doble click en cualquier archivo de `diagrams/png/` (se abre en cualquier visor de imágenes).
+
+**Para regenerar** (si querés modificar los `.puml`):
+
+- Instalá PlantUML (`apt-get install plantuml` o descargá el jar de https://plantuml.com/download).
+- Ejecutá `plantuml -tsvg -tpng -tpdf diagrams/plantuml/*.puml` para regenerar los 3 formatos.
+- **Recomendación**: regenerá siempre los 3 formatos después de modificar cualquier `.puml` para mantener la consistencia.
 
 ### Paso 4: Aplicar ICONIX a tu TP
 
@@ -254,6 +267,30 @@ El diagrama del patrón Composite muestra cómo Odoo implementa la Lista de Mate
 ### Evidencias
 
 - **`evidence/index.md`** — catálogo de 30 EV-COD y 8 EV-INF verificables contra código real de Odoo 19.0.
+
+---
+
+## Referencia bibliográfica
+
+Material de lectura recomendado para profundizar en la metodología ICONIX y su aplicación en este curso.
+
+### Libro de ICONIX (recomendado para la materia)
+
+- **Use Case Driven Object Modeling with UML** — Doug Rosenberg y Kendall Scott
+  - 📖 Acceso: https://drive.google.com/file/d/1brsFcTJIR-EBr7y7NCZHUdjSAJnQQu1U/view?usp=sharing
+  - Libro de referencia principal de la metodología ICONIX. Cubre en detalle cada fase: casos de uso, modelo de dominio, robustez, secuencia y clases. Lectura obligatoria para el TP.
+
+### Presentación sobre ICONIX (PPT)
+
+- **PPT sobre ICONIX** — material de clase complementario
+  - Útil como soporte visual para entender la metodología. Puede ser de utilidad para el alumno para preparar el TP o exponer conceptos en clase.
+
+### Otras referencias citadas en el repositorio
+
+- **Gamma, E., Helm, R., Johnson, R., & Vlissides, J.** (2003). *Design Patterns: Elements of Reusable Object-Oriented Software*. Addison-Wesley. — libro canónico de los patrones GoF.
+- **Cristia, M.** (2015). *Standard for Documenting Design Patterns in Software Design*. FCEIA, Universidad Nacional de Rosario. https://www.fceia.unr.edu.ar/ingsoft/patrones-doc.pdf — estándar usado en `docs/12_patrones_diseno/composite_bom.md`.
+- **Odoo S.A.** (2024). *Odoo 19.0 Documentation*. https://www.odoo.com/documentation/19.0/ — documentación oficial de Odoo.
+- **Repositorio oficial de Odoo**: https://github.com/odoo/odoo (rama `19.0`) — código fuente utilizado como base para la ingeniería inversa.
 
 ---
 
