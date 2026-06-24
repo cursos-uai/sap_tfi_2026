@@ -82,6 +82,73 @@ con la regla 1 del estándar (Gamma et al. y Cristia).
 
 ---
 
+## Where — Relación entre elementos del patrón y elementos del diseño
+
+Esta sección mapea **explícitamente** cada elemento estructural del patrón Composite con su elemento concreto en la implementación del BoM de Odoo 19.0. La sintaxis sigue el estándar UNR: `<elemento_patron> is <elemento_diseño>`.
+
+### Relación uno a uno
+
+```
+Where
+    Component            is BomComponent
+    Component            is BomComponent (interfaz abstracta Python, contrato implícito)
+    Leaf                 is ProductProduct (producto simple sin BoM asociado)
+    Leaf                 is MrpBomLine (línea de BoM sin sub-componentes, Leaf concreto)
+    Composite            is MrpBom (producto con BoM asociado)
+    Composite            is MrpBom (repetido: cada BoM de Odoo es un Composite)
+    Composite            is MrpBomLine (línea cuyo producto tiene su propio BoM, Composite concreto)
+    children             is bom_line_ids (campo One2many de MrpBom hacia MrpBomLine)
+    Operation()          is explode(product, quantity) (método recursivo de MrpBom)
+    Operation()          is get_cost() (método polimórfico: standard_price en Leaf, suma recursiva en Composite)
+    Operation()          is get_quantity() (método polimórfico)
+    add(Component)       is _onchange_product_id() (método de MrpBomLine, agrega un componente)
+    remove(Component)    is unlink() (CRUD estándar de Odoo, elimina un componente)
+    getChild(int)        is _compute_child_bom_id() (método computado de MrpBomLine, obtiene el BoM hijo)
+    Client               is Form view view_mrp_bom_form (cliente UI que manipula el Composite)
+    Client               is mrp.production (cliente funcional que invoca explode() para manufactura)
+```
+
+### Tabla de equivalencias
+
+| Elemento del Patrón | Elemento del Diseño | Tipo | Archivo / Línea |
+|---------------------|---------------------|------|-----------------|
+| `Component` | `BomComponent` (interfaz abstracta Python) | interfaz | contrato implícito |
+| `Leaf` | `ProductProduct` (producto simple sin BoM) | clase concreta | `addons/product/models/product_product.py` |
+| `Leaf` | `MrpBomLine` (línea sin sub-componentes) | clase concreta | `addons/mrp/models/mrp_bom.py:683` |
+| `Composite` | `MrpBom` (producto con BoM) | clase concreta | `addons/mrp/models/mrp_bom.py:12` |
+| `Composite` | `MrpBomLine` (línea con sub-componentes) | clase concreta | `addons/mrp/models/mrp_bom.py:683` |
+| `children` | `bom_line_ids` | atributo (One2many) | `mrp_bom.py:40` |
+| `Operation()` | `explode(product, quantity)` | método | `mrp_bom.py:419-474` |
+| `Operation()` | `get_cost()` | método polimórfico | contrato implícito |
+| `Operation()` | `get_quantity()` | método polimórfico | contrato implícito |
+| `add(Component)` | `_onchange_product_id()` | método | `mrp_bom.py:114` |
+| `remove(Component)` | `unlink()` (CRUD Odoo) | método | ORM estándar |
+| `getChild(int)` | `_compute_child_bom_id()` | método (computed) | `mrp_bom.py:734` |
+| `Client` | `view_mrp_bom_form` (vista UI) | cliente UI | `addons/mrp/views/mrp_bom_views.xml` |
+| `Client` | `mrp.production` (manufactura) | cliente funcional | `addons/mrp/models/mrp_production.py` |
+
+### Notas sobre la repetición de elementos
+
+- **`Component` aparece dos veces** en el mapeo: una vez como interfaz abstracta Python y otra como contrato implícito compartido por todos los participantes. Esta repetición es intencional según la regla 1 del estándar UNR (Cristia 2015).
+- **`Composite` aparece tres veces**: la primera como la clase `mrp.bom`, la segunda como instancia (cada BoM es un Composite concreto), y la tercera como `mrp.bom.line` cuando referencia un producto que tiene su propio BoM (Composite concreto). Esta repetición refleja la naturaleza dual de `mrp.bom.line`: puede ser Leaf o Composite según el producto que referencia.
+- **`Leaf` aparece dos veces**: `product.product` (producto sin BoM) y `mrp.bom.line` (línea cuyo producto tampoco tiene BoM). Esta repetición cubre los dos casos posibles de Leaf.
+
+### Verificación de completitud
+
+Todos los elementos estructurales del patrón Composite definidos en Gamma et al. (2003, pp. 151-164) están mapeados:
+
+- [x] Component → BomComponent
+- [x] Leaf → ProductProduct, MrpBomLine (caso Leaf)
+- [x] Composite → MrpBom, MrpBomLine (caso Composite)
+- [x] children → bom_line_ids
+- [x] Operation() → explode(), get_cost(), get_quantity()
+- [x] add(Component) → _onchange_product_id()
+- [x] remove(Component) → unlink()
+- [x] getChild(int) → _compute_child_bom_id()
+- [x] Client → view_mrp_bom_form, mrp.production
+
+---
+
 ## Estructura del Patrón
 
 ### Participants (GoF)
@@ -92,23 +159,6 @@ con la regla 1 del estándar (Gamma et al. y Cristia).
 | **Leaf** | Representa objetos hoja (sin hijos) en la composición. Define el comportamiento para objetos primitivos. |
 | **Composite** | Define el comportamiento para componentes que tienen hijos. Almacena los componentes hijos. Implementa las operaciones de la interfaz Component delegando en los hijos. |
 | **Client** | Manipula los objetos de la composición a través de la interfaz Component. |
-
-### Elementos del Patrón Mapeados al Diseño de Odoo
-
-| Elemento Patrón | Elemento Diseño | Tipo | Ubicación |
-|-----------------|-----------------|------|-----------|
-| `Component` | `BomComponent` | interfaz abstracta (Python) | Contrato implícito |
-| `Component` | `BomComponent` (repetido) | | (clientes múltiples) |
-| `Leaf` | `product.product` | clase concreta | `addons/product/models/product_product.py` |
-| `Composite` | `mrp.bom` | clase concreta | `addons/mrp/models/mrp_bom.py:12` |
-| `Composite` | `mrp.bom` (repetido) | | (cada BoM es un Composite) |
-| `children` | `bom_line_ids` | atributo (One2many) | `mrp_bom.py:40` |
-| `Operation()` | `explode(product, quantity)` | método | `mrp_bom.py:419` |
-| `Operation()` | `get_cost()` | método polimórfico | contrato implícito |
-| `Operation()` | `get_quantity()` | método polimórfico | contrato implícito |
-| `add(Component)` | `_onchange_product_id()` | método | `mrp_bom.py:114` |
-| `remove(Component)` | `unlink()` (CRUD Odoo) | método | ORM estándar |
-| `getChild(int)` | `_compute_child_bom_id()` | método (computed) | `mrp_bom.py:734` |
 
 ---
 
