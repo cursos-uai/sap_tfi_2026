@@ -1,0 +1,109 @@
+@startuml D-ARQ-TECH-001 — Arquitectura Estratificada de Odoo
+
+title SAP-TFI-2026 — Arquitectura Estratificada de Odoo (Stack Tecnologico)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+' ──────────────────────────── CAPA 1: Cliente ────────────────────────────
+package "Capa 1: Cliente (Navegador)" {
+    node "Web Browser\n(Chrome, Firefox, Safari)" as Browser
+    node "JavaScript Runtime\n(V8, SpiderMonkey)" as JSRuntime
+}
+
+' ──────────────────────────── CAPA 2: Servidor Odoo ────────────────────────────
+package "Capa 2: Servidor de Aplicacion Odoo" {
+
+    package "Capa 2.1: Presentacion (UI)" {
+        node "OWL Framework\n(JS + Templates QWeb)" as OWL
+        node "Static Assets\n(JS, CSS, imagenes)" as Static
+        database "Views (XML)\nForm, Tree, Kanban, Search" as Views
+    }
+
+    package "Capa 2.2: Web Layer" {
+        node "Router (enrutador)\naddons/web/http.py" as Router
+        node "HTTP Controllers\n(addons/<modulo>/controllers/)" as Controllers
+        node "JSON-RPC Endpoint\n/jsonrpc" as JSONRPC
+        node "XML-RPC Endpoint\n/xmlrpc/2/*" as XMLRPC
+    }
+
+    package "Capa 2.3: Business Logic" {
+        node "Models (Python)\naddons/<modulo>/models/*.py" as Models
+        node "ORM (Object-Relational Mapping)\naddons/orm/" as ORM
+        node "Compute Fields,\nonchange, constraints" as Computed
+    }
+
+    package "Capa 2.4: Addons (Modulos)" {
+        node "sale (Ventas)" as AddonSale
+        node "account (Contabilidad)" as AddonAccount
+        node "stock (Inventario)" as AddonStock
+        node "product (Productos)" as AddonProduct
+        node "Otros addons (500+ modulos)" as AddonOther
+    }
+}
+
+' ──────────────────────────── CAPA 3: Datos ────────────────────────────
+package "Capa 3: Persistencia" {
+    database "PostgreSQL Database\n(tablas, indices, vistas SQL)" as DB
+    node "Filestore\n(adjuntos, imagenes en disco)" as Filestore
+}
+
+' ──────────────────────────── CAPA 4: Integracion ────────────────────────────
+package "Capa 4: Integracion Externa" {
+    node "API REST\n(consumidores externos)" as RESTAPI
+    node "SMTP / Email Service" as SMTP
+    node "Payment Gateway\n(stripe, paypal, etc.)" as Payment
+    node "Webhooks (out)" as Webhooks
+}
+
+' ──────────────────────────── Relaciones ────────────────────────────
+
+Browser --> OWL : carga SPA
+Browser --> Static : descarga assets
+JSRuntime --> OWL : ejecuta JS
+
+OWL --> Router : HTTP request
+Browser --> Router : HTTP request (XHR/fetch)
+Static <-- Router : sirve archivos
+
+Router --> Controllers : dispatch
+Router --> Views : selecciona vista XML
+Controllers --> Models : invoca metodos
+Controllers --> AddonSale : maneja rutas del modulo
+Controllers --> AddonAccount : maneja rutas del modulo
+Controllers --> AddonStock : maneja rutas del modulo
+Controllers --> RESTAPI : expone endpoints
+JSONRPC <-- Controllers : protocolo JSON-RPC 2.0
+XMLRPC <-- Models : protocolo XML-RPC (legacy)
+
+Models --> ORM : queries
+Models --> AddonSale : extiende sale.order
+Models --> AddonAccount : extiende account.move
+Models --> AddonStock : extiende stock.picking
+Models --> AddonProduct : extiende product.product
+Models --> Computed : logica de negocio
+ORM --> DB : SQL queries
+ORM --> Filestore : adjuntos
+Models --> SMTP : envia emails
+Models --> Payment : cobros
+Models --> Webhooks : notifica cambios
+
+AddonSale --> Models : contiene
+AddonAccount --> Models : contiene
+AddonStock --> Models : contiene
+AddonProduct --> Models : contiene
+AddonOther --> Models : contiene
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+Capas: Cliente | Servidor (UI/Web/Logica/Addons) | Datos | Integracion
+endlegend
+
+@enduml
