@@ -1,0 +1,71 @@
+@startuml D-SEC-ENT-002 — Diagrama de Secuencia: Reservar Productos
+
+title SAP-TFI-2026 — Diagrama de Secuencia - Reservar Productos (CU-ENT-002)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Sistema" as S
+participant "StockPicking\n(action_assign)" as SP
+participant "StockMove\n(action_assign)" as SM
+participant "Procurement\nOrder" as PO
+database "PostgreSQL" as DB
+
+S -> SP : 1. action_assign()
+activate SP
+
+SP -> DB : 2. SELECT picking + lines
+DB --> SP : 3. picking, move_ids
+
+loop Por cada move
+    SP -> SM : 4. action_assign() por linea
+    activate SM
+    
+    SM -> DB : 5. SELECT stock.quant (available)
+    DB --> SM : 6. cantidad disponible
+    
+    alt Cantidad >= requerida
+        SM -> DB : 7a. INSERT stock.move.line (reserved)
+        DB --> SM : 8a. OK
+        SM --> SP : 9a. Reserva exitosa
+    else Cantidad < requerida
+        SM -> DB : 7b. SELECT orderpoint WHERE product_id=...
+        DB --> SM : 8b. orderpoints aplicables
+        
+        opt Si hay orderpoint MTO
+            SM -> PO : 9b. procurement.order.create()
+            activate PO
+            PO -> DB : 10b. INSERT procurement.order
+            PO -> DB : 11b. INSERT purchase.order (MTO)
+            DB --> PO : 12b. OK
+            PO --> SM : 13b. PO programado
+            deactivate PO
+        end
+        
+        SM --> SP : 14b. Reserva parcial o programada
+    end
+    deactivate SM
+end
+
+SP -> DB : 15. UPDATE stock.picking SET state=...
+DB --> SP : 16. OK
+
+alt Si todas las lineas reservadas
+    SP --> S : 17a. Estado = 'assigned'
+else Si hay parcial
+    SP --> S : 17b. Estado = 'partially_available'
+end
+deactivate SP
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml

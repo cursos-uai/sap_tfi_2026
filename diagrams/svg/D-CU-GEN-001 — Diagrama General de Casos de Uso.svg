@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="333px" preserveAspectRatio="none" style="width:1687px;height:333px;background:#FFFFFF;" version="1.1" viewBox="0 0 1687 333" width="1687px" zoomAndPan="magnify"><defs/><g><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="300" x="687" y="11.1387">SAP-TFI-2026 — Casos de Uso del Flujo Principal</text><!--MD5=[d28a6152fa0713a5cd3c60fe5c89f640]
+cluster Módulo sale--><rect fill="#FFFFFF" height="94" style="stroke:#000000;stroke-width:1.5;" width="456" x="111" y="20.9688"/><text fill="#000000" font-family="Arial" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="86" x="296" y="34.1074">Módulo sale</text><!--MD5=[76e937497a732c955936b9d33a77a451]
+cluster Módulo stock--><rect fill="#FFFFFF" height="94" style="stroke:#000000;stroke-width:1.5;" width="449" x="595" y="48.9688"/><text fill="#000000" font-family="Arial" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="94" x="772.5" y="62.1074">Módulo stock</text><!--MD5=[d8490c13dd785f85ae1bd7be41e3e3a5]
+cluster Módulo account--><rect fill="#FFFFFF" height="94" style="stroke:#000000;stroke-width:1.5;" width="609" x="1072" y="58.9688"/><text fill="#000000" font-family="Arial" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="112" x="1320.5" y="72.1074">Módulo account</text><ellipse cx="221.9239" cy="75.7235" fill="#FEFECE" rx="94.9239" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="74" x="184.9239" y="70.8935">CU-VEN-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="118" x="162.9239" y="84.8622">Crear presupuesto</text><ellipse cx="464.1457" cy="75.7235" fill="#FEFECE" rx="87.1457" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="74" x="427.1457" y="70.8935">CU-VEN-004</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="107" x="410.6457" y="84.8622">Confirmar pedido</text><ellipse cx="709.4594" cy="103.7235" fill="#FEFECE" rx="98.4594" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="73" x="672.9594" y="98.8935">CU-ENT-002</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="123" x="647.9594" y="112.8622">Reservar productos</text><ellipse cx="948.0746" cy="103.7235" fill="#FEFECE" rx="80.0746" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="73" x="911.5746" y="98.8935">CU-ENT-004</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="97" x="899.5746" y="112.8622">Validar entrega</text><ellipse cx="1158.1751" cy="113.7235" fill="#FEFECE" rx="70.1751" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="1122.1751" y="108.8935">CU-FAC-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="83" x="1116.6751" y="122.8622">Crear factura</text><ellipse cx="1369.4889" cy="113.7235" fill="#FEFECE" rx="81.4889" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="1333.4889" y="108.8935">CU-FAC-002</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="99" x="1319.9889" y="122.8622">Publicar factura</text><ellipse cx="1588.2462" cy="113.7235" fill="#FEFECE" rx="77.2462" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="1552.2462" y="108.8935">CU-FAC-003</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="93" x="1541.7462" y="122.8622">Registrar pago</text><!--MD5=[9c35c66068622dad62ecac52c54c307b]
+entity V--><ellipse cx="36.5" cy="92.9688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M36.5,112.9688 C40.5,112.9688 43.5,112.9688 47.5,108.9688 C55.5,108.9688 63.5,116.9688 63.5,124.9688 L63.5,128.9688 C63.5,132.9688 59.5,136.9688 55.5,136.9688 L17.5,136.9688 C13.5,136.9688 9.5,132.9688 9.5,128.9688 L9.5,124.9688 C9.5,116.9688 17.5,108.9688 25.5,108.9688 C29.5,112.9688 32.5,112.9688 36.5,112.9688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="61" x="6" y="149.6074">Vendedor</text><!--MD5=[9a762eefa6a5e3fba0376d4fc87b4ea8]
+entity OA--><ellipse cx="464" cy="151.9688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M464,171.9688 C468,171.9688 471,171.9688 475,167.9688 C483,167.9688 491,175.9688 491,183.9688 L491,187.9688 C491,191.9688 487,195.9688 483,195.9688 L445,195.9688 C441,195.9688 437,191.9688 437,187.9688 L437,183.9688 C437,175.9688 445,167.9688 453,167.9688 C457,171.9688 460,171.9688 464,171.9688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="54" x="427.5" y="208.6074">Operario</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="73" x="427.5" y="222.5762">de Almacén</text><!--MD5=[22029b2902cbfefb11350e8ee6e306b3]
+entity F--><ellipse cx="948" cy="179.9688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M948,199.9688 C952,199.9688 955,199.9688 959,195.9688 C967,195.9688 975,203.9688 975,211.9688 L975,215.9688 C975,219.9688 971,223.9688 967,223.9688 L929,223.9688 C925,223.9688 921,219.9688 921,215.9688 L921,211.9688 C921,203.9688 929,195.9688 937,195.9688 C941,199.9688 944,199.9688 948,199.9688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="69" x="913.5" y="236.6074">Facturador</text><!--MD5=[24b8734069172189c87eccd7d26f2a44]
+link V to CU1--><path d="M67.13,87.2188 C67.13,87.2188 133.89,87.2188 133.89,87.2188 " fill="none" id="V-to-CU1" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="138.89,87.2188,129.89,83.2188,133.89,87.2188,129.89,91.2188,138.89,87.2188" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[43437422b4467f7e8f34df0a9bfa8ade]
+link V to CU4--><path d="M67.12,117.6388 C155.2,117.6388 403,117.6388 403,117.6388 C403,117.6388 403,97.4388 403,97.4388 " fill="none" id="V-to-CU4" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="403,92.4388,399,101.4388,403,97.4388,407,101.4388,403,92.4388" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[629537903d709bd0da9b040c6cd14731]
+link OA to CU2--><path d="M464,134.1787 C464,120.1288 464,108.2988 464,108.2988 C464,108.2988 607.47,108.2988 607.47,108.2988 " fill="none" id="OA-to-CU2" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="612.47,108.2988,603.47,104.2988,607.47,108.2988,603.47,112.2988,612.47,108.2988" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[082cd9c219f34a6d30c2204975360ee4]
+link OA to CU3--><path d="M500.78,149.7188 C604.35,149.7188 891,149.7188 891,149.7188 C891,149.7188 891,125.2287 891,125.2287 " fill="none" id="OA-to-CU3" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="891,120.2288,887,129.2288,891,125.2287,895,129.2288,891,120.2288" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[ce29caabc97a3dbeabb6ed0cc397bcbf]
+link F to CU5--><path d="M948,162.1488 C948,145.8988 948,130.7188 948,130.7188 C948,130.7188 1104.82,130.7188 1104.82,130.7188 " fill="none" id="F-to-CU5" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1109.82,130.7188,1100.82,126.7188,1104.82,130.7188,1100.82,134.7188,1109.82,130.7188" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[5e6b5cdbbdf0223e1acb33cbaf906626]
+link F to CU6--><path d="M982.53,188.1388 C1083.32,188.1388 1370,188.1388 1370,188.1388 C1370,188.1388 1370,142.0288 1370,142.0288 " fill="none" id="F-to-CU6" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1370,137.0288,1366,146.0288,1370,142.0288,1374,146.0288,1370,137.0288" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[a8ba91ff88f23a3b0ffd94918554b3b8]
+link F to CU7--><path d="M982.86,213.7987 C1116.42,213.7987 1588,213.7987 1588,213.7987 C1588,213.7987 1588,142.1188 1588,142.1188 " fill="none" id="F-to-CU7" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1588,137.1188,1584,146.1188,1588,142.1188,1592,146.1188,1588,137.1188" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f6d6844462161eb416f35b5c746a08f5]
+link CU1 to CU4--><path d="M317.3,75.9688 C317.3,75.9688 371.67,75.9688 371.67,75.9688 " fill="none" id="CU1-to-CU4" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="376.67,75.9688,367.67,71.9688,371.67,75.9688,367.67,79.9688,376.67,75.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="40" x="345.48" y="88.1074">«flujo»</text><!--MD5=[ca3989cfa90511e75cc9452ef6bbf2c7]
+link CU4 to CU2--><path d="M533.04,89.9688 C533.04,89.9688 626.04,89.9688 626.04,89.9688 " fill="none" id="CU4-to-CU2" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="631.04,89.9688,622.04,85.9688,626.04,89.9688,622.04,93.9688,631.04,89.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="61" x="580.54" y="87.1074">«dispara»</text><!--MD5=[9f928ee0c94a010c293ebaea2b6072f9]
+link CU2 to CU3--><path d="M808.23,103.9688 C808.23,103.9688 862.87,103.9688 862.87,103.9688 " fill="none" id="CU2-to-CU3" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="867.87,103.9688,858.87,99.9688,862.87,103.9688,858.87,107.9688,867.87,103.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="95" x="836.55" y="116.1074">«precondición»</text><!--MD5=[425f8d91902586afd0f6e2ce3d571629]
+link CU3 to CU5--><path d="M1026.2,108.9688 C1026.2,108.9688 1084.41,108.9688 1084.41,108.9688 " fill="none" id="CU3-to-CU5" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="1089.41,108.9688,1080.41,104.9688,1084.41,108.9688,1080.41,112.9688,1089.41,108.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="107" x="1056.3" y="121.1074">«opcionalmente»</text><!--MD5=[5ebcd2afce629b16ac850f53c9daf3a2]
+link CU5 to CU6--><path d="M1228.13,113.9688 C1228.13,113.9688 1282.83,113.9688 1282.83,113.9688 " fill="none" id="CU5-to-CU6" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="1287.83,113.9688,1278.83,109.9688,1282.83,113.9688,1278.83,117.9688,1287.83,113.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="40" x="1256.48" y="126.1074">«flujo»</text><!--MD5=[c55a4f732ede1a9381fc309c539dd4ea]
+link CU6 to CU7--><path d="M1451.17,113.9688 C1451.17,113.9688 1505.77,113.9688 1505.77,113.9688 " fill="none" id="CU6-to-CU7" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="1510.77,113.9688,1501.77,109.9688,1505.77,113.9688,1501.77,117.9688,1510.77,113.9688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="40" x="1479.47" y="126.1074">«flujo»</text><rect fill="#DDDDDD" height="65.875" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="264" x="1401" y="252.1074"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="144" x="1407" y="268.2461">Proyecto: SAP-TFI-2026</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="120" x="1407" y="282.2148">Agente: saptfi2026</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="124" x="1407" y="296.1836">Metodología: ICONIX</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="252" x="1407" y="310.1523">Fuente: Ingeniería inversa de Odoo 19.0</text><!--MD5=[8f7752bc902ce52f037603caf85f331e]
+@startuml D-CU-GEN-001 — Diagrama General de Casos de Uso
+
+title SAP-TFI-2026 — Casos de Uso del Flujo Principal
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Vendedor" as V
+actor "Operario\nde Almacén" as OA
+actor "Facturador" as F
+
+rectangle "Módulo sale" {
+    usecase "CU-VEN-001\nCrear presupuesto" as CU1
+    usecase "CU-VEN-004\nConfirmar pedido" as CU4
+}
+
+rectangle "Módulo stock" {
+    usecase "CU-ENT-002\nReservar productos" as CU2
+    usecase "CU-ENT-004\nValidar entrega" as CU3
+}
+
+rectangle "Módulo account" {
+    usecase "CU-FAC-001\nCrear factura" as CU5
+    usecase "CU-FAC-002\nPublicar factura" as CU6
+    usecase "CU-FAC-003\nRegistrar pago" as CU7
+}
+
+V - -> CU1
+V - -> CU4
+OA - -> CU2
+OA - -> CU3
+F - -> CU5
+F - -> CU6
+F - -> CU7
+
+CU1 ..> CU4 : <<flujo>>
+CU4 ..> CU2 : <<dispara>>
+CU2 ..> CU3 : <<precondición>>
+CU3 ..> CU5 : <<opcionalmente>>
+CU5 ..> CU6 : <<flujo>>
+CU6 ..> CU7 : <<flujo>>
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+endlegend
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 14:25:22 ART 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: es
+Country: AR
+--></g></svg>

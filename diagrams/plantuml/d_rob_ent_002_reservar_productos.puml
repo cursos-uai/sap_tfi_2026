@@ -1,0 +1,58 @@
+@startuml D-ROB-ENT-002 — Diagrama de Robustez: Reservar Productos
+
+title SAP-TFI-2026 — Diagrama de Robustez - Reservar Productos (CU-ENT-002)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Sistema\n(o Operario)" as A
+
+boundary "Trigger\n(action_confirm o boton)" as B_Trig
+
+control "StockPicking\n(action_assign)" as C_Assign
+control "Reabastecimiento\n(procurement)" as C_Proc
+
+entity "stock.picking" as E_Pick
+entity "stock.move.line\n(reservas)" as E_ML
+entity "stock.warehouse.orderpoint" as E_WO
+entity "purchase.order\n(MTO)" as E_PO
+
+A --> B_Trig : 1. Trigger reserva
+B_Trig --> E_Pick : 2. Lee picking
+B_Trig --> C_Assign : 3. action_assign()
+
+C_Assign --> E_Pick : 4. Recorre lineas
+C_Assign --> E_ML : 5. Busca stock disponible
+E_ML --> C_Assign : 6. Cantidad disponible
+
+alt Si hay stock
+    C_Assign --> E_ML : 7a. Reserva cantidad
+    E_ML --> C_Assign : 8a. reserved_availability
+else Si no hay stock
+    C_Assign --> C_Proc : 7b. Busca reabastecimiento
+    C_Proc --> E_WO : 8b. Consulta reglas
+    E_WO --> C_Proc : 9b. orderpoints aplicables
+    C_Proc --> E_PO : 10b. Crea purchase order (MTO)
+    E_PO --> C_Proc : 11b. PO creado
+    C_Proc --> C_Assign : 12b. Programado
+end
+
+C_Assign --> E_Pick : 13. Actualiza estado
+alt Si todas las lineas tienen reserva
+    E_Pick --> A : 14a. Estado = 'assigned'
+else Si hay parcial
+    E_Pick --> A : 14b. Estado = 'partially_available'
+end
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml

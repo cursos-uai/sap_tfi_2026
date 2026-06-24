@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="944px" preserveAspectRatio="none" style="width:1207px;height:944px;background:#FFFFFF;" version="1.1" viewBox="0 0 1207 944" width="1207px" zoomAndPan="magnify"><defs/><g><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="268" x="463.25" y="10.2104">SAP-TFI-2026 — Modelo de Dominio Conceptual</text><!--MD5=[378b18254a1b2429f435e93f5e5cc50c]
+class C--><rect codeLine="14" fill="#FEFECE" height="95.2188" id="C" style="stroke:#A80036;stroke-width:1.5;" width="195" x="7" y="39.3047"/><ellipse cx="81.25" cy="53.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M82.5625,57.0703 Q82.1875,57.2734 81.7656,57.3672 Q81.3594,57.4609 80.8906,57.4609 Q79.2813,57.4609 78.4219,56.3984 Q77.5625,55.3203 77.5625,53.3047 Q77.5625,51.2734 78.4219,50.2109 Q79.2813,49.1328 80.8906,49.1328 Q81.3594,49.1328 81.7656,49.2422 Q82.1875,49.3359 82.5625,49.5234 L82.5625,51.2891 Q82.1406,50.9141 81.75,50.7422 Q81.375,50.5703 80.9688,50.5703 Q80.1094,50.5703 79.6563,51.2578 Q79.2188,51.9453 79.2188,53.3047 Q79.2188,54.6641 79.6563,55.3516 Q80.1094,56.0391 80.9688,56.0391 Q81.375,56.0391 81.75,55.8672 Q82.1406,55.6953 82.5625,55.3047 L82.5625,57.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="39" x="98.75" y="57.1128">Cliente</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="201" y1="67.3047" y2="67.3047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="13" y="81.5151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="102" x="13" y="94.3198">+direccion: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="137" x="13" y="107.1245">+lista_precios: PriceList</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="183" x="13" y="119.9292">+condicion_pago: PaymentTerm</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="201" y1="126.5234" y2="126.5234"/><!--MD5=[3b33aac52bf85bcbfceea1b1d7f3c296]
+class P--><rect codeLine="21" fill="#FEFECE" height="108.0234" id="P" style="stroke:#A80036;stroke-width:1.5;" width="133" x="237" y="32.8047"/><ellipse cx="274.75" cy="46.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M276.0625,50.5703 Q275.6875,50.7734 275.2656,50.8672 Q274.8594,50.9609 274.3906,50.9609 Q272.7813,50.9609 271.9219,49.8984 Q271.0625,48.8203 271.0625,46.8047 Q271.0625,44.7734 271.9219,43.7109 Q272.7813,42.6328 274.3906,42.6328 Q274.8594,42.6328 275.2656,42.7422 Q275.6875,42.8359 276.0625,43.0234 L276.0625,44.7891 Q275.6406,44.4141 275.25,44.2422 Q274.875,44.0703 274.4688,44.0703 Q273.6094,44.0703 273.1563,44.7578 Q272.7188,45.4453 272.7188,46.8047 Q272.7188,48.1641 273.1563,48.8516 Q273.6094,49.5391 274.4688,49.5391 Q274.875,49.5391 275.25,49.3672 Q275.6406,49.1953 276.0625,48.8047 L276.0625,50.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="50" x="292.25" y="50.6128">Producto</text><line style="stroke:#A80036;stroke-width:1.5;" x1="238" x2="369" y1="60.8047" y2="60.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="243" y="75.0151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="116" x="243" y="87.8198">+descripcion: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="88" x="243" y="100.6245">+precio: Money</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="121" x="243" y="113.4292">+categoria: Category</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="103" x="243" y="126.2339">+impuestos: Tax*</text><line style="stroke:#A80036;stroke-width:1.5;" x1="238" x2="369" y1="132.8281" y2="132.8281"/><!--MD5=[5315e15fdc445c872eb8c3b036754ed5]
+class Q--><rect codeLine="29" fill="#FEFECE" height="108.0234" id="Q" style="stroke:#A80036;stroke-width:1.5;" width="153" x="405" y="32.8047"/><ellipse cx="441.85" cy="46.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M443.1625,50.5703 Q442.7875,50.7734 442.3656,50.8672 Q441.9594,50.9609 441.4906,50.9609 Q439.8813,50.9609 439.0219,49.8984 Q438.1625,48.8203 438.1625,46.8047 Q438.1625,44.7734 439.0219,43.7109 Q439.8813,42.6328 441.4906,42.6328 Q441.9594,42.6328 442.3656,42.7422 Q442.7875,42.8359 443.1625,43.0234 L443.1625,44.7891 Q442.7406,44.4141 442.35,44.2422 Q441.975,44.0703 441.5688,44.0703 Q440.7094,44.0703 440.2563,44.7578 Q439.8188,45.4453 439.8188,46.8047 Q439.8188,48.1641 440.2563,48.8516 Q440.7094,49.5391 441.5688,49.5391 Q441.975,49.5391 442.35,49.3672 Q442.7406,49.1953 443.1625,48.8047 L443.1625,50.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="72" x="459.15" y="50.6128">Presupuesto</text><line style="stroke:#A80036;stroke-width:1.5;" x1="406" x2="557" y1="60.8047" y2="60.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="411" y="75.0151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="102" x="411" y="87.8198">+fecha: DateTime</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="141" x="411" y="100.6245">+estado: QuotationState</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="113" x="411" y="113.4292">+lineas: OrderLine*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="78" x="411" y="126.2339">+total: Money</text><line style="stroke:#A80036;stroke-width:1.5;" x1="406" x2="557" y1="132.8281" y2="132.8281"/><!--MD5=[255014859fcd18787a2ae9f2a405ae60]
+class O--><rect codeLine="37" fill="#FEFECE" height="133.6328" id="O" style="stroke:#A80036;stroke-width:1.5;" width="213" x="593" y="19.8047"/><ellipse cx="660.75" cy="33.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M662.0625,37.5703 Q661.6875,37.7734 661.2656,37.8672 Q660.8594,37.9609 660.3906,37.9609 Q658.7813,37.9609 657.9219,36.8984 Q657.0625,35.8203 657.0625,33.8047 Q657.0625,31.7734 657.9219,30.7109 Q658.7813,29.6328 660.3906,29.6328 Q660.8594,29.6328 661.2656,29.7422 Q661.6875,29.8359 662.0625,30.0234 L662.0625,31.7891 Q661.6406,31.4141 661.25,31.2422 Q660.875,31.0703 660.4688,31.0703 Q659.6094,31.0703 659.1563,31.7578 Q658.7188,32.4453 658.7188,33.8047 Q658.7188,35.1641 659.1563,35.8516 Q659.6094,36.5391 660.4688,36.5391 Q660.875,36.5391 661.25,36.3672 Q661.6406,36.1953 662.0625,35.8047 L662.0625,37.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="70" x="678.25" y="37.6128">PedidoVenta</text><line style="stroke:#A80036;stroke-width:1.5;" x1="594" x2="805" y1="47.8047" y2="47.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="599" y="62.0151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="181" x="599" y="74.8198">+fecha_confirmacion: DateTime</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="119" x="599" y="87.6245">+estado: OrderState</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="201" x="599" y="100.4292">+estado_facturacion: InvoiceStatus</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="188" x="599" y="113.2339">+estado_entrega: DeliveryStatus</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="113" x="599" y="126.0386">+lineas: OrderLine*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="78" x="599" y="138.8433">+total: Money</text><line style="stroke:#A80036;stroke-width:1.5;" x1="594" x2="805" y1="145.4375" y2="145.4375"/><!--MD5=[9f9177eff5d294dc5edf0c0547b63e65]
+class OL--><rect codeLine="47" fill="#FEFECE" height="133.6328" id="OL" style="stroke:#A80036;stroke-width:1.5;" width="149" x="30" y="213.8047"/><ellipse cx="66.85" cy="227.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M68.1625,231.5703 Q67.7875,231.7734 67.3656,231.8672 Q66.9594,231.9609 66.4906,231.9609 Q64.8813,231.9609 64.0219,230.8984 Q63.1625,229.8203 63.1625,227.8047 Q63.1625,225.7734 64.0219,224.7109 Q64.8813,223.6328 66.4906,223.6328 Q66.9594,223.6328 67.3656,223.7422 Q67.7875,223.8359 68.1625,224.0234 L68.1625,225.7891 Q67.7406,225.4141 67.35,225.2422 Q66.975,225.0703 66.5688,225.0703 Q65.7094,225.0703 65.2563,225.7578 Q64.8188,226.4453 64.8188,227.8047 Q64.8188,229.1641 65.2563,229.8516 Q65.7094,230.5391 66.5688,230.5391 Q66.975,230.5391 67.35,230.3672 Q67.7406,230.1953 68.1625,229.8047 L68.1625,231.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="68" x="84.15" y="231.6128">LineaPedido</text><line style="stroke:#A80036;stroke-width:1.5;" x1="31" x2="178" y1="241.8047" y2="241.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="117" x="36" y="256.0151">+producto: Producto</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="92" x="36" y="268.8198">+cantidad: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="77" x="36" y="281.6245">+unidad: Unit</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="137" x="36" y="294.4292">+precio_unitario: Money</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="103" x="36" y="307.2339">+descuento: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="103" x="36" y="320.0386">+impuestos: Tax*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="99" x="36" y="332.8433">+subtotal: Money</text><line style="stroke:#A80036;stroke-width:1.5;" x1="31" x2="178" y1="339.4375" y2="339.4375"/><!--MD5=[56e4c9075fa7c9f4c09ef0a20c49f72c]
+class T--><rect codeLine="57" fill="#FEFECE" height="108.0234" id="T" style="stroke:#A80036;stroke-width:1.5;" width="137" x="214" y="226.8047"/><ellipse cx="240.5" cy="240.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M241.8125,244.5703 Q241.4375,244.7734 241.0156,244.8672 Q240.6094,244.9609 240.1406,244.9609 Q238.5313,244.9609 237.6719,243.8984 Q236.8125,242.8203 236.8125,240.8047 Q236.8125,238.7734 237.6719,237.7109 Q238.5313,236.6328 240.1406,236.6328 Q240.6094,236.6328 241.0156,236.7422 Q241.4375,236.8359 241.8125,237.0234 L241.8125,238.7891 Q241.3906,238.4141 241,238.2422 Q240.625,238.0703 240.2188,238.0703 Q239.3594,238.0703 238.9063,238.7578 Q238.4688,239.4453 238.4688,240.8047 Q238.4688,242.1641 238.9063,242.8516 Q239.3594,243.5391 240.2188,243.5391 Q240.625,243.5391 241,243.3672 Q241.3906,243.1953 241.8125,242.8047 L241.8125,244.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="79" x="255.5" y="244.6128">Transferencia</text><line style="stroke:#A80036;stroke-width:1.5;" x1="215" x2="350" y1="254.8047" y2="254.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="220" y="269.0151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="125" x="220" y="281.8198">+estado: PickingState</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="116" x="220" y="294.6245">+origen: Warehouse</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="122" x="220" y="307.4292">+destino: Warehouse</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="109" x="220" y="320.2339">+lineas: MoveLine*</text><line style="stroke:#A80036;stroke-width:1.5;" x1="215" x2="350" y1="326.8281" y2="326.8281"/><!--MD5=[d556d8ff01f08f9305ef22d72ffdd3ee]
+class ML--><rect codeLine="65" fill="#FEFECE" height="108.0234" id="ML" style="stroke:#A80036;stroke-width:1.5;" width="168" x="386.5" y="226.8047"/><ellipse cx="420.2" cy="240.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M421.5125,244.5703 Q421.1375,244.7734 420.7156,244.8672 Q420.3094,244.9609 419.8406,244.9609 Q418.2313,244.9609 417.3719,243.8984 Q416.5125,242.8203 416.5125,240.8047 Q416.5125,238.7734 417.3719,237.7109 Q418.2313,236.6328 419.8406,236.6328 Q420.3094,236.6328 420.7156,236.7422 Q421.1375,236.8359 421.5125,237.0234 L421.5125,238.7891 Q421.0906,238.4141 420.7,238.2422 Q420.325,238.0703 419.9188,238.0703 Q419.0594,238.0703 418.6063,238.7578 Q418.1688,239.4453 418.1688,240.8047 Q418.1688,242.1641 418.6063,242.8516 Q419.0594,243.5391 419.9188,243.5391 Q420.325,243.5391 420.7,243.3672 Q421.0906,243.1953 421.5125,242.8047 L421.5125,244.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="94" x="436.8" y="244.6128">LineaMovimiento</text><line style="stroke:#A80036;stroke-width:1.5;" x1="387.5" x2="553.5" y1="254.8047" y2="254.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="117" x="392.5" y="269.0151">+producto: Producto</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="92" x="392.5" y="281.8198">+cantidad: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="156" x="392.5" y="294.6245">+cantidad_reservada: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="156" x="392.5" y="307.4292">+cantidad_entregada: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="115" x="392.5" y="320.2339">+estado: MoveState</text><line style="stroke:#A80036;stroke-width:1.5;" x1="387.5" x2="553.5" y1="326.8281" y2="326.8281"/><!--MD5=[cf39a86b148c3d2a53e894bf08c046dd]
+class I--><rect codeLine="73" fill="#FEFECE" height="133.6328" id="I" style="stroke:#A80036;stroke-width:1.5;" width="181" x="590" y="213.8047"/><ellipse cx="655.75" cy="227.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M657.0625,231.5703 Q656.6875,231.7734 656.2656,231.8672 Q655.8594,231.9609 655.3906,231.9609 Q653.7813,231.9609 652.9219,230.8984 Q652.0625,229.8203 652.0625,227.8047 Q652.0625,225.7734 652.9219,224.7109 Q653.7813,223.6328 655.3906,223.6328 Q655.8594,223.6328 656.2656,223.7422 Q656.6875,223.8359 657.0625,224.0234 L657.0625,225.7891 Q656.6406,225.4141 656.25,225.2422 Q655.875,225.0703 655.4688,225.0703 Q654.6094,225.0703 654.1563,225.7578 Q653.7188,226.4453 653.7188,227.8047 Q653.7188,229.1641 654.1563,229.8516 Q654.6094,230.5391 655.4688,230.5391 Q655.875,230.5391 656.25,230.3672 Q656.6406,230.1953 657.0625,229.8047 L657.0625,231.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="42" x="673.25" y="231.6128">Factura</text><line style="stroke:#A80036;stroke-width:1.5;" x1="591" x2="770" y1="241.8047" y2="241.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="596" y="256.0151">+numero: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="74" x="596" y="268.8198">+fecha: Date</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="125" x="596" y="281.6245">+estado: InvoiceState</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="169" x="596" y="294.4292">+estado_pago: PaymentState</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="93" x="596" y="307.2339">+cliente: Cliente</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="119" x="596" y="320.0386">+lineas: InvoiceLine*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="78" x="596" y="332.8433">+total: Money</text><line style="stroke:#A80036;stroke-width:1.5;" x1="591" x2="770" y1="339.4375" y2="339.4375"/><!--MD5=[7d2271830203563a2549f66cfe4a3f4e]
+class IL--><rect codeLine="83" fill="#FEFECE" height="120.8281" id="IL" style="stroke:#A80036;stroke-width:1.5;" width="165" x="22" y="407.8047"/><ellipse cx="64.75" cy="421.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M66.0625,425.5703 Q65.6875,425.7734 65.2656,425.8672 Q64.8594,425.9609 64.3906,425.9609 Q62.7813,425.9609 61.9219,424.8984 Q61.0625,423.8203 61.0625,421.8047 Q61.0625,419.7734 61.9219,418.7109 Q62.7813,417.6328 64.3906,417.6328 Q64.8594,417.6328 65.2656,417.7422 Q65.6875,417.8359 66.0625,418.0234 L66.0625,419.7891 Q65.6406,419.4141 65.25,419.2422 Q64.875,419.0703 64.4688,419.0703 Q63.6094,419.0703 63.1563,419.7578 Q62.7188,420.4453 62.7188,421.8047 Q62.7188,423.1641 63.1563,423.8516 Q63.6094,424.5391 64.4688,424.5391 Q64.875,424.5391 65.25,424.3672 Q65.6406,424.1953 66.0625,423.8047 L66.0625,425.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="72" x="82.25" y="425.6128">LineaFactura</text><line style="stroke:#A80036;stroke-width:1.5;" x1="23" x2="186" y1="435.8047" y2="435.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="117" x="28" y="450.0151">+producto: Producto</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="92" x="28" y="462.8198">+cantidad: Float</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="137" x="28" y="475.6245">+precio_unitario: Money</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="103" x="28" y="488.4292">+impuestos: Tax*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="99" x="28" y="501.2339">+subtotal: Money</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="153" x="28" y="514.0386">+cuenta_contable: Account</text><line style="stroke:#A80036;stroke-width:1.5;" x1="23" x2="186" y1="520.6328" y2="520.6328"/><!--MD5=[4d8356f53ed69ca0abf43fffa1de0a44]
+class Pm--><rect codeLine="92" fill="#FEFECE" height="108.0234" id="Pm" style="stroke:#A80036;stroke-width:1.5;" width="162" x="222.5" y="414.3047"/><ellipse cx="285.75" cy="428.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M287.0625,432.0703 Q286.6875,432.2734 286.2656,432.3672 Q285.8594,432.4609 285.3906,432.4609 Q283.7813,432.4609 282.9219,431.3984 Q282.0625,430.3203 282.0625,428.3047 Q282.0625,426.2734 282.9219,425.2109 Q283.7813,424.1328 285.3906,424.1328 Q285.8594,424.1328 286.2656,424.2422 Q286.6875,424.3359 287.0625,424.5234 L287.0625,426.2891 Q286.6406,425.9141 286.25,425.7422 Q285.875,425.5703 285.4688,425.5703 Q284.6094,425.5703 284.1563,426.2578 Q283.7188,426.9453 283.7188,428.3047 Q283.7188,429.6641 284.1563,430.3516 Q284.6094,431.0391 285.4688,431.0391 Q285.875,431.0391 286.25,430.8672 Q286.6406,430.6953 287.0625,430.3047 L287.0625,432.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="28" x="303.25" y="432.1128">Pago</text><line style="stroke:#A80036;stroke-width:1.5;" x1="223.5" x2="383.5" y1="442.3047" y2="442.3047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="74" x="228.5" y="456.5151">+fecha: Date</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="89" x="228.5" y="469.3198">+monto: Money</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="150" x="228.5" y="482.1245">+metodo: PaymentMethod</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="88" x="228.5" y="494.9292">+diario: Journal</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="99" x="228.5" y="507.7339">+factura: Factura</text><line style="stroke:#A80036;stroke-width:1.5;" x1="223.5" x2="383.5" y1="514.3281" y2="514.3281"/><!--MD5=[06e16a454a6c6ad4bfc8baf2f740782c]
+class W--><rect codeLine="100" fill="#FEFECE" height="82.4141" id="W" style="stroke:#A80036;stroke-width:1.5;" width="114" x="419.5" y="427.3047"/><ellipse cx="449.6" cy="441.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M450.9125,445.0703 Q450.5375,445.2734 450.1156,445.3672 Q449.7094,445.4609 449.2406,445.4609 Q447.6313,445.4609 446.7719,444.3984 Q445.9125,443.3203 445.9125,441.3047 Q445.9125,439.2734 446.7719,438.2109 Q447.6313,437.1328 449.2406,437.1328 Q449.7094,437.1328 450.1156,437.2422 Q450.5375,437.3359 450.9125,437.5234 L450.9125,439.2891 Q450.4906,438.9141 450.1,438.7422 Q449.725,438.5703 449.3188,438.5703 Q448.4594,438.5703 448.0063,439.2578 Q447.5688,439.9453 447.5688,441.3047 Q447.5688,442.6641 448.0063,443.3516 Q448.4594,444.0391 449.3188,444.0391 Q449.725,444.0391 450.1,443.8672 Q450.4906,443.6953 450.9125,443.3047 L450.9125,445.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="48" x="465.4" y="445.1128">Almacen</text><line style="stroke:#A80036;stroke-width:1.5;" x1="420.5" x2="532.5" y1="455.3047" y2="455.3047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="425.5" y="469.5151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="88" x="425.5" y="482.3198">+codigo: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="102" x="425.5" y="495.1245">+direccion: String</text><line style="stroke:#A80036;stroke-width:1.5;" x1="420.5" x2="532.5" y1="501.7188" y2="501.7188"/><!--MD5=[8832394f0f955ca405dbc7ff727aede1]
+class L--><rect codeLine="106" fill="#FEFECE" height="82.4141" id="L" style="stroke:#A80036;stroke-width:1.5;" width="125" x="569" y="427.3047"/><ellipse cx="601.35" cy="441.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M602.6625,445.0703 Q602.2875,445.2734 601.8656,445.3672 Q601.4594,445.4609 600.9906,445.4609 Q599.3813,445.4609 598.5219,444.3984 Q597.6625,443.3203 597.6625,441.3047 Q597.6625,439.2734 598.5219,438.2109 Q599.3813,437.1328 600.9906,437.1328 Q601.4594,437.1328 601.8656,437.2422 Q602.2875,437.3359 602.6625,437.5234 L602.6625,439.2891 Q602.2406,438.9141 601.85,438.7422 Q601.475,438.5703 601.0688,438.5703 Q600.2094,438.5703 599.7563,439.2578 Q599.3188,439.9453 599.3188,441.3047 Q599.3188,442.6641 599.7563,443.3516 Q600.2094,444.0391 601.0688,444.0391 Q601.475,444.0391 601.85,443.8672 Q602.2406,443.6953 602.6625,443.3047 L602.6625,445.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="54" x="617.65" y="445.1128">Ubicacion</text><line style="stroke:#A80036;stroke-width:1.5;" x1="570" x2="693" y1="455.3047" y2="455.3047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="95" x="575" y="469.5151">+nombre: String</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="113" x="575" y="482.3198">+almacen: Almacen</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="112" x="575" y="495.1245">+tipo: LocationType</text><line style="stroke:#A80036;stroke-width:1.5;" x1="570" x2="693" y1="501.7188" y2="501.7188"/><!--MD5=[20a748d5ee336a9a91751b0a3d4f0beb]
+class Cliente--><rect fill="#FEFECE" height="44" id="Cliente" style="stroke:#A80036;stroke-width:1.5;" width="67" x="862" y="64.8047"/><ellipse cx="875" cy="78.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M876.3125,82.5703 Q875.9375,82.7734 875.5156,82.8672 Q875.1094,82.9609 874.6406,82.9609 Q873.0313,82.9609 872.1719,81.8984 Q871.3125,80.8203 871.3125,78.8047 Q871.3125,76.7734 872.1719,75.7109 Q873.0313,74.6328 874.6406,74.6328 Q875.1094,74.6328 875.5156,74.7422 Q875.9375,74.8359 876.3125,75.0234 L876.3125,76.7891 Q875.8906,76.4141 875.5,76.2422 Q875.125,76.0703 874.7188,76.0703 Q873.8594,76.0703 873.4063,76.7578 Q872.9688,77.4453 872.9688,78.8047 Q872.9688,80.1641 873.4063,80.8516 Q873.8594,81.5391 874.7188,81.5391 Q875.125,81.5391 875.5,81.3672 Q875.8906,81.1953 876.3125,80.8047 L876.3125,82.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="39" x="887" y="82.6128">Cliente</text><line style="stroke:#A80036;stroke-width:1.5;" x1="863" x2="928" y1="92.8047" y2="92.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="863" x2="928" y1="100.8047" y2="100.8047"/><!--MD5=[e47a55a3de1a63c2b7018e0331d2f2c9]
+class Presupuesto--><rect fill="#FEFECE" height="44" id="Presupuesto" style="stroke:#A80036;stroke-width:1.5;" width="100" x="948.5" y="258.8047"/><ellipse cx="961.5" cy="272.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M962.8125,276.5703 Q962.4375,276.7734 962.0156,276.8672 Q961.6094,276.9609 961.1406,276.9609 Q959.5313,276.9609 958.6719,275.8984 Q957.8125,274.8203 957.8125,272.8047 Q957.8125,270.7734 958.6719,269.7109 Q959.5313,268.6328 961.1406,268.6328 Q961.6094,268.6328 962.0156,268.7422 Q962.4375,268.8359 962.8125,269.0234 L962.8125,270.7891 Q962.3906,270.4141 962,270.2422 Q961.625,270.0703 961.2188,270.0703 Q960.3594,270.0703 959.9063,270.7578 Q959.4688,271.4453 959.4688,272.8047 Q959.4688,274.1641 959.9063,274.8516 Q960.3594,275.5391 961.2188,275.5391 Q961.625,275.5391 962,275.3672 Q962.3906,275.1953 962.8125,274.8047 L962.8125,276.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="72" x="973.5" y="276.6128">Presupuesto</text><line style="stroke:#A80036;stroke-width:1.5;" x1="949.5" x2="1047.5" y1="286.8047" y2="286.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="949.5" x2="1047.5" y1="294.8047" y2="294.8047"/><!--MD5=[766ade0f80209c90b759f4fe7235152d]
+class PedidoVenta--><rect fill="#FEFECE" height="44" id="PedidoVenta" style="stroke:#A80036;stroke-width:1.5;" width="98" x="885.5" y="446.3047"/><ellipse cx="898.5" cy="460.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M899.8125,464.0703 Q899.4375,464.2734 899.0156,464.3672 Q898.6094,464.4609 898.1406,464.4609 Q896.5313,464.4609 895.6719,463.3984 Q894.8125,462.3203 894.8125,460.3047 Q894.8125,458.2734 895.6719,457.2109 Q896.5313,456.1328 898.1406,456.1328 Q898.6094,456.1328 899.0156,456.2422 Q899.4375,456.3359 899.8125,456.5234 L899.8125,458.2891 Q899.3906,457.9141 899,457.7422 Q898.625,457.5703 898.2188,457.5703 Q897.3594,457.5703 896.9063,458.2578 Q896.4688,458.9453 896.4688,460.3047 Q896.4688,461.6641 896.9063,462.3516 Q897.3594,463.0391 898.2188,463.0391 Q898.625,463.0391 899,462.8672 Q899.3906,462.6953 899.8125,462.3047 L899.8125,464.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="70" x="910.5" y="464.1128">PedidoVenta</text><line style="stroke:#A80036;stroke-width:1.5;" x1="886.5" x2="982.5" y1="474.3047" y2="474.3047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="886.5" x2="982.5" y1="482.3047" y2="482.3047"/><!--MD5=[a926c88f85ce99385ed3fd3448dac0f5]
+class Factura--><rect fill="#FEFECE" height="44" id="Factura" style="stroke:#A80036;stroke-width:1.5;" width="70" x="789.5" y="588.8047"/><ellipse cx="802.5" cy="602.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M803.8125,606.5703 Q803.4375,606.7734 803.0156,606.8672 Q802.6094,606.9609 802.1406,606.9609 Q800.5313,606.9609 799.6719,605.8984 Q798.8125,604.8203 798.8125,602.8047 Q798.8125,600.7734 799.6719,599.7109 Q800.5313,598.6328 802.1406,598.6328 Q802.6094,598.6328 803.0156,598.7422 Q803.4375,598.8359 803.8125,599.0234 L803.8125,600.7891 Q803.3906,600.4141 803,600.2422 Q802.625,600.0703 802.2188,600.0703 Q801.3594,600.0703 800.9063,600.7578 Q800.4688,601.4453 800.4688,602.8047 Q800.4688,604.1641 800.9063,604.8516 Q801.3594,605.5391 802.2188,605.5391 Q802.625,605.5391 803,605.3672 Q803.3906,605.1953 803.8125,604.8047 L803.8125,606.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="42" x="814.5" y="606.6128">Factura</text><line style="stroke:#A80036;stroke-width:1.5;" x1="790.5" x2="858.5" y1="616.8047" y2="616.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="790.5" x2="858.5" y1="624.8047" y2="624.8047"/><!--MD5=[9f1928b30f8d20d7f23668770e7fbc36]
+class LineaPedido--><rect fill="#FEFECE" height="44" id="LineaPedido" style="stroke:#A80036;stroke-width:1.5;" width="96" x="894.5" y="588.8047"/><ellipse cx="907.5" cy="602.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M908.8125,606.5703 Q908.4375,606.7734 908.0156,606.8672 Q907.6094,606.9609 907.1406,606.9609 Q905.5313,606.9609 904.6719,605.8984 Q903.8125,604.8203 903.8125,602.8047 Q903.8125,600.7734 904.6719,599.7109 Q905.5313,598.6328 907.1406,598.6328 Q907.6094,598.6328 908.0156,598.7422 Q908.4375,598.8359 908.8125,599.0234 L908.8125,600.7891 Q908.3906,600.4141 908,600.2422 Q907.625,600.0703 907.2188,600.0703 Q906.3594,600.0703 905.9063,600.7578 Q905.4688,601.4453 905.4688,602.8047 Q905.4688,604.1641 905.9063,604.8516 Q906.3594,605.5391 907.2188,605.5391 Q907.625,605.5391 908,605.3672 Q908.3906,605.1953 908.8125,604.8047 L908.8125,606.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="68" x="919.5" y="606.6128">LineaPedido</text><line style="stroke:#A80036;stroke-width:1.5;" x1="895.5" x2="989.5" y1="616.8047" y2="616.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="895.5" x2="989.5" y1="624.8047" y2="624.8047"/><!--MD5=[e68a48cb6548f404c904310e16eeee93]
+class Transferencia--><rect fill="#FEFECE" height="44" id="Transferencia" style="stroke:#A80036;stroke-width:1.5;" width="107" x="1026" y="588.8047"/><ellipse cx="1039" cy="602.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1040.3125,606.5703 Q1039.9375,606.7734 1039.5156,606.8672 Q1039.1094,606.9609 1038.6406,606.9609 Q1037.0313,606.9609 1036.1719,605.8984 Q1035.3125,604.8203 1035.3125,602.8047 Q1035.3125,600.7734 1036.1719,599.7109 Q1037.0313,598.6328 1038.6406,598.6328 Q1039.1094,598.6328 1039.5156,598.7422 Q1039.9375,598.8359 1040.3125,599.0234 L1040.3125,600.7891 Q1039.8906,600.4141 1039.5,600.2422 Q1039.125,600.0703 1038.7188,600.0703 Q1037.8594,600.0703 1037.4063,600.7578 Q1036.9688,601.4453 1036.9688,602.8047 Q1036.9688,604.1641 1037.4063,604.8516 Q1037.8594,605.5391 1038.7188,605.5391 Q1039.125,605.5391 1039.5,605.3672 Q1039.8906,605.1953 1040.3125,604.8047 L1040.3125,606.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="79" x="1051" y="606.6128">Transferencia</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1027" x2="1132" y1="616.8047" y2="616.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1027" x2="1132" y1="624.8047" y2="624.8047"/><!--MD5=[9884e166d189446fe4825863c8acf943]
+class Producto--><rect fill="#FEFECE" height="44" id="Producto" style="stroke:#A80036;stroke-width:1.5;" width="78" x="1018.5" y="446.3047"/><ellipse cx="1031.5" cy="460.3047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1032.8125,464.0703 Q1032.4375,464.2734 1032.0156,464.3672 Q1031.6094,464.4609 1031.1406,464.4609 Q1029.5313,464.4609 1028.6719,463.3984 Q1027.8125,462.3203 1027.8125,460.3047 Q1027.8125,458.2734 1028.6719,457.2109 Q1029.5313,456.1328 1031.1406,456.1328 Q1031.6094,456.1328 1032.0156,456.2422 Q1032.4375,456.3359 1032.8125,456.5234 L1032.8125,458.2891 Q1032.3906,457.9141 1032,457.7422 Q1031.625,457.5703 1031.2188,457.5703 Q1030.3594,457.5703 1029.9063,458.2578 Q1029.4688,458.9453 1029.4688,460.3047 Q1029.4688,461.6641 1029.9063,462.3516 Q1030.3594,463.0391 1031.2188,463.0391 Q1031.625,463.0391 1032,462.8672 Q1032.3906,462.6953 1032.8125,462.3047 L1032.8125,464.0703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="50" x="1043.5" y="464.1128">Producto</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1019.5" x2="1095.5" y1="474.3047" y2="474.3047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1019.5" x2="1095.5" y1="482.3047" y2="482.3047"/><!--MD5=[143acd3474c748221cc1a086579e5c58]
+class LineaMovimiento--><rect fill="#FEFECE" height="44" id="LineaMovimiento" style="stroke:#A80036;stroke-width:1.5;" width="122" x="964.5" y="692.8047"/><ellipse cx="977.5" cy="706.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M978.8125,710.5703 Q978.4375,710.7734 978.0156,710.8672 Q977.6094,710.9609 977.1406,710.9609 Q975.5313,710.9609 974.6719,709.8984 Q973.8125,708.8203 973.8125,706.8047 Q973.8125,704.7734 974.6719,703.7109 Q975.5313,702.6328 977.1406,702.6328 Q977.6094,702.6328 978.0156,702.7422 Q978.4375,702.8359 978.8125,703.0234 L978.8125,704.7891 Q978.3906,704.4141 978,704.2422 Q977.625,704.0703 977.2188,704.0703 Q976.3594,704.0703 975.9063,704.7578 Q975.4688,705.4453 975.4688,706.8047 Q975.4688,708.1641 975.9063,708.8516 Q976.3594,709.5391 977.2188,709.5391 Q977.625,709.5391 978,709.3672 Q978.3906,709.1953 978.8125,708.8047 L978.8125,710.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="94" x="989.5" y="710.6128">LineaMovimiento</text><line style="stroke:#A80036;stroke-width:1.5;" x1="965.5" x2="1085.5" y1="720.8047" y2="720.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="965.5" x2="1085.5" y1="728.8047" y2="728.8047"/><!--MD5=[aba8253125d43e5f3e83b96bc0d923b8]
+class Almacen--><rect fill="#FEFECE" height="44" id="Almacen" style="stroke:#A80036;stroke-width:1.5;" width="76" x="1121.5" y="692.8047"/><ellipse cx="1134.5" cy="706.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1135.8125,710.5703 Q1135.4375,710.7734 1135.0156,710.8672 Q1134.6094,710.9609 1134.1406,710.9609 Q1132.5313,710.9609 1131.6719,709.8984 Q1130.8125,708.8203 1130.8125,706.8047 Q1130.8125,704.7734 1131.6719,703.7109 Q1132.5313,702.6328 1134.1406,702.6328 Q1134.6094,702.6328 1135.0156,702.7422 Q1135.4375,702.8359 1135.8125,703.0234 L1135.8125,704.7891 Q1135.3906,704.4141 1135,704.2422 Q1134.625,704.0703 1134.2188,704.0703 Q1133.3594,704.0703 1132.9063,704.7578 Q1132.4688,705.4453 1132.4688,706.8047 Q1132.4688,708.1641 1132.9063,708.8516 Q1133.3594,709.5391 1134.2188,709.5391 Q1134.625,709.5391 1135,709.3672 Q1135.3906,709.1953 1135.8125,708.8047 L1135.8125,710.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="48" x="1146.5" y="710.6128">Almacen</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1122.5" x2="1196.5" y1="720.8047" y2="720.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1122.5" x2="1196.5" y1="728.8047" y2="728.8047"/><!--MD5=[9a452930688759815221757ff572fd90]
+class Ubicacion--><rect fill="#FEFECE" height="44" id="Ubicacion" style="stroke:#A80036;stroke-width:1.5;" width="82" x="1118.5" y="796.8047"/><ellipse cx="1131.5" cy="810.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M1132.8125,814.5703 Q1132.4375,814.7734 1132.0156,814.8672 Q1131.6094,814.9609 1131.1406,814.9609 Q1129.5313,814.9609 1128.6719,813.8984 Q1127.8125,812.8203 1127.8125,810.8047 Q1127.8125,808.7734 1128.6719,807.7109 Q1129.5313,806.6328 1131.1406,806.6328 Q1131.6094,806.6328 1132.0156,806.7422 Q1132.4375,806.8359 1132.8125,807.0234 L1132.8125,808.7891 Q1132.3906,808.4141 1132,808.2422 Q1131.625,808.0703 1131.2188,808.0703 Q1130.3594,808.0703 1129.9063,808.7578 Q1129.4688,809.4453 1129.4688,810.8047 Q1129.4688,812.1641 1129.9063,812.8516 Q1130.3594,813.5391 1131.2188,813.5391 Q1131.625,813.5391 1132,813.3672 Q1132.3906,813.1953 1132.8125,812.8047 L1132.8125,814.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="54" x="1143.5" y="814.6128">Ubicacion</text><line style="stroke:#A80036;stroke-width:1.5;" x1="1119.5" x2="1199.5" y1="824.8047" y2="824.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="1119.5" x2="1199.5" y1="832.8047" y2="832.8047"/><!--MD5=[beeeb134941fbf91048e084c8df4f55f]
+class LineaFactura--><rect fill="#FEFECE" height="44" id="LineaFactura" style="stroke:#A80036;stroke-width:1.5;" width="100" x="829.5" y="692.8047"/><ellipse cx="842.5" cy="706.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M843.8125,710.5703 Q843.4375,710.7734 843.0156,710.8672 Q842.6094,710.9609 842.1406,710.9609 Q840.5313,710.9609 839.6719,709.8984 Q838.8125,708.8203 838.8125,706.8047 Q838.8125,704.7734 839.6719,703.7109 Q840.5313,702.6328 842.1406,702.6328 Q842.6094,702.6328 843.0156,702.7422 Q843.4375,702.8359 843.8125,703.0234 L843.8125,704.7891 Q843.3906,704.4141 843,704.2422 Q842.625,704.0703 842.2188,704.0703 Q841.3594,704.0703 840.9063,704.7578 Q840.4688,705.4453 840.4688,706.8047 Q840.4688,708.1641 840.9063,708.8516 Q841.3594,709.5391 842.2188,709.5391 Q842.625,709.5391 843,709.3672 Q843.3906,709.1953 843.8125,708.8047 L843.8125,710.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="72" x="854.5" y="710.6128">LineaFactura</text><line style="stroke:#A80036;stroke-width:1.5;" x1="830.5" x2="928.5" y1="720.8047" y2="720.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="830.5" x2="928.5" y1="728.8047" y2="728.8047"/><!--MD5=[08a7bdd530bd48323abc2624db633d95]
+class Pago--><rect fill="#FEFECE" height="44" id="Pago" style="stroke:#A80036;stroke-width:1.5;" width="56" x="738.5" y="692.8047"/><ellipse cx="751.5" cy="706.8047" fill="#ADD1B2" rx="9" ry="9" style="stroke:#A80036;stroke-width:1.0;"/><path d="M752.8125,710.5703 Q752.4375,710.7734 752.0156,710.8672 Q751.6094,710.9609 751.1406,710.9609 Q749.5313,710.9609 748.6719,709.8984 Q747.8125,708.8203 747.8125,706.8047 Q747.8125,704.7734 748.6719,703.7109 Q749.5313,702.6328 751.1406,702.6328 Q751.6094,702.6328 752.0156,702.7422 Q752.4375,702.8359 752.8125,703.0234 L752.8125,704.7891 Q752.3906,704.4141 752,704.2422 Q751.625,704.0703 751.2188,704.0703 Q750.3594,704.0703 749.9063,704.7578 Q749.4688,705.4453 749.4688,706.8047 Q749.4688,708.1641 749.9063,708.8516 Q750.3594,709.5391 751.2188,709.5391 Q751.625,709.5391 752,709.3672 Q752.3906,709.1953 752.8125,708.8047 L752.8125,710.5703 Z " fill="#000000"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="28" x="763.5" y="710.6128">Pago</text><line style="stroke:#A80036;stroke-width:1.5;" x1="739.5" x2="793.5" y1="720.8047" y2="720.8047"/><line style="stroke:#A80036;stroke-width:1.5;" x1="739.5" x2="793.5" y1="728.8047" y2="728.8047"/><!--MD5=[52cd198596467e68b2c0bc592ce5b21e]
+link Cliente to Presupuesto--><path codeLine="114" d="M914.5,109.0547 C914.5,160.0147 914.5,280.8047 914.5,280.8047 C914.5,280.8047 943.18,280.8047 943.18,280.8047 " fill="none" id="Cliente-to-Presupuesto" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="948.18,280.8047,939.18,276.8047,943.18,280.8047,939.18,284.8047,948.18,280.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="40" x="873.5" y="206.4851">solicita</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="911.6656" y="126.9655">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="934.3486" y="278.193">*</text><!--MD5=[63e82dbdef89801dca13d6ccc37e5b53]
+link Cliente to PedidoVenta--><path codeLine="115" d="M900,108.9647 C900,108.9647 900,441.0847 900,441.0847 " fill="none" id="Cliente-to-PedidoVenta" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="900,446.0847,904,437.0847,900,441.0847,896,437.0847,900,446.0847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="43" x="856" y="272.2351">compra</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="893.2688" y="126.8513">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="882.5156" y="435.776">*</text><!--MD5=[244872798c3a9c365a3b3085ca3d43ba]
+link Cliente to Factura--><path codeLine="116" d="M873.75,109.0147 C873.75,207.9747 873.75,603.8047 873.75,603.8047 C873.75,603.8047 864.5,603.8047 864.5,603.8047 " fill="none" id="Cliente-to-Factura" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="859.5,603.8047,868.5,607.8047,864.5,603.8047,868.5,599.8047,859.5,603.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="35" x="837.75" y="358.2451">recibe</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="859.9641" y="126.9147">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="867.3375" y="599.4169">*</text><!--MD5=[55e9700a39dbe16849b0fd586bb26ae6]
+link Presupuesto to PedidoVenta--><path codeLine="117" d="M966,303.0547 C966,303.0547 966,441.0847 966,441.0847 " fill="none" id="Presupuesto-to-PedidoVenta" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="966,446.0847,970,437.0847,966,441.0847,962,437.0847,966,446.0847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="88" x="877" y="369.2751">se convierte en</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="949.325" y="320.9655">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="22" x="950.2781" y="435.776">0..1</text><!--MD5=[41fcafe09c3c52e7ae74b78cd999f9bf]
+link PedidoVenta to LineaPedido--><path codeLine="118" d="M939,490.5747 C939,490.5747 939,583.6947 939,583.6947 " fill="none" id="PedidoVenta-to-LineaPedido" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="939,588.6947,943,579.6947,939,583.6947,935,579.6947,939,588.6947" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="48" x="890" y="534.3451">contiene</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="932.2688" y="508.4908">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="930.9281" y="578.0733">*</text><!--MD5=[1a9a7af241d0e0190089330a92001497]
+link PedidoVenta to Transferencia--><path codeLine="119" d="M983.88,468.8047 C995.46,468.8047 1004.5,468.8047 1004.5,468.8047 C1004.5,468.8047 1004.5,603.8047 1004.5,603.8047 C1004.5,603.8047 1020.79,603.8047 1020.79,603.8047 " fill="none" id="PedidoVenta-to-Transferencia" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1025.79,603.8047,1016.79,599.8047,1020.79,603.8047,1016.79,607.8047,1025.79,603.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="40" x="963.5" y="531.3451">genera</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="991.6468" y="466.2664">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="1012.1696" y="600.3223">*</text><!--MD5=[24ef2da706b0fed02f473d99065fa5c7]
+link PedidoVenta to Factura--><path codeLine="120" d="M890,490.5147 C890,532.3747 890,618.8047 890,618.8047 C890,618.8047 864.55,618.8047 864.55,618.8047 " fill="none" id="PedidoVenta-to-Factura" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="859.55,618.8047,868.55,622.8047,864.55,618.8047,868.55,614.8047,859.55,618.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="39" x="850" y="564.5951">origina</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="870.7" y="508.057">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="867.3978" y="617.5106">*</text><!--MD5=[5a5ef5e0d890084ffb5bb00424013d5a]
+link Producto to LineaPedido--><path codeLine="121" d="M1022.25,490.5147 C1022.25,532.3747 1022.25,618.8047 1022.25,618.8047 C1022.25,618.8047 995.73,618.8047 995.73,618.8047 " fill="none" id="Producto-to-LineaPedido" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="990.73,618.8047,999.73,622.8047,995.73,618.8047,999.73,614.8047,990.73,618.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="64" x="957.25" y="565.1251">aparece en</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="1004.8359" y="508.4147">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="998.5746" y="617.383">*</text><!--MD5=[1e3f52b1fc4c1c69cc4345a61a88b8d7]
+link LineaPedido to LineaMovimiento--><path codeLine="122" d="M977.5,632.8647 C977.5,632.8647 977.5,687.7847 977.5,687.7847 " fill="none" id="LineaPedido-to-LineaMovimiento" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="977.5,692.7847,981.5,683.7847,977.5,687.7847,973.5,683.7847,977.5,692.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="88" x="888.5" y="657.5351">se convierte en</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="979.3594" y="651.0802">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="955.2438" y="682.192">*</text><!--MD5=[97b28a6ee7375727682be2624898674a]
+link Transferencia to LineaMovimiento--><path codeLine="123" d="M1056.25,632.8647 C1056.25,632.8647 1056.25,687.7847 1056.25,687.7847 " fill="none" id="Transferencia-to-LineaMovimiento" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1056.25,692.7847,1060.25,683.7847,1056.25,687.7847,1052.25,683.7847,1056.25,692.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="48" x="1007.25" y="657.5351">contiene</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="1041.7266" y="651.0802">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="1059.0953" y="682.192">*</text><!--MD5=[ae603e212cfeca53ed2c7e2dc64ad459]
+link Almacen to Ubicacion--><path codeLine="124" d="M1159.5,736.8647 C1159.5,736.8647 1159.5,791.7847 1159.5,791.7847 " fill="none" id="Almacen-to-Ubicacion" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1159.5,796.7847,1163.5,787.7847,1159.5,791.7847,1155.5,787.7847,1159.5,796.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="28" x="1130.5" y="761.5351">tiene</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="1151.5156" y="755.0802">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="1152.5438" y="786.192">*</text><!--MD5=[3fb48d17186a22e343d1b0e29692671a]
+link Transferencia to Almacen--><path codeLine="125" d="M1127.25,632.8647 C1127.25,632.8647 1127.25,687.7847 1127.25,687.7847 " fill="none" id="Transferencia-to-Almacen" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1127.25,692.7847,1131.25,683.7847,1127.25,687.7847,1123.25,683.7847,1127.25,692.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="82" x="1044.25" y="671.5351">origen/destino</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="1133.8359" y="651.0802">*</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="1108.8547" y="682.192">2</text><!--MD5=[c065ea60d0873565193dccb3ff79896f]
+link Factura to LineaFactura--><path codeLine="126" d="M844.5,632.8647 C844.5,632.8647 844.5,687.7847 844.5,687.7847 " fill="none" id="Factura-to-LineaFactura" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="844.5,692.7847,848.5,683.7847,844.5,687.7847,840.5,683.7847,844.5,692.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="48" x="795.5" y="657.5351">contiene</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="842.1406" y="651.0802">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="826.3875" y="682.192">*</text><!--MD5=[7a8e8b527630c623aec9ee9d4bbf1a2c]
+link Factura to Pago--><path codeLine="127" d="M789.2,610.8047 C783.95,610.8047 780.25,610.8047 780.25,610.8047 C780.25,610.8047 780.25,687.7447 780.25,687.7447 " fill="none" id="Factura-to-Pago" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="780.25,692.7447,784.25,683.7447,780.25,687.7447,776.25,683.7447,780.25,692.7447" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="35" x="744.25" y="642.0051">recibe</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="774.5613" y="607.9131">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="777.6766" y="682.1393">*</text><!--MD5=[484d71b2b865702f7cbe9f9efdb60a04]
+link LineaPedido to LineaFactura--><path codeLine="128" d="M912,632.8647 C912,632.8647 912,687.7847 912,687.7847 " fill="none" id="LineaPedido-to-LineaFactura" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="912,692.7847,916,683.7847,912,687.7847,908,683.7847,912,692.7847" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="76" x="835" y="671.5351">se factura en</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="7" x="895.4375" y="651.0802">1</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="6" x="915.4031" y="682.192">*</text><!--MD5=[6fb24074b721fac0fca77022afb8e41b]
+link C to P--><!--MD5=[b913503dc393b99f33478321151aa09e]
+link P to Q--><!--MD5=[fdd2bb445b8eab47408c4d4f16d0360d]
+link Q to O--><!--MD5=[1b02eec52045938439e22aa8468c5fbd]
+link C to OL--><!--MD5=[015e3a9ab7927ce06bffd621ed2e93f9]
+link OL to T--><!--MD5=[4a99dfdb719dc84f7e31f2d00a11477d]
+link T to ML--><!--MD5=[b11de0f00b33fe333d27a84b4335fdcf]
+link ML to I--><!--MD5=[b1f044466c95f78ade1ca2ed4c75c6ca]
+link OL to IL--><!--MD5=[48604743eeeb19cb5d4e3977eef684e9]
+link IL to Pm--><!--MD5=[56a2f246751c6f747a967c29abde404b]
+link Pm to W--><!--MD5=[292054612dc83bc7411b40815889518b]
+link W to L--><rect fill="#DDDDDD" height="74.0234" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="248" x="937.5" y="854.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="131" x="943.5" y="870.0151">Proyecto: SAP-TFI-2026</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="107" x="943.5" y="882.8198">Agente: saptfi2026</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="114" x="943.5" y="895.6245">Metodología: ICONIX</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="229" x="943.5" y="908.4292">Fuente: Ingeniería inversa de Odoo 19.0</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="236" x="943.5" y="921.2339">Modelo conceptual (separado del técnico)</text><!--MD5=[ecc381c82f37c11295a2e0d0a17e1cce]
+@startuml D-CLA-CON-GEN-001 — Modelo de Dominio (Conceptual)
+
+title SAP-TFI-2026 — Modelo de Dominio Conceptual
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+
+' ─── Conceptos del dominio (separados de clases técnicas Odoo) ───
+
+class "Cliente" as C {
+    +nombre: String
+    +direccion: String
+    +lista_precios: PriceList
+    +condicion_pago: PaymentTerm
+}
+
+class "Producto" as P {
+    +nombre: String
+    +descripcion: String
+    +precio: Money
+    +categoria: Category
+    +impuestos: Tax*
+}
+
+class "Presupuesto" as Q {
+    +nombre: String
+    +fecha: DateTime
+    +estado: QuotationState
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "PedidoVenta" as O {
+    +nombre: String
+    +fecha_confirmacion: DateTime
+    +estado: OrderState
+    +estado_facturacion: InvoiceStatus
+    +estado_entrega: DeliveryStatus
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "LineaPedido" as OL {
+    +producto: Producto
+    +cantidad: Float
+    +unidad: Unit
+    +precio_unitario: Money
+    +descuento: Float
+    +impuestos: Tax*
+    +subtotal: Money
+}
+
+class "Transferencia" as T {
+    +nombre: String
+    +estado: PickingState
+    +origen: Warehouse
+    +destino: Warehouse
+    +lineas: MoveLine*
+}
+
+class "LineaMovimiento" as ML {
+    +producto: Producto
+    +cantidad: Float
+    +cantidad_reservada: Float
+    +cantidad_entregada: Float
+    +estado: MoveState
+}
+
+class "Factura" as I {
+    +numero: String
+    +fecha: Date
+    +estado: InvoiceState
+    +estado_pago: PaymentState
+    +cliente: Cliente
+    +lineas: InvoiceLine*
+    +total: Money
+}
+
+class "LineaFactura" as IL {
+    +producto: Producto
+    +cantidad: Float
+    +precio_unitario: Money
+    +impuestos: Tax*
+    +subtotal: Money
+    +cuenta_contable: Account
+}
+
+class "Pago" as Pm {
+    +fecha: Date
+    +monto: Money
+    +metodo: PaymentMethod
+    +diario: Journal
+    +factura: Factura
+}
+
+class "Almacen" as W {
+    +nombre: String
+    +codigo: String
+    +direccion: String
+}
+
+class "Ubicacion" as L {
+    +nombre: String
+    +almacen: Almacen
+    +tipo: LocationType
+}
+
+' ─── Relaciones ───
+
+Cliente "1" - -> "*" Presupuesto : solicita
+Cliente "1" - -> "*" PedidoVenta : compra
+Cliente "1" - -> "*" Factura : recibe
+Presupuesto "1" - -> "0..1" PedidoVenta : se convierte en
+PedidoVenta "1" - -> "*" LineaPedido : contiene
+PedidoVenta "1" - -> "*" Transferencia : genera
+PedidoVenta "1" - -> "*" Factura : origina
+Producto "1" - -> "*" LineaPedido : aparece en
+LineaPedido "1" - -> "*" LineaMovimiento : se convierte en
+Transferencia "1" - -> "*" LineaMovimiento : contiene
+Almacen "1" - -> "*" Ubicacion : tiene
+Transferencia "*" - -> "2" Almacen : origen/destino
+Factura "1" - -> "*" LineaFactura : contiene
+Factura "1" - -> "*" Pago : recibe
+LineaPedido "1" - -> "*" LineaFactura : se factura en
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+Modelo conceptual (separado del técnico)
+endlegend
+
+@enduml
+
+@startuml D-CLA-CON-GEN-001 — Modelo de Dominio (Conceptual)
+
+title SAP-TFI-2026 — Modelo de Dominio Conceptual
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+
+
+class "Cliente" as C {
+    +nombre: String
+    +direccion: String
+    +lista_precios: PriceList
+    +condicion_pago: PaymentTerm
+}
+
+class "Producto" as P {
+    +nombre: String
+    +descripcion: String
+    +precio: Money
+    +categoria: Category
+    +impuestos: Tax*
+}
+
+class "Presupuesto" as Q {
+    +nombre: String
+    +fecha: DateTime
+    +estado: QuotationState
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "PedidoVenta" as O {
+    +nombre: String
+    +fecha_confirmacion: DateTime
+    +estado: OrderState
+    +estado_facturacion: InvoiceStatus
+    +estado_entrega: DeliveryStatus
+    +lineas: OrderLine*
+    +total: Money
+}
+
+class "LineaPedido" as OL {
+    +producto: Producto
+    +cantidad: Float
+    +unidad: Unit
+    +precio_unitario: Money
+    +descuento: Float
+    +impuestos: Tax*
+    +subtotal: Money
+}
+
+class "Transferencia" as T {
+    +nombre: String
+    +estado: PickingState
+    +origen: Warehouse
+    +destino: Warehouse
+    +lineas: MoveLine*
+}
+
+class "LineaMovimiento" as ML {
+    +producto: Producto
+    +cantidad: Float
+    +cantidad_reservada: Float
+    +cantidad_entregada: Float
+    +estado: MoveState
+}
+
+class "Factura" as I {
+    +numero: String
+    +fecha: Date
+    +estado: InvoiceState
+    +estado_pago: PaymentState
+    +cliente: Cliente
+    +lineas: InvoiceLine*
+    +total: Money
+}
+
+class "LineaFactura" as IL {
+    +producto: Producto
+    +cantidad: Float
+    +precio_unitario: Money
+    +impuestos: Tax*
+    +subtotal: Money
+    +cuenta_contable: Account
+}
+
+class "Pago" as Pm {
+    +fecha: Date
+    +monto: Money
+    +metodo: PaymentMethod
+    +diario: Journal
+    +factura: Factura
+}
+
+class "Almacen" as W {
+    +nombre: String
+    +codigo: String
+    +direccion: String
+}
+
+class "Ubicacion" as L {
+    +nombre: String
+    +almacen: Almacen
+    +tipo: LocationType
+}
+
+
+Cliente "1" - -> "*" Presupuesto : solicita
+Cliente "1" - -> "*" PedidoVenta : compra
+Cliente "1" - -> "*" Factura : recibe
+Presupuesto "1" - -> "0..1" PedidoVenta : se convierte en
+PedidoVenta "1" - -> "*" LineaPedido : contiene
+PedidoVenta "1" - -> "*" Transferencia : genera
+PedidoVenta "1" - -> "*" Factura : origina
+Producto "1" - -> "*" LineaPedido : aparece en
+LineaPedido "1" - -> "*" LineaMovimiento : se convierte en
+Transferencia "1" - -> "*" LineaMovimiento : contiene
+Almacen "1" - -> "*" Ubicacion : tiene
+Transferencia "*" - -> "2" Almacen : origen/destino
+Factura "1" - -> "*" LineaFactura : contiene
+Factura "1" - -> "*" Pago : recibe
+LineaPedido "1" - -> "*" LineaFactura : se factura en
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+Modelo conceptual (separado del técnico)
+endlegend
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 14:25:22 ART 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: es
+Country: AR
+--></g></svg>

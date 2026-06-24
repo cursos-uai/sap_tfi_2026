@@ -1,0 +1,60 @@
+@startuml D-ROB-VEN-004 — Diagrama de Robustez: Confirmar Pedido
+
+title SAP-TFI-2026 — Diagrama de Robustez - Confirmar Pedido de Venta (CU-VEN-004)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+' Boundary = vistas, formularios
+' Control = coordinadores
+' Entity = objetos persistentes
+
+actor "Vendedor" as V
+
+boundary "view_sale_order_form\n(form de pedido)" as B_Form
+boundary "Wiz. Validación" as B_Wiz
+
+control "SaleOrder\n(action_confirm)" as C_SO
+control "Validator\n(_confirmation_error_message)" as C_Val
+control "Confirmation\nValues\n(_prepare_confirmation_values)" as C_CV
+control "Stock\n(_action_confirm)" as C_Stk
+control "Invoice\n(_create_invoices)" as C_Inv
+
+entity "sale.order" as E_SO
+entity "sale.order.line" as E_Line
+entity "stock.picking" as E_Pick
+entity "account.move" as E_Move
+
+V --> B_Form : 1. Click "Confirmar"
+B_Form --> C_SO : 2. Invoca action_confirm
+C_SO --> C_Val : 3. Valida pedido
+C_Val --> E_SO : 4. Lee estado y líneas
+C_Val --> E_Line : 5. Lee líneas
+C_Val --> C_SO : 6. OK / error
+
+alt Si OK
+    C_SO --> C_CV : 7. Prepara valores
+    C_CV --> E_SO : 8. Write state='sale', date_order
+    C_SO --> C_Stk : 9. _action_confirm (stock)
+    C_Stk --> E_Pick : 10. Crea picking
+    C_SO --> C_Inv : 11. _create_invoices (opcional)
+    C_Inv --> E_Move : 12. Crea factura
+    C_SO --> B_Form : 13. Retorna OK
+else Si error
+    C_Val --> B_Form : 6b. Muestra error
+end
+
+B_Form --> V : 14. Muestra resultado (estado actualizado)
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodología: ICONIX
+Fuente: Ingeniería inversa de Odoo 19.0
+endlegend
+
+@enduml

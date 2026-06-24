@@ -1,0 +1,31 @@
+# Gitignore — SAP-TFI-2026
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs y temporales
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Entornos virtuales
+.venv/
+venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# PlantUML
+*.bak
+
+# Estado del proyecto (generado por el agente)
+state/

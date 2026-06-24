@@ -1,0 +1,61 @@
+@startuml D-SEC-FAC-001 — Diagrama de Secuencia: Crear Factura
+
+title SAP-TFI-2026 — Diagrama de Secuencia - Crear Factura desde Pedido (CU-FAC-001)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+actor "Facturador" as F
+participant "Boton" as Btn
+participant "SaleOrder\n(_create_invoices)" as SO
+participant "AccountMove" as AM
+database "PostgreSQL" as DB
+
+F -> Btn : 1. Click "Crear Factura"
+Btn -> SO : 2. _create_invoices()
+activate SO
+
+SO -> DB : 3. SELECT sale.order (state='sale')
+DB --> SO : 4. order
+
+SO -> SO : 5. Verifica invoice_status
+
+alt Hay lineas a facturar
+    SO -> DB : 6a. SELECT sale.order.line (qty to invoice)
+    DB --> SO : 7a. lines
+    
+    SO -> SO : 8a. _prepare_invoice() construye vals
+    activate AM
+    
+    AM -> DB : 9a. INSERT account.move (move_type='out_invoice', state='draft')
+    DB --> AM : 10a. id
+    
+    loop Por cada linea
+        AM -> DB : 11a. INSERT account.move.line
+        DB --> AM : 12a. id
+    end
+    
+    AM -> DB : 13a. UPDATE sale.order SET invoice_ids=...
+    AM -> DB : 14a. UPDATE sale.order SET invoice_status=...
+    deactivate AM
+    
+    SO --> Btn : 15a. Factura creada
+    Btn --> F : 16a. Mostrar factura
+else Nada a facturar
+    SO --> Btn : 6b. raise UserError("Nothing to invoice")
+    Btn --> F : 7b. Mostrar error
+end
+deactivate SO
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX
+Fuente: Ingenieria inversa de Odoo 19.0
+endlegend
+
+@enduml
