@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1109px" preserveAspectRatio="none" style="width:1555px;height:1109px;background:#FFFFFF;" version="1.1" viewBox="0 0 1555 1109" width="1555px" zoomAndPan="magnify"><defs/><g><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="400" x="571" y="10.2104">SAP-TFI-2026 — Arquitectura de Odoo 19.0 con Estilos Arquitectonicos</text><!--MD5=[a820aff557a57793e1f30e1f1e95ffc9]
+cluster Cliente (Browser)\n[Estilo: Cliente-Servidor]--><polygon fill="#FFFFFF" points="305,18.8047,469,18.8047,476,50.4141,634,50.4141,634,121.8047,305,121.8047,305,18.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="305" x2="476" y1="50.4141" y2="50.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="113" x="331.5" y="31.0151">Cliente (Browser)</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="158" x="309" y="43.8198">[Estilo: Cliente-Servidor]</text><!--MD5=[dadecaae55e99e5574e38f3c20ead6aa]
+cluster Capa 2.1: Presentacion (UI)\n[Estilo: MVC - Vista]--><polygon fill="#FFFFFF" points="246,162.8047,428,162.8047,435,194.4141,734,194.4141,734,265.8047,246,265.8047,246,162.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="246" x2="435" y1="194.4141" y2="194.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="176" x="250" y="175.0151">Capa 2.1: Presentacion (UI)</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="127" x="274.5" y="187.8198">[Estilo: MVC - Vista]</text><!--MD5=[42920aec715543e80efeb653d2a19fe4]
+cluster Capa 2.2: Web Layer\n[Estilos: Pipe-and-Filter, MVC-Controlador]--><polygon fill="#FFFFFF" points="168,289.8047,448,289.8047,455,321.4141,720,321.4141,720,508.8047,168,508.8047,168,289.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="168" x2="455" y1="321.4141" y2="321.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="133" x="242.5" y="302.0151">Capa 2.2: Web Layer</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="274" x="172" y="314.8198">[Estilos: Pipe-and-Filter, MVC-Controlador]</text><!--MD5=[e7d6824f13f5a7df5c0e6d942da3d4ce]
+cluster Capa 2.3: Business Logic\n[Estilos: MVC-Modelo, Microkernel, Event-Driven]--><polygon fill="#FFFFFF" points="570,532.8047,890,532.8047,897,564.4141,976,564.4141,976,776.8047,570,776.8047,570,532.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="570" x2="897" y1="564.4141" y2="564.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="161" x="650.5" y="545.0151">Capa 2.3: Business Logic</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="314" x="574" y="557.8198">[Estilos: MVC-Modelo, Microkernel, Event-Driven]</text><!--MD5=[81ce35e4ebeeb6ef8134ca84bc0a40ca]
+cluster Capa 2.4: Addons\n[Estilo: Microkernel (plugins via _inherit)]--><polygon fill="#FFFFFF" points="744,405.8047,1015,405.8047,1022,437.4141,1183,437.4141,1183,508.8047,744,508.8047,744,405.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="744" x2="1022" y1="437.4141" y2="437.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="112" x="824.5" y="418.0151">Capa 2.4: Addons</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="265" x="748" y="430.8198">[Estilo: Microkernel (plugins via _inherit)]</text><!--MD5=[1af0d064384014d711b27c0b9200f3cf]
+cluster Capa 3: Persistencia\n[Estilo: 3-Tier - Capa de Datos]--><polygon fill="#FFFFFF" points="540,800.8047,745,800.8047,752,832.4141,823,832.4141,823,915.8047,540,915.8047,540,800.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="540" x2="752" y1="832.4141" y2="832.4141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="132" x="577.5" y="813.0151">Capa 3: Persistencia</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="199" x="544" y="825.8198">[Estilo: 3-Tier - Capa de Datos]</text><!--MD5=[49ed9890ed555d3993563712b3c9834b]
+cluster Capa 4: Integracion Externa\n[Estilos: Cliente-Servidor (inverso), Pipe-and-Filter]--><polygon fill="#FFFFFF" points="1000,661.3047,1336,661.3047,1343,692.9141,1538,692.9141,1538,764.3047,1000,764.3047,1000,661.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1000" x2="1343" y1="692.9141" y2="692.9141"/><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="179" x="1079.5" y="673.5151">Capa 4: Integracion Externa</text><text fill="#000000" font-family="Arial" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="330" x="1004" y="686.3198">[Estilos: Cliente-Servidor (inverso), Pipe-and-Filter]</text><!--MD5=[e9dede37b31fdda9664526f66258b036]
+entity Browser--><polygon fill="#FEFECE" points="502.5,72.8047,512.5,62.8047,617.5,62.8047,617.5,95.6094,607.5,105.6094,502.5,105.6094,502.5,72.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="607.5" x2="617.5" y1="72.8047" y2="62.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="502.5" x2="607.5" y1="72.8047" y2="72.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="607.5" x2="607.5" y1="72.8047" y2="105.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="75" x="517.5" y="93.0151">Web Browser</text><!--MD5=[0bddb22d7ece04c78f46eabeea2aa83e]
+entity JSRuntime--><polygon fill="#FEFECE" points="321,72.8047,331,62.8047,467,62.8047,467,95.6094,457,105.6094,321,105.6094,321,72.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="457" x2="467" y1="72.8047" y2="62.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="321" x2="457" y1="72.8047" y2="72.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="457" x2="457" y1="72.8047" y2="105.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="106" x="336" y="93.0151">JavaScript Runtime</text><!--MD5=[715b49e1f0b38bbf4f2ab4c3e56a4461]
+entity OWL--><polygon fill="#FEFECE" points="586.5,216.8047,596.5,206.8047,717.5,206.8047,717.5,239.6094,707.5,249.6094,586.5,249.6094,586.5,216.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="707.5" x2="717.5" y1="216.8047" y2="206.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="586.5" x2="707.5" y1="216.8047" y2="216.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="707.5" x2="707.5" y1="216.8047" y2="249.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="91" x="601.5" y="237.0151">OWL Framework</text><!--MD5=[169e6db3b10d0b8bb941037d67bc5092]
+entity Static--><polygon fill="#FEFECE" points="385,216.8047,395,206.8047,551,206.8047,551,239.6094,541,249.6094,385,249.6094,385,216.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="541" x2="551" y1="216.8047" y2="206.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="385" x2="541" y1="216.8047" y2="216.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="541" x2="541" y1="216.8047" y2="249.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="126" x="400" y="237.0151">Static Assets (JS/CSS)</text><!--MD5=[f04d1115a9404fce8f0faf89e2d614ba]
+entity Views--><path d="M262.5,217.3047 C262.5,207.3047 306,207.3047 306,207.3047 C306,207.3047 349.5,207.3047 349.5,217.3047 L349.5,239.1094 C349.5,249.1094 306,249.1094 306,249.1094 C306,249.1094 262.5,249.1094 262.5,239.1094 L262.5,217.3047 " fill="#FEFECE" style="stroke:#000000;stroke-width:1.5;"/><path d="M262.5,217.3047 C262.5,227.3047 306,227.3047 306,227.3047 C306,227.3047 349.5,227.3047 349.5,217.3047 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="67" x="272.5" y="241.5151">Views (XML)</text><!--MD5=[953a8c67cfe21abaf9bf45dad8506ca8]
+entity Router--><polygon fill="#FEFECE" points="367,343.8047,377,333.8047,527,333.8047,527,379.4141,517,389.4141,367,389.4141,367,343.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="517" x2="527" y1="343.8047" y2="333.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="367" x2="517" y1="343.8047" y2="343.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="517" x2="517" y1="343.8047" y2="389.4141"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="37" x="382" y="364.0151">Router</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="120" x="382" y="376.8198">(addons/web/http.py)</text><!--MD5=[1b9dce2ce56fb0e0072eca4d439af425]
+entity Controllers--><polygon fill="#FEFECE" points="379,459.8047,389,449.8047,515,449.8047,515,482.6094,505,492.6094,379,492.6094,379,459.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="505" x2="515" y1="459.8047" y2="449.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="379" x2="505" y1="459.8047" y2="459.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="505" x2="505" y1="459.8047" y2="492.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="96" x="394" y="480.0151">HTTP Controllers</text><!--MD5=[73372684b7a2dd498146a2049e89994a]
+entity JSONRPC--><polygon fill="#FEFECE" points="184.5,350.3047,194.5,340.3047,331.5,340.3047,331.5,373.1094,321.5,383.1094,184.5,383.1094,184.5,350.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="321.5" x2="331.5" y1="350.3047" y2="340.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="184.5" x2="321.5" y1="350.3047" y2="350.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="321.5" x2="321.5" y1="350.3047" y2="383.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="107" x="199.5" y="370.5151">JSON-RPC Endpoint</text><!--MD5=[48b9c83e48f6c6ca75bf9d16f1bd1656]
+entity XMLRPC--><polygon fill="#FEFECE" points="562.5,350.3047,572.5,340.3047,703.5,340.3047,703.5,373.1094,693.5,383.1094,562.5,383.1094,562.5,350.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="693.5" x2="703.5" y1="350.3047" y2="340.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="562.5" x2="693.5" y1="350.3047" y2="350.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="693.5" x2="693.5" y1="350.3047" y2="383.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="101" x="577.5" y="370.5151">XML-RPC Endpoint</text><!--MD5=[ca73e4f6ec3b50150f4a88dd5bb62e34]
+entity Models--><polygon fill="#FEFECE" points="756,586.8047,766,576.8047,960,576.8047,960,622.4141,950,632.4141,756,632.4141,756,586.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="950" x2="960" y1="586.8047" y2="576.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="756" x2="950" y1="586.8047" y2="586.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="950" x2="950" y1="586.8047" y2="632.4141"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="90" x="771" y="607.0151">Models (Python)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="164" x="771" y="619.8198">(addons/&lt;modulo&gt;/models/)</text><!--MD5=[98debdbd1e7fc65cc980069a5574c645]
+entity ORM--><polygon fill="#FEFECE" points="586,708.8047,596,698.8047,758,698.8047,758,744.4141,748,754.4141,586,754.4141,586,708.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="748" x2="758" y1="708.8047" y2="698.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="586" x2="748" y1="708.8047" y2="708.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="748" x2="748" y1="708.8047" y2="754.4141"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="132" x="601" y="729.0151">ORM (Object-Relational)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="107" x="601" y="741.8198">[Estilo: Repository]</text><!--MD5=[891138bbf311d860f58828246d15e24a]
+entity Computed--><polygon fill="#FEFECE" points="793.5,702.8047,803.5,692.8047,960.5,692.8047,960.5,751.2188,950.5,761.2188,793.5,761.2188,793.5,702.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="950.5" x2="960.5" y1="702.8047" y2="692.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="793.5" x2="950.5" y1="702.8047" y2="702.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="950.5" x2="950.5" y1="702.8047" y2="761.2188"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="92" x="808.5" y="723.0151">Compute Fields,</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="127" x="808.5" y="735.8198">onchange, constraints</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="118" x="808.5" y="748.6245">[Estilo: Event-Driven]</text><!--MD5=[33451ac166e8eb49af1e8084ff6b5bd7]
+entity AddonSale--><polygon fill="#FEFECE" points="1103,459.8047,1113,449.8047,1167,449.8047,1167,482.6094,1157,492.6094,1103,492.6094,1103,459.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1157" x2="1167" y1="459.8047" y2="449.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1103" x2="1157" y1="459.8047" y2="459.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1157" x2="1157" y1="459.8047" y2="492.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="24" x="1118" y="480.0151">sale</text><!--MD5=[8bd0732bd4805016a644c7fc9138da9e]
+entity AddonAccount--><polygon fill="#FEFECE" points="984,459.8047,994,449.8047,1068,449.8047,1068,482.6094,1058,492.6094,984,492.6094,984,459.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1058" x2="1068" y1="459.8047" y2="449.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="984" x2="1058" y1="459.8047" y2="459.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1058" x2="1058" y1="459.8047" y2="492.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="44" x="999" y="480.0151">account</text><!--MD5=[d92f10525d477bc068b74ff7ba6631ba]
+entity AddonStock--><polygon fill="#FEFECE" points="879,459.8047,889,449.8047,949,449.8047,949,482.6094,939,492.6094,879,492.6094,879,459.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="939" x2="949" y1="459.8047" y2="449.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="879" x2="939" y1="459.8047" y2="459.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="939" x2="939" y1="459.8047" y2="492.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="30" x="894" y="480.0151">stock</text><!--MD5=[e90f18fd88c3277351e9e399ca757b54]
+entity AddonProduct--><polygon fill="#FEFECE" points="760.5,459.8047,770.5,449.8047,843.5,449.8047,843.5,482.6094,833.5,492.6094,760.5,492.6094,760.5,459.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="833.5" x2="843.5" y1="459.8047" y2="449.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="760.5" x2="833.5" y1="459.8047" y2="459.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="833.5" x2="833.5" y1="459.8047" y2="492.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="43" x="775.5" y="480.0151">product</text><!--MD5=[f9ba5bf973e7832d2ce5ed59077b93f7]
+entity DB--><path d="M679.5,854.8047 C679.5,844.8047 743,844.8047 743,844.8047 C743,844.8047 806.5,844.8047 806.5,854.8047 L806.5,889.4141 C806.5,899.4141 743,899.4141 743,899.4141 C743,899.4141 679.5,899.4141 679.5,889.4141 L679.5,854.8047 " fill="#FEFECE" style="stroke:#000000;stroke-width:1.5;"/><path d="M679.5,854.8047 C679.5,864.8047 743,864.8047 743,864.8047 C743,864.8047 806.5,864.8047 806.5,854.8047 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="67" x="689.5" y="879.0151">PostgreSQL</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="107" x="689.5" y="891.8198">[Estilo: Repository]</text><!--MD5=[6730fecaa425a0a46ee4e6000bd4bab3]
+entity Filestore--><polygon fill="#FEFECE" points="555.5,860.8047,565.5,850.8047,644.5,850.8047,644.5,883.6094,634.5,893.6094,555.5,893.6094,555.5,860.8047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="634.5" x2="644.5" y1="860.8047" y2="850.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="555.5" x2="634.5" y1="860.8047" y2="860.8047"/><line style="stroke:#000000;stroke-width:1.5;" x1="634.5" x2="634.5" y1="860.8047" y2="893.6094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="49" x="570.5" y="881.0151">Filestore</text><!--MD5=[9db45dadaa299e310493984b6e3977d8]
+entity RESTAPI--><polygon fill="#FEFECE" points="1432,715.3047,1442,705.3047,1522,705.3047,1522,738.1094,1512,748.1094,1432,748.1094,1432,715.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1512" x2="1522" y1="715.3047" y2="705.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1432" x2="1512" y1="715.3047" y2="715.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1512" x2="1512" y1="715.3047" y2="748.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="50" x="1447" y="735.5151">API REST</text><!--MD5=[fc2c71aa2d4bb2c20cdd0d7e43ea6cdc]
+entity SMTP--><polygon fill="#FEFECE" points="1325.5,715.3047,1335.5,705.3047,1396.5,705.3047,1396.5,738.1094,1386.5,748.1094,1325.5,748.1094,1325.5,715.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1386.5" x2="1396.5" y1="715.3047" y2="705.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1325.5" x2="1386.5" y1="715.3047" y2="715.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1386.5" x2="1386.5" y1="715.3047" y2="748.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="31" x="1340.5" y="735.5151">SMTP</text><!--MD5=[1f684f0298694fdc450f2524689bdb7b]
+entity Payment--><polygon fill="#FEFECE" points="1148,715.3047,1158,705.3047,1290,705.3047,1290,738.1094,1280,748.1094,1148,748.1094,1148,715.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1280" x2="1290" y1="715.3047" y2="705.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1148" x2="1280" y1="715.3047" y2="715.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1280" x2="1280" y1="715.3047" y2="748.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="102" x="1163" y="735.5151">Payment Gateway</text><!--MD5=[6695fbe5114acec56953413226d30d75]
+entity Webhooks--><polygon fill="#FEFECE" points="1015.5,715.3047,1025.5,705.3047,1112.5,705.3047,1112.5,738.1094,1102.5,748.1094,1015.5,748.1094,1015.5,715.3047" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1102.5" x2="1112.5" y1="715.3047" y2="705.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1015.5" x2="1102.5" y1="715.3047" y2="715.3047"/><line style="stroke:#000000;stroke-width:1.5;" x1="1102.5" x2="1102.5" y1="715.3047" y2="748.1094"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="57" x="1030.5" y="735.5151">Webhooks</text><path d="M6,21.8047 L6,147.0469 L286,147.0469 L286,31.8047 L276,21.8047 L6,21.8047 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><path d="M276,21.8047 L276,31.8047 L286,31.8047 L276,21.8047 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="209" x="12" y="37.0151">Estilos arquitectonicos identificados:</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="259" x="12" y="49.8198">- Cliente-Servidor (browser &lt;-&gt; Odoo server)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="243" x="12" y="62.6245">- 3-Tier / N-Tier (Cliente, Aplicacion, Datos)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="250" x="12" y="75.4292">- MVC (Modelo-Vista-Controlador, extendido)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="230" x="12" y="88.2339">- Capas (Presentation, Web, Logic, Data)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="226" x="12" y="101.0386">- Pipe-and-Filter (request pipeline HTTP)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="206" x="12" y="113.8433">- Microkernel (extension via _inherit)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="221" x="12" y="126.6479">- Repository (ORM Odoo encapsula BD)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="219" x="12" y="139.4526">- Event-Driven (mail.thread, onchange)</text><!--MD5=[f22ecbec945bce49da0b62084f53302a]
+link Browser to OWL--><path d="M602,105.8647 C602,105.8647 602,201.5947 602,201.5947 " fill="none" id="Browser-to-OWL" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="602,206.5947,606,197.5947,602,201.5947,598,197.5947,602,206.5947" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1641c2ba960e8b3bb6fe6780bb63a52b]
+link Browser to Static--><path d="M526.75,105.8647 C526.75,105.8647 526.75,201.5947 526.75,201.5947 " fill="none" id="Browser-to-Static" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="526.75,206.5947,530.75,197.5947,526.75,201.5947,522.75,197.5947,526.75,206.5947" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[5eef0aac2baea4f1d5083a0d6e399b1a]
+link OWL to Router--><path d="M645,250.1547 C645,268.5247 645,291.8047 645,291.8047 C645,291.8047 456,291.8047 456,291.8047 C456,291.8047 456,328.7347 456,328.7347 " fill="none" id="OWL-to-Router" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="456,333.7347,460,324.7347,456,328.7347,452,324.7347,456,333.7347" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1747aae1de5b3c3b3904efca5c8e97ec]
+link Router to Controllers--><path d="M447,390.0047 C447,390.0047 447,444.7747 447,444.7747 " fill="none" id="Router-to-Controllers" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="447,449.7747,451,440.7747,447,444.7747,443,440.7747,447,449.7747" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="116" x="330" y="414.5951">dispatch (Pipe-Filter)</text><!--MD5=[e41dac9d8c2bc189bddba939644d2652]
+link Router to Views--><path d="M376,333.5947 C376,294.5547 376,228.8047 376,228.8047 C376,228.8047 354.54,228.8047 354.54,228.8047 " fill="none" id="Router-to-Views" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="349.54,228.8047,358.54,232.8047,354.54,228.8047,358.54,224.8047,349.54,228.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="159" x="216" y="267.6851">selecciona vista (MVC-Vista)</text><!--MD5=[424488e8f480e7d5928ef5318233d0af]
+link Controllers to Models--><path d="M447,493.0947 C447,533.2447 447,614.8047 447,614.8047 C447,614.8047 750.88,614.8047 750.88,614.8047 " fill="none" id="Controllers-to-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="755.88,614.8047,746.88,610.8047,750.88,614.8047,746.88,618.8047,755.88,614.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="143" x="394.09" y="612.0151">invoca (MVC-Controlador)</text><!--MD5=[60dcaa0e441789da7bf546e9ac1db977]
+reverse link JSONRPC to Controllers--><path d="M258,388.5347 C258,388.5347 258,471.8047 258,471.8047 C258,471.8047 324.63,471.8047 378.77,471.8047 " fill="none" id="JSONRPC-backto-Controllers" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="258,383.5347,254,392.5347,258,388.5347,262,392.5347,258,383.5347" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[c2d83e18b21702632f96c051703ec630]
+reverse link XMLRPC to Models--><path d="M644.75,388.3947 C644.75,388.3947 644.75,595.8047 644.75,595.8047 C644.75,595.8047 701.02,595.8047 755.75,595.8047 " fill="none" id="XMLRPC-backto-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="644.75,383.3947,640.75,392.3947,644.75,388.3947,648.75,392.3947,644.75,383.3947" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[21daed6e59226e132503ad0e6c8b7d1b]
+link Models to ORM--><path d="M775.75,633.1047 C775.75,669.1447 775.75,726.8047 775.75,726.8047 C775.75,726.8047 763.15,726.8047 763.15,726.8047 " fill="none" id="Models-to-ORM" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="758.15,726.8047,767.15,730.8047,763.15,726.8047,767.15,722.8047,758.15,726.8047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="115" x="659.75" y="683.4651">queries (Repository)</text><!--MD5=[c138026a0490a2932dd78d7a0ec2a8c2]
+link Models to Computed--><path d="M876.75,633.1047 C876.75,633.1047 876.75,687.5747 876.75,687.5747 " fill="none" id="Models-to-Computed" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="876.75,692.5747,880.75,683.5747,876.75,687.5747,872.75,683.5747,876.75,692.5747" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="116" x="759.75" y="657.5451">logica (Event-Driven)</text><!--MD5=[3dc06c445b37507de0d4bfdeddf294ba]
+link ORM to DB--><path d="M718.75,754.8547 C718.75,754.8547 718.75,839.3347 718.75,839.3347 " fill="none" id="ORM-to-DB" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="718.75,844.3347,722.75,835.3347,718.75,839.3347,714.75,835.3347,718.75,844.3347" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="23" x="694.75" y="794.3051">SQL</text><!--MD5=[80c630221e31e3ec0f55d866b1244baf]
+link ORM to Filestore--><path d="M615.25,754.8547 C615.25,754.8547 615.25,845.5047 615.25,845.5047 " fill="none" id="ORM-to-Filestore" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="615.25,850.5047,619.25,841.5047,615.25,845.5047,611.25,841.5047,615.25,850.5047" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f0ae5d2d126f5d20c1124f8de9a9c9b2]
+link Models to SMTP--><path d="M960.09,599.8047 C1107.12,599.8047 1361,599.8047 1361,599.8047 C1361,599.8047 1361,700.2647 1361,700.2647 " fill="none" id="Models-to-SMTP" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1361,705.2647,1365,696.2647,1361,700.2647,1357,696.2647,1361,705.2647" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="155" x="1054.77" y="597.0151">envia emails (Event-Driven)</text><!--MD5=[7f022b5891c0d561192f5ea7b2982eba]
+link Models to Payment--><path d="M960.23,610.8047 C1047,610.8047 1157.5,610.8047 1157.5,610.8047 C1157.5,610.8047 1157.5,700.2547 1157.5,700.2547 " fill="none" id="Models-to-Payment" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1157.5,705.2547,1161.5,696.2547,1157.5,700.2547,1153.5,696.2547,1157.5,705.2547" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="39" x="1063.59" y="622.0151">cobros</text><!--MD5=[2a5dc2c0eaa82c9925354644b701ce47]
+link Models to Webhooks--><path d="M960.08,621.8047 C1002.38,621.8047 1041.75,621.8047 1041.75,621.8047 C1041.75,621.8047 1041.75,700.3047 1041.75,700.3047 " fill="none" id="Models-to-Webhooks" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="1041.75,705.3047,1045.75,696.3047,1041.75,700.3047,1037.75,696.3047,1041.75,705.3047" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="41" x="998.17" y="619.0151">notifica</text><!--MD5=[0d9455f8c452dcf5d44cb4db9745ebcc]
+link AddonSale to Models--><path d="M1107.75,492.8547 C1107.75,526.7747 1107.75,588.8047 1107.75,588.8047 C1107.75,588.8047 965.3,588.8047 965.3,588.8047 " fill="none" id="AddonSale-to-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="960.3,588.8047,969.3,592.8047,965.3,588.8047,969.3,584.8047,960.3,588.8047" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[3688c88d3a43da6449d7382f84538800]
+link AddonAccount to Models--><path d="M983.99,471.8047 C968.43,471.8047 954.5,471.8047 954.5,471.8047 C954.5,471.8047 954.5,571.5947 954.5,571.5947 " fill="none" id="AddonAccount-to-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="954.5,576.5947,958.5,567.5947,954.5,571.5947,950.5,567.5947,954.5,576.5947" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[f59f7a95d59eca7a87b79dfb17643d47]
+link AddonStock to Models--><path d="M914,493.0547 C914,493.0547 914,571.5547 914,571.5547 " fill="none" id="AddonStock-to-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="914,576.5547,918,567.5547,914,571.5547,910,567.5547,914,576.5547" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[785d925de65a114e262823f1d3e75529]
+link AddonProduct to Models--><path d="M802,493.0547 C802,493.0547 802,571.5547 802,571.5547 " fill="none" id="AddonProduct-to-Models" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="802,576.5547,806,567.5547,802,571.5547,798,567.5547,802,576.5547" style="stroke:#A80036;stroke-width:1.0;"/><rect fill="#DDDDDD" height="163.6563" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="343" x="1190" y="929.8047"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="131" x="1196" y="945.0151">Proyecto: SAP-TFI-2026</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="107" x="1196" y="957.8198">Agente: saptfi2026</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="252" x="1196" y="970.6245">Estilos aplicados: 8 estilos GoF/Arquitectura</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="0" x="1200" y="983.4292"/><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="213" x="1196" y="996.2339">Cliente-Servidor: browser &lt;-&gt; server</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="193" x="1196" y="1009.0386">3-Tier: Cliente | Aplicacion | Datos</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="331" x="1196" y="1021.8433">MVC: Vista (XML/OWL) | Controlador (HTTP) | Modelo (ORM)</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="248" x="1196" y="1034.6479">Capas: Presentacion | Web | Logic | Addons</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="214" x="1196" y="1047.4526">Pipe-and-Filter: HTTP request pipeline</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="181" x="1196" y="1060.2573">Microkernel: addons via _inherit</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="209" x="1196" y="1073.062">Repository: ORM Odoo encapsula BD</text><text fill="#000000" font-family="Arial" font-size="11" lengthAdjust="spacing" textLength="240" x="1196" y="1085.8667">Event-Driven: mail.thread, onchange, cron</text><!--MD5=[9ae33a0624683e2cad93e7493b7e15d4]
+@startuml D-ARQ-TECH-002 — Arquitectura con Estilos Arquitectonicos Identificados
+
+title SAP-TFI-2026 — Arquitectura de Odoo 19.0 con Estilos Arquitectonicos
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+
+' ─────────────────────── ESTILOS APLICADOS ───────────────────────
+note as N1
+  Estilos arquitectonicos identificados:
+  - Cliente-Servidor (browser <-> Odoo server)
+  - 3-Tier / N-Tier (Cliente, Aplicacion, Datos)
+  - MVC (Modelo-Vista-Controlador, extendido)
+  - Capas (Presentation, Web, Logic, Data)
+  - Pipe-and-Filter (request pipeline HTTP)
+  - Microkernel (extension via _inherit)
+  - Repository (ORM Odoo encapsula BD)
+  - Event-Driven (mail.thread, onchange)
+end note
+
+' ─────────────────────── CLIENTE ───────────────────────
+package "Cliente (Browser)\n[Estilo: Cliente-Servidor]" {
+    node "Web Browser" as Browser
+    node "JavaScript Runtime" as JSRuntime
+}
+
+' ─────────────────────── CAPA PRESENTACION ───────────────────────
+package "Capa 2.1: Presentacion (UI)\n[Estilo: MVC - Vista]" {
+    node "OWL Framework" as OWL
+    node "Static Assets (JS/CSS)" as Static
+    database "Views (XML)" as Views
+}
+
+' ─────────────────────── WEB LAYER ───────────────────────
+package "Capa 2.2: Web Layer\n[Estilos: Pipe-and-Filter, MVC-Controlador]" {
+    node "Router\n(addons/web/http.py)" as Router
+    node "HTTP Controllers" as Controllers
+    node "JSON-RPC Endpoint" as JSONRPC
+    node "XML-RPC Endpoint" as XMLRPC
+}
+
+' ─────────────────────── LOGICA ───────────────────────
+package "Capa 2.3: Business Logic\n[Estilos: MVC-Modelo, Microkernel, Event-Driven]" {
+    node "Models (Python)\n(addons/<modulo>/models/)" as Models
+    node "ORM (Object-Relational)\n[Estilo: Repository]" as ORM
+    node "Compute Fields,\nonchange, constraints\n[Estilo: Event-Driven]" as Computed
+}
+
+' ─────────────────────── ADDONS ───────────────────────
+package "Capa 2.4: Addons\n[Estilo: Microkernel (plugins via _inherit)]" {
+    node "sale" as AddonSale
+    node "account" as AddonAccount
+    node "stock" as AddonStock
+    node "product" as AddonProduct
+}
+
+' ─────────────────────── DATOS ───────────────────────
+package "Capa 3: Persistencia\n[Estilo: 3-Tier - Capa de Datos]" {
+    database "PostgreSQL\n[Estilo: Repository]" as DB
+    node "Filestore" as Filestore
+}
+
+' ─────────────────────── INTEGRACION ───────────────────────
+package "Capa 4: Integracion Externa\n[Estilos: Cliente-Servidor (inverso), Pipe-and-Filter]" {
+    node "API REST" as RESTAPI
+    node "SMTP" as SMTP
+    node "Payment Gateway" as Payment
+    node "Webhooks" as Webhooks
+}
+
+' ─────────────────────── CONEXIONES ───────────────────────
+
+Browser - -> OWL
+Browser - -> Static
+OWL - -> Router
+Router - -> Controllers : dispatch (Pipe-Filter)
+Router - -> Views : selecciona vista (MVC-Vista)
+Controllers - -> Models : invoca (MVC-Controlador)
+JSONRPC <- - Controllers
+XMLRPC <- - Models
+Models - -> ORM : queries (Repository)
+Models - -> Computed : logica (Event-Driven)
+ORM - -> DB : SQL
+ORM - -> Filestore
+Models - -> SMTP : envia emails (Event-Driven)
+Models - -> Payment : cobros
+Models - -> Webhooks : notifica
+
+AddonSale - -> Models
+AddonAccount - -> Models
+AddonStock - -> Models
+AddonProduct - -> Models
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Estilos aplicados: 8 estilos GoF/Arquitectura
+
+Cliente-Servidor: browser <-> server
+3-Tier: Cliente | Aplicacion | Datos
+MVC: Vista (XML/OWL) | Controlador (HTTP) | Modelo (ORM)
+Capas: Presentacion | Web | Logic | Addons
+Pipe-and-Filter: HTTP request pipeline
+Microkernel: addons via _inherit
+Repository: ORM Odoo encapsula BD
+Event-Driven: mail.thread, onchange, cron
+endlegend
+
+@enduml
+
+@startuml D-ARQ-TECH-002 — Arquitectura con Estilos Arquitectonicos Identificados
+
+title SAP-TFI-2026 — Arquitectura de Odoo 19.0 con Estilos Arquitectonicos
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+
+note as N1
+  Estilos arquitectonicos identificados:
+  - Cliente-Servidor (browser <-> Odoo server)
+  - 3-Tier / N-Tier (Cliente, Aplicacion, Datos)
+  - MVC (Modelo-Vista-Controlador, extendido)
+  - Capas (Presentation, Web, Logic, Data)
+  - Pipe-and-Filter (request pipeline HTTP)
+  - Microkernel (extension via _inherit)
+  - Repository (ORM Odoo encapsula BD)
+  - Event-Driven (mail.thread, onchange)
+end note
+
+package "Cliente (Browser)\n[Estilo: Cliente-Servidor]" {
+    node "Web Browser" as Browser
+    node "JavaScript Runtime" as JSRuntime
+}
+
+package "Capa 2.1: Presentacion (UI)\n[Estilo: MVC - Vista]" {
+    node "OWL Framework" as OWL
+    node "Static Assets (JS/CSS)" as Static
+    database "Views (XML)" as Views
+}
+
+package "Capa 2.2: Web Layer\n[Estilos: Pipe-and-Filter, MVC-Controlador]" {
+    node "Router\n(addons/web/http.py)" as Router
+    node "HTTP Controllers" as Controllers
+    node "JSON-RPC Endpoint" as JSONRPC
+    node "XML-RPC Endpoint" as XMLRPC
+}
+
+package "Capa 2.3: Business Logic\n[Estilos: MVC-Modelo, Microkernel, Event-Driven]" {
+    node "Models (Python)\n(addons/<modulo>/models/)" as Models
+    node "ORM (Object-Relational)\n[Estilo: Repository]" as ORM
+    node "Compute Fields,\nonchange, constraints\n[Estilo: Event-Driven]" as Computed
+}
+
+package "Capa 2.4: Addons\n[Estilo: Microkernel (plugins via _inherit)]" {
+    node "sale" as AddonSale
+    node "account" as AddonAccount
+    node "stock" as AddonStock
+    node "product" as AddonProduct
+}
+
+package "Capa 3: Persistencia\n[Estilo: 3-Tier - Capa de Datos]" {
+    database "PostgreSQL\n[Estilo: Repository]" as DB
+    node "Filestore" as Filestore
+}
+
+package "Capa 4: Integracion Externa\n[Estilos: Cliente-Servidor (inverso), Pipe-and-Filter]" {
+    node "API REST" as RESTAPI
+    node "SMTP" as SMTP
+    node "Payment Gateway" as Payment
+    node "Webhooks" as Webhooks
+}
+
+
+Browser - -> OWL
+Browser - -> Static
+OWL - -> Router
+Router - -> Controllers : dispatch (Pipe-Filter)
+Router - -> Views : selecciona vista (MVC-Vista)
+Controllers - -> Models : invoca (MVC-Controlador)
+JSONRPC <- - Controllers
+XMLRPC <- - Models
+Models - -> ORM : queries (Repository)
+Models - -> Computed : logica (Event-Driven)
+ORM - -> DB : SQL
+ORM - -> Filestore
+Models - -> SMTP : envia emails (Event-Driven)
+Models - -> Payment : cobros
+Models - -> Webhooks : notifica
+
+AddonSale - -> Models
+AddonAccount - -> Models
+AddonStock - -> Models
+AddonProduct - -> Models
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Estilos aplicados: 8 estilos GoF/Arquitectura
+
+Cliente-Servidor: browser <-> server
+3-Tier: Cliente | Aplicacion | Datos
+MVC: Vista (XML/OWL) | Controlador (HTTP) | Modelo (ORM)
+Capas: Presentacion | Web | Logic | Addons
+Pipe-and-Filter: HTTP request pipeline
+Microkernel: addons via _inherit
+Repository: ORM Odoo encapsula BD
+Event-Driven: mail.thread, onchange, cron
+endlegend
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 14:25:22 ART 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: es
+Country: AR
+--></g></svg>

@@ -219,7 +219,7 @@ Para la integración venta/stock/contabilidad:
 
 ---
 
-### Ejemplo 5: Diagrama de Arquitectura Estratificada (D-ARQ-TECH-001)
+### Ejemplo 5: Diagrama de Arquitectura Estratificada (D-ARQ-TECH-001) y Estilos Arquitectónicos (D-ARQ-TECH-002)
 
 El diagrama de arquitectura muestra las capas del stack tecnológico de Odoo:
 
@@ -228,7 +228,9 @@ El diagrama de arquitectura muestra las capas del stack tecnológico de Odoo:
 - **Capa 3**: Persistencia (PostgreSQL, Filestore)
 - **Capa 4**: Integración externa (REST API, SMTP, Payment, Webhooks)
 
-**Lección para el alumno**: el diagrama de arquitectura debe mostrar TODAS las capas relevantes del stack, no solo la capa de aplicación. Esto permite entender dónde corre cada componente y cómo se comunican entre capas.
+El **D-ARQ-TECH-002** complementa este diagrama identificando los **8 estilos arquitectónicos** aplicados a Odoo: Cliente-Servidor, 3-Tier, MVC, Capas, Pipe-and-Filter, Microkernel, Repository, Event-Driven. Ver `docs/04_arquitectura/estilos_arquitectonicos.md` para el análisis detallado.
+
+**Lección para el alumno**: el diagrama de arquitectura debe mostrar TODAS las capas relevantes del stack, no solo la capa de aplicación. Esto permite entender dónde corre cada componente y cómo se comunican entre capas. Además, identificar los **estilos arquitectónicos** aplicados ayuda a entender por qué el sistema se organiza como se organiza.
 
 ---
 
@@ -264,6 +266,11 @@ El diagrama del patrón Composite muestra cómo Odoo implementa la Lista de Mate
 
 - **`docs/12_patrones_diseno/composite_bom.md`** — patrón Composite aplicado a BoM, con documentación siguiendo estándar UNR.
 
+### Estilos arquitectónicos
+
+- **`docs/04_arquitectura/estilos_arquitectonicos.md`** — análisis de los 8 estilos arquitectónicos aplicados a Odoo (Cliente-Servidor, 3-Tier, MVC, Capas, Pipe-and-Filter, Microkernel, Repository, Event-Driven). Basado en el apunte de la materia.
+- **`diagrams/plantuml/d_arq_tech_002_estilos_arquitectonicos.puml`** — diagrama de arquitectura con los estilos identificados.
+
 ### Evidencias
 
 - **`evidence/index.md`** — catálogo de 30 EV-COD y 8 EV-INF verificables contra código real de Odoo 19.0.
@@ -284,6 +291,13 @@ Material de lectura recomendado para profundizar en la metodología ICONIX y su 
 
 - **PPT sobre ICONIX** — material de clase complementario
   - Útil como soporte visual para entender la metodología. Puede ser de utilidad para el alumno para preparar el TP o exponer conceptos en clase.
+
+### Apunte de estilos arquitectónicos (de la materia)
+
+- **Apunte de estilos arquitectónicos** — material de la materia
+  - 📖 Acceso: https://drive.google.com/file/d/0B8MI0532KYVjTzJTWGJMTXcxRUU/view?usp=sharing&resourcekey=0-KFIUox1cee5ulFXDP7MZVg
+  - Material teórico sobre estilos arquitectónicos (cliente-servidor, 3-tier, MVC, capas, pipe-filter, microkernel, repository, event-driven, etc.).
+  - **Aplicación al TP**: estos conceptos están aplicados al diseño de Odoo en `docs/04_arquitectura/estilos_arquitectonicos.md` y en el diagrama `D-ARQ-TECH-002`. Lectura recomendada para entender por qué Odoo se organiza como se organiza.
 
 ### Otras referencias citadas en el repositorio
 
