@@ -1,0 +1,121 @@
+@startuml D-PAT-COMPOSITE-001 — Patron Composite aplicado a Lista de Materiales (BoM)
+
+title SAP-TFI-2026 — Patron Composite aplicado a Lista de Materiales (BoM) en Odoo 19.0
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+' ──────────────────── Patron Composite (GoF) ────────────────────
+
+package "Patron Composite (GoF)" {
+    abstract class "Component" as Comp {
+        +operation()
+        +add(Component)
+        +remove(Component)
+        +getChild(int)
+    }
+
+    class "Leaf" as Leaf {
+        +operation()
+    }
+
+    class "Composite" as CompClass {
+        -children: List<Component>
+        +operation()
+        +add(Component)
+        +remove(Component)
+        +getChild(int)
+    }
+
+    Comp <|-- Leaf
+    Comp <|-- CompClass
+    CompClass "1" *-- "*" Comp : children
+}
+
+' ──────────────────── Aplicacion al BoM de Odoo ────────────────────
+
+package "Aplicacion: BoM (Bill of Materials) en Odoo 19.0" {
+
+    abstract class "<BomComponent>\nabstract (interfaz Python)" as BomComp {
+        +get_product_id() : product.product
+        +get_quantity() : Float
+        +get_uom() : uom.uom
+        +get_cost() : Float
+        +explode(level) : List
+        +accept(visitor)
+    }
+
+    class "<mrp.bom>\n(Producto Compuesto)" as MrpBom {
+        +_name = 'mrp.bom'
+        +product_tmpl_id : Many2one(product.template)
+        +product_id : Many2one(product.product)
+        +bom_line_ids : One2many(mrp.bom.line)
+        +product_qty : Float
+        +product_uom_id : Many2one(uom.uom)
+        --
+        +explode(product, quantity)
+        +_check_bom_cycle()
+        +action_compute_price()
+    }
+
+    class "<mrp.bom.line>\n(Línea Componente)" as MrpBomLine {
+        +_name = 'mrp.bom.line'
+        +product_id : Many2one(product.product)
+        +bom_id : Many2one(mrp.bom)
+        +child_bom_id : Many2one(mrp.bom, computed)
+        +product_qty : Float
+        +product_uom_id : Many2one(uom.uom)
+        --
+        +onchange_product_id()
+        +_skip_bom_line()
+    }
+
+    class "<product.product>\n(Producto Hoja)" as ProductProduct {
+        +_name = 'product.product'
+        +name : Char
+        +list_price : Float
+        +standard_price : Float
+        +bom_ids : One2many(mrp.bom)
+        --
+        +get_cost()
+        +explode_as_leaf()
+    }
+
+    BomComp <|-- MrpBom
+    BomComp <|-- MrpBomLine
+    BomComp <|-- ProductProduct
+
+    MrpBom "1" *-- "*" MrpBomLine : bom_line_ids
+    MrpBomLine "*" --> "0..1" MrpBom : child_bom_id (computed)
+    MrpBomLine "*" --> "1" ProductProduct : product_id
+    ProductProduct "1" *-- "*" MrpBom : bom_ids
+}
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Patron: Composite (Gamma et al., 2003)
+Aplicado a: Lista de Materiales (BoM) en Odoo 19.0
+Motivacion: estructura jerarquica de productos donde
+un producto puede estar compuesto por otros productos
+(recursivamente).
+
+Beneficios:
+- Cliente trata uniforme Leaf y Composite
+- Composicion recursiva (BOM anidados)
+- Operaciones polimorficas (explode, get_cost)
+- Validacion de ciclos (_check_bom_cycle)
+
+Trade-offs:
+- Puede violar LSP si Leaf no soporta add/remove
+- Dificil restringir tipo de hijos
+- Ciclos deben validarse explicitamente
+endlegend
+
+@enduml
