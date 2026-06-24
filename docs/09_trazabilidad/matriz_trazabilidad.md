@@ -2,23 +2,46 @@
 
 > Documento vivo. Última actualización: 2026-06-18.
 
-**Versión Odoo analizada:** 19.0 Community
-**Rama:** 19.0
-**Edición:** Community
-**Path local código fuente:** `~/proyectos/odoo_src/odoo`
-**Path local repo proyecto:** `~/proyectos/sap_tfi_2026`
+## Diagrama de CU principal
+
+`D-CU-GEN-002` — Casos de Uso con extend/include
+- **5 includes**: CU-AUTH-001, CU-CALC-001, CU-GENPICK-001, CU-VALLIN-001, CU-GENJOUR-001
+- **5 extends**: CU-VEN-001-EMAIL, CU-VEN-001-DISC, CU-ENT-002-MTO, CU-ENT-004-BACK, CU-FAC-002-VAL
+
+## Versión Odoo analizada
+
+- **19.0 Community**
+- **Rama**: `19.0`
+- **Path local código fuente**: `~/proyectos/odoo_src/odoo`
+- **Path local repo proyecto**: `~/proyectos/sap_tfi_2026`
 
 ## Matriz principal
 
-| Requisito | Caso de uso | Regla | Pantalla | Robustez | Secuencia | Clase | Modelo Odoo | Evidencia | Estado |
-|-----------|-------------|-------|----------|----------|-----------|-------|-------------|-----------|--------|
-| REQ-VEN-001 | CU-VEN-001 | RN-VEN-001, RN-VEN-002 | view_sale_order_form | (futuro) | (futuro) | (futuro) | sale.order | EV-COD-001..005 | Verificado |
-| REQ-VEN-004 | CU-VEN-004 | RN-VEN-004, RN-VEN-005, RN-VEN-006 | view_sale_order_form | D-ROB-VEN-004 | D-SEC-VEN-004 | (en D-CLA-INT-001) | sale.order | EV-COD-006..009 | Verificado |
-| REQ-ENT-002 | CU-ENT-002 | RN-ENT-002, RN-ENT-003 | view_picking_form | (futuro) | (futuro) | (en D-CLA-INT-001) | stock.picking | EV-COD-010, EV-COD-011 | Verificado |
-| REQ-ENT-004 | CU-ENT-004 | RN-ENT-004, RN-ENT-005 | view_picking_form | (futuro) | (futuro) | (en D-CLA-INT-001) | stock.picking | EV-COD-012 | Verificado |
-| REQ-FAC-001 | CU-FAC-001 | RN-FAC-001, RN-FAC-002 | view_sale_order_form | (futuro) | (futuro) | (en D-CLA-INT-001) | sale.order, account.move | EV-COD-013, EV-COD-014 | Verificado |
-| REQ-FAC-002 | CU-FAC-002 | RN-FAC-003, RN-FAC-004 | view_move_form | (futuro) | (futuro) | (en D-CLA-INT-001) | account.move | EV-COD-016, EV-COD-017, EV-COD-018 | Verificado |
-| REQ-FAC-003 | CU-FAC-003 | RN-FAC-005, RN-FAC-006 | view_move_form | (futuro) | (futuro) | (en D-CLA-INT-001) | account.move | EV-COD-019, EV-COD-020 | Verificado |
+| Requisito | Caso de uso | Reglas | Diagrama de robustez | Diagrama de secuencia | Clases | Modelo Odoo | Evidencia |
+|-----------|-------------|--------|---------------------|----------------------|--------|-------------|-----------|
+| REQ-VEN-001 | CU-VEN-001 | RN-VEN-001, RN-VEN-002, RN-VEN-003 | D-ROB-VEN-001 | D-SEC-VEN-001 | D-CLA-INT-001 | sale.order | EV-COD-001..005 |
+| REQ-VEN-004 | CU-VEN-004 | RN-VEN-004, RN-VEN-005, RN-VEN-006 | D-ROB-VEN-004 | D-SEC-VEN-004 | D-CLA-INT-001 | sale.order | EV-COD-006..009, EV-COD-021, EV-COD-027, EV-COD-028, EV-COD-030 |
+| REQ-ENT-002 | CU-ENT-002 | RN-ENT-002, RN-ENT-003 | D-ROB-ENT-002 | D-SEC-ENT-002 | D-CLA-INT-001 | stock.picking | EV-COD-010, EV-COD-011, EV-COD-022 |
+| REQ-ENT-004 | CU-ENT-004 | RN-ENT-004, RN-ENT-005 | (no ROB) | (no SEC) | D-CLA-INT-001 | stock.picking | EV-COD-012, EV-COD-029 |
+| REQ-FAC-001 | CU-FAC-001 | RN-FAC-001, RN-FAC-002 | D-ROB-FAC-001 | D-SEC-FAC-001 | D-CLA-INT-001 | sale.order, account.move | EV-COD-013, EV-COD-014, EV-COD-023 |
+| REQ-FAC-002 | CU-FAC-002 | RN-FAC-003, RN-FAC-004 | (no ROB) | (no SEC) | D-CLA-INT-001 | account.move | EV-COD-016, EV-COD-017, EV-COD-018, EV-COD-026 |
+| REQ-FAC-003 | CU-FAC-003 | RN-FAC-005, RN-FAC-006 | (no ROB) | (no SEC) | D-CLA-INT-001 | account.move | EV-COD-019, EV-COD-020, EV-COD-024, EV-COD-025 |
+
+## Tabla de CU includes y extends
+
+| CU Base | Relación | CU Relacionado | Tipo |
+|---------|----------|----------------|------|
+| CU-VEN-001 | <<include>> | CU-AUTH-001 | Validación de sesión |
+| CU-VEN-001 | <<include>> | CU-CALC-001 | Cálculo de totales |
+| CU-VEN-004 | <<include>> | CU-AUTH-001 | Validación de sesión |
+| CU-VEN-004 | <<include>> | CU-GENPICK-001 | Generación de picking |
+| CU-FAC-001 | <<include>> | CU-VALLIN-001 | Validación de líneas |
+| CU-FAC-002 | <<include>> | CU-GENJOUR-001 | Generación de asiento |
+| CU-VEN-001 | <<extend>> | CU-VEN-001-EMAIL | Envío de email (opcional) |
+| CU-VEN-001 | <<extend>> | CU-VEN-001-DISC | Aplicar descuento (opcional) |
+| CU-ENT-002 | <<extend>> | CU-ENT-002-MTO | Generar PO (MTO) (opcional) |
+| CU-ENT-004 | <<extend>> | CU-ENT-004-BACK | Crear backorder (opcional) |
+| CU-FAC-002 | <<extend>> | CU-FAC-002-VAL | Validar asiento anormal (opcional) |
 
 ## Leyenda de estados
 
@@ -63,59 +86,9 @@
 | Obsoleto | 0 | 0% |
 | **TOTAL** | **7** | **100%** |
 
-## Evidencias generadas (20)
-
-| Código | Tipo | Descripción | Archivo |
-|--------|------|-------------|---------|
-| EV-COD-001 | EV-COD | `sale.order` definición de clase | `addons/sale/models/sale_order.py:34-36` |
-| EV-COD-002 | EV-COD | `SALE_ORDER_STATE` constantes | `addons/sale/models/sale_order.py:26-31` |
-| EV-COD-003 | EV-COD | `action_quotation_send` | `addons/sale/models/sale_order.py:1067` |
-| EV-COD-004 | EV-COD | `action_confirm` | `addons/sale/models/sale_order.py:1166` |
-| EV-COD-005 | EV-COD | `name` field | `addons/sale/models/sale_order.py:54-58` |
-| EV-COD-006 | EV-COD | `action_confirm` cuerpo | `addons/sale/models/sale_order.py:1166-1196` |
-| EV-COD-007 | EV-COD | `_confirmation_error_message` | `addons/sale/models/sale_order.py:1203-1216` |
-| EV-COD-008 | EV-COD | `_prepare_confirmation_values` | `addons/sale/models/sale_order.py:1218-1229` |
-| EV-COD-009 | EV-COD | `_should_be_locked` | `addons/sale/models/sale_order.py:1198-1201` |
-| EV-COD-010 | EV-COD | `action_assign` (stock.picking) | `addons/stock/models/stock_picking.py:1195` |
-| EV-COD-011 | EV-COD | `action_confirm` (stock.picking) | `addons/stock/models/stock_picking.py:1186` |
-| EV-COD-012 | EV-COD | `button_validate` | `addons/stock/models/stock_picking.py:1398` |
-| EV-COD-013 | EV-COD | `_create_invoices` | `addons/sale/models/sale_order.py:1550` |
-| EV-COD-014 | EV-COD | `_prepare_invoice` | `addons/sale/models/sale_order.py:1411` |
-| EV-COD-015 | EV-COD | `account.move` definición | `addons/account/models/account_move.py:72-73` |
-| EV-COD-016 | EV-COD | `action_post` | `addons/account/models/account_move.py:6101` |
-| EV-COD-017 | EV-COD | `AccountMove` class | `addons/account/models/account_move.py:72-73` |
-| EV-COD-018 | EV-COD | `state` field (account.move) | `addons/account/models/account_move.py:129` |
-| EV-COD-019 | EV-COD | `action_register_payment` | `addons/account/models/account_move.py:6022` |
-| EV-COD-020 | EV-COD | `payment_state` field | `addons/account/models/account_move.py:600` |
-| EV-COD-021 | EV-COD | `_action_confirm` stub | `addons/sale/models/sale_order.py:1231-1235` |
-| EV-COD-022 | EV-COD | `action_assign` cuerpo | `addons/stock/models/stock_picking.py:1195-1208` |
-| EV-COD-023 | EV-COD | `picking_ids` (sale_stock) | `addons/sale_stock/models/sale_order.py:31` |
-| EV-COD-024 | EV-COD | `PAYMENT_STATE_SELECTION` | `addons/account/models/account_move.py:48-56` |
-| EV-COD-025 | EV-COD | `payment_state` (computed) | `addons/account/models/account_move.py:600-606` |
-| EV-COD-026 | EV-COD | `action_post` cuerpo | `addons/account/models/account_move.py:6101-6122` |
-| EV-COD-027 | EV-COD | `_send_order_confirmation_mail` | `addons/sale/models/sale_order.py:1237-1244` |
-| EV-COD-028 | EV-COD | `_trigger_scheduler()` | `addons/sale/models/sale_order.py:1192` |
-| EV-COD-029 | EV-COD | `action_cancel` (stock) | `addons/stock/models/stock_picking.py:1210-1214` |
-| EV-COD-030 | EV-COD | `_should_be_locked` | `addons/sale/models/sale_order.py:1198-1201` |
-
-## Inferencias pendientes (EV-INF)
-
-Total: **22 inferencias** documentadas en los CU y diagramas. Las más relevantes:
-
-- **EV-INF-004**: Implementación interna de `_action_confirm()` no leída.
-- **EV-INF-005**: Efectos downstream sobre `stock.picking` y `account.move` se validan en CU específicos.
-- **EV-INF-006, 007**: Lógica interna de `action_assign()` y `procurement.order` no leídas.
-- **EV-INF-008, 009**: Lógica de `button_validate()` y backorder no leídas.
-- **EV-INF-010, 011**: Lógica de agrupación de facturas no leída.
-- **EV-INF-012, 013**: Lógica de `action_post()` y validaciones no leídas.
-- **EV-INF-014, 015, 016**: Valores de `payment_state` y reconciliación no verificados.
-- **EV-INF-017, 018**: Modelo conceptual aproximado, refinable.
-- **EV-INF-019, 020**: Versión Community vs Enterprise.
-- **EV-INF-021, 022**: Campos exactos del form y botones visibles.
-
 ## Próximas acciones
 
-- [ ] Validar las 22 EV-INF en iteraciones siguientes.
-- [ ] Leer `_action_confirm()` de `sale.order` para refinar CU-VEN-004.
-- [ ] Agregar CU de cancelación de pedido y factura.
-- [ ] Generar diagramas de robustez y secuencia para los CU que faltan.
+- [ ] Validar las 8 EV-INF en iteraciones siguientes.
+- [ ] Agregar diagramas de robustez/secuencia para CU-FAC-002, CU-FAC-003, CU-ENT-004.
+- [ ] Documentar los 10 CU secundarios (5 includes + 5 extends).
+- [ ] Generar diagramas de robustez y secuencia para cada uno.

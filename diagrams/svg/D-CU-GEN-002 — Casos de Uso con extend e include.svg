@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1028px" preserveAspectRatio="none" style="width:695px;height:1028px;background:#FFFFFF;" version="1.1" viewBox="0 0 695 1028" width="695px" zoomAndPan="magnify"><defs/><g><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="453" x="114.5244" y="11.1387">SAP-TFI-2026 — Casos de Uso del Flujo Comercial (con extend e include)</text><!--MD5=[9c35c66068622dad62ecac52c54c307b]
+entity V--><ellipse cx="104" cy="814.4688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M104,834.4688 C108,834.4688 111,834.4688 115,830.4688 C123,830.4688 131,838.4688 131,846.4688 L131,850.4688 C131,854.4688 127,858.4688 123,858.4688 L85,858.4688 C81,858.4688 77,854.4688 77,850.4688 L77,846.4688 C77,838.4688 85,830.4688 93,830.4688 C97,834.4688 100,834.4688 104,834.4688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="61" x="73.5" y="871.1074">Vendedor</text><!--MD5=[9a762eefa6a5e3fba0376d4fc87b4ea8]
+entity OA--><ellipse cx="104" cy="417.4688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M104,437.4688 C108,437.4688 111,437.4688 115,433.4688 C123,433.4688 131,441.4688 131,449.4688 L131,453.4688 C131,457.4688 127,461.4688 123,461.4688 L85,461.4688 C81,461.4688 77,457.4688 77,453.4688 L77,449.4688 C77,441.4688 85,433.4688 93,433.4688 C97,437.4688 100,437.4688 104,437.4688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="131" x="38.5" y="474.1074">Operario de Almacén</text><!--MD5=[22029b2902cbfefb11350e8ee6e306b3]
+entity F--><ellipse cx="104" cy="105.4688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M104,125.4688 C108,125.4688 111,125.4688 115,121.4688 C123,121.4688 131,129.4688 131,137.4688 L131,141.4688 C131,145.4688 127,149.4688 123,149.4688 L85,149.4688 C81,149.4688 77,145.4688 77,141.4688 L77,137.4688 C77,129.4688 85,121.4688 93,121.4688 C97,125.4688 100,125.4688 104,125.4688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="69" x="69.5" y="162.1074">Facturador</text><!--MD5=[8ad42e69c823d91e931492f14bc2a1bb]
+entity S--><ellipse cx="360.5" cy="765.4688" fill="#FEFECE" rx="16" ry="16" style="stroke:#A80036;stroke-width:1.5;"/><path d="M360.5,785.4688 C364.5,785.4688 367.5,785.4688 371.5,781.4688 C379.5,781.4688 387.5,789.4688 387.5,797.4688 L387.5,801.4688 C387.5,805.4688 383.5,809.4688 379.5,809.4688 L341.5,809.4688 C337.5,809.4688 333.5,805.4688 333.5,801.4688 L333.5,797.4688 C333.5,789.4688 341.5,781.4688 349.5,781.4688 C353.5,785.4688 356.5,785.4688 360.5,785.4688 " fill="#FEFECE" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="50" x="335.5" y="822.1074">Sistema</text><ellipse cx="360.4239" cy="689.2235" fill="#FEFECE" rx="94.9239" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="74" x="323.4239" y="684.3935">CU-VEN-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="118" x="301.4239" y="698.3622">Crear presupuesto</text><ellipse cx="360.6457" cy="883.2235" fill="#FEFECE" rx="87.1457" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="74" x="323.6457" y="878.3935">CU-VEN-004</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="107" x="307.1457" y="892.3622">Confirmar pedido</text><ellipse cx="360.4594" cy="385.2235" fill="#FEFECE" rx="98.4594" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="73" x="323.9594" y="380.3935">CU-ENT-002</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="123" x="298.9594" y="394.3622">Reservar productos</text><ellipse cx="360.5746" cy="505.2235" fill="#FEFECE" rx="80.0746" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="73" x="324.0746" y="500.3935">CU-ENT-004</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="97" x="312.0746" y="514.3622">Validar entrega</text><ellipse cx="360.6751" cy="52.2235" fill="#FEFECE" rx="70.1751" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="324.6751" y="47.3935">CU-FAC-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="83" x="319.1751" y="61.3622">Crear factura</text><ellipse cx="360.4889" cy="226.2235" fill="#FEFECE" rx="81.4889" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="324.4889" y="221.3935">CU-FAC-002</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="99" x="310.9889" y="235.3622">Publicar factura</text><ellipse cx="360.7462" cy="133.2235" fill="#FEFECE" rx="77.2462" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="72" x="324.7462" y="128.3935">CU-FAC-003</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="93" x="314.2462" y="142.3622">Registrar pago</text><ellipse cx="604.2107" cy="786.6009" fill="#FEFECE" rx="73.7107" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="82" x="563.2107" y="774.7865">CU-AUTH-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="88" x="560.2107" y="788.7552">Validar sesión</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="67" x="570.7107" y="802.724">de usuario</text><ellipse cx="603.7817" cy="686.6009" fill="#FEFECE" rx="80.7817" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="79" x="564.2817" y="674.7865">CU-CALC-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="98" x="554.7817" y="688.7552">Calcular totales</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="92" x="557.7817" y="702.724">con impuestos</text><ellipse cx="603.9031" cy="886.6009" fill="#FEFECE" rx="82.9031" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="101" x="553.4031" y="874.7865">CU-GENPICK-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="99" x="554.4031" y="888.7552">Generar picking</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="70" x="568.9031" y="902.724">de entrega</text><ellipse cx="603.9178" cy="52.6009" fill="#FEFECE" rx="74.4178" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="89" x="559.4178" y="40.7865">CU-VALLIN-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="84" x="561.9178" y="54.7552">Validar líneas</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="71" x="568.4178" y="68.724">pendientes</text><ellipse cx="604.0244" cy="226.6009" fill="#FEFECE" rx="85.0244" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="104" x="552.0244" y="214.7865">CU-GENJOUR-001</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="85" x="561.5244" y="228.7552">Crear asiento</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="55" x="576.5244" y="242.724">contable</text><ellipse cx="103.7523" cy="644.6009" fill="#FEFECE" rx="97.7523" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="113" x="47.2523" y="632.7865">CU-VEN-001-EMAIL</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="122" x="42.7523" y="646.7552">Enviar presupuesto</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="58" x="74.7523" y="660.724">por email</text><ellipse cx="103.8883" cy="735.2235" fill="#FEFECE" rx="91.3883" ry="22.7548" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="106" x="50.8883" y="730.3935">CU-VEN-001-DISC</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="113" x="47.3883" y="744.3622">Aplicar descuento</text><ellipse cx="104.1812" cy="332.6009" fill="#FEFECE" rx="90.6812" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="103" x="52.6812" y="320.7865">CU-ENT-002-MTO</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="112" x="48.1812" y="334.7552">Generar orden de</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="87" x="60.6812" y="348.724">compra (MTO)</text><ellipse cx="104.0097" cy="544.6009" fill="#FEFECE" rx="93.5097" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="108" x="50.0097" y="532.7865">CU-ENT-004-BACK</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="102" x="53.0097" y="546.7552">Crear backorder</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="116" x="46.0097" y="560.724">de entrega parcial</text><ellipse cx="103.7817" cy="232.6009" fill="#FEFECE" rx="80.7817" ry="32.6322" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="98" x="54.7817" y="220.7865">CU-FAC-002-VAL</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="94" x="56.7817" y="234.7552">Validar asiento</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="51" x="78.2817" y="248.724">anormal</text><!--MD5=[a508ff513e46f517cf7589534421a1b5]
+link V to CU_VEN_001--><path d="M134.63,810.9688 C182.84,810.9688 271,810.9688 271,810.9688 C271,810.9688 271,702.4388 271,702.4388 " fill="none" id="V-to-CU_VEN_001" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="271,697.4388,267,706.4388,271,702.4388,275,706.4388,271,697.4388" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="28" x="228.08" y="823.1074">crea</text><!--MD5=[b98f14d815d0da1860dc40537c90721b]
+link V to CU_VEN_004--><path d="M134.69,867.2188 C134.69,867.2188 293.73,867.2188 293.73,867.2188 " fill="none" id="V-to-CU_VEN_004" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="298.73,867.2188,289.73,863.2188,293.73,867.2188,289.73,871.2188,298.73,867.2188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="54" x="159.21" y="879.3574">confirma</text><!--MD5=[e65700e2db88c5370396a22ea12c30f1]
+link OA to CU_ENT_002--><path d="M169.72,404.2188 C169.72,404.2188 298.23,404.2188 298.23,404.2188 " fill="none" id="OA-to-CU_ENT_002" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="303.23,404.2188,294.23,400.2188,298.23,404.2188,294.23,408.2188,303.23,404.2188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="47" x="185.98" y="416.3574">reserva</text><!--MD5=[ce2bab626404204c106dd8f227b447a3]
+link OA to CU_ENT_004--><path d="M104,476.9988 C104,488.0788 104,497.2188 104,497.2188 C104,497.2188 280.62,497.2188 280.62,497.2188 " fill="none" id="OA-to-CU_ENT_004" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="285.62,497.2188,276.62,493.2188,280.62,497.2188,276.62,501.2188,285.62,497.2188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="36" x="145.2" y="509.3574">valida</text><!--MD5=[d5cd8864894757c7f99fd3eb329c8769]
+link F to CU_FAC_001--><path d="M104,87.7387 C104,69.8288 104,52.4688 104,52.4688 C104,52.4688 285.41,52.4688 285.41,52.4688 " fill="none" id="F-to-CU_FAC_001" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="290.41,52.4688,281.41,48.4688,285.41,52.4688,281.41,56.4688,290.41,52.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="45" x="131.07" y="64.6074">factura</text><!--MD5=[0f06c2fce8c87b21e514de17a91ed65e]
+link F to CU_FAC_002--><path d="M138.66,160.7188 C208.81,160.7188 361,160.7188 361,160.7188 C361,160.7188 361,198.0988 361,198.0988 " fill="none" id="F-to-CU_FAC_002" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="361,203.0988,365,194.0988,361,198.0988,357,194.0988,361,203.0988" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="45" x="222.52" y="172.8574">publica</text><!--MD5=[d446390730700962dffd96081d6fe955]
+link F to CU_FAC_003--><path d="M138.59,133.4688 C138.59,133.4688 278.38,133.4688 278.38,133.4688 " fill="none" id="F-to-CU_FAC_003" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="283.38,133.4688,274.38,129.4688,278.38,133.4688,274.38,137.4688,283.38,133.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="36" x="171.49" y="145.6074">cobra</text><!--MD5=[da65d3c85a6876bdcd9271cec2851d2e]
+link S to CU_AUTH--><path d="M389.39,786.4688 C389.39,786.4688 525.37,786.4688 525.37,786.4688 " fill="none" id="S-to-CU_AUTH" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="530.37,786.4688,521.37,782.4688,525.37,786.4688,521.37,790.4688,530.37,786.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="71" x="458.38" y="798.6074">autentica%</text><!--MD5=[8ddc21c3e9a43be34afe17bc80817c64]
+link CU_VEN_001 to CU_AUTH--><path d="M452,695.8088 C452,714.8388 452,770.2188 452,770.2188 C452,770.2188 534.98,770.2188 534.98,770.2188 " fill="none" id="CU_VEN_001-to-CU_AUTH" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="539.98,770.2188,530.98,766.2188,534.98,770.2188,530.98,774.2188,539.98,770.2188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="396.28" y="782.3574">«include»</text><!--MD5=[6bee04f8f462e40a867cef978b71b0fd]
+link CU_VEN_001 to CU_CALC--><path d="M455.69,689.4688 C455.69,689.4688 518.07,689.4688 518.07,689.4688 " fill="none" id="CU_VEN_001-to-CU_CALC" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="523.07,689.4688,514.07,685.4688,518.07,689.4688,514.07,693.4688,523.07,689.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="487.88" y="701.6074">«include»</text><!--MD5=[32e1b718557e26926af3797a7597e09c]
+link CU_VEN_004 to CU_AUTH--><path d="M419,866.3488 C419,842.6388 419,802.7188 419,802.7188 C419,802.7188 535.33,802.7188 535.33,802.7188 " fill="none" id="CU_VEN_004-to-CU_AUTH" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="540.33,802.7188,531.33,798.7188,535.33,802.7188,531.33,806.7188,540.33,802.7188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="446.35" y="814.8574">«include»</text><!--MD5=[4bbb5bd03a960f101daa178701edf83c]
+link CU_VEN_004 to CU_GENPICK--><path d="M447.72,883.4688 C447.72,883.4688 516.05,883.4688 516.05,883.4688 " fill="none" id="CU_VEN_004-to-CU_GENPICK" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="521.05,883.4688,512.05,879.4688,516.05,883.4688,512.05,887.4688,521.05,883.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="482.89" y="895.6074">«include»</text><!--MD5=[ca8728ed7472f7d211c705242d74af68]
+link CU_FAC_001 to CU_VALLIN--><path d="M430.6,52.4688 C430.6,52.4688 524.29,52.4688 524.29,52.4688 " fill="none" id="CU_FAC_001-to-CU_VALLIN" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="529.29,52.4688,520.29,48.4688,524.29,52.4688,520.29,56.4688,529.29,52.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="478.45" y="64.6074">«include»</text><!--MD5=[dad31935008c80b792d1b02f69035ce2]
+link CU_FAC_002 to CU_GENJOUR--><path d="M442.26,226.4688 C442.26,226.4688 513.71,226.4688 513.71,226.4688 " fill="none" id="CU_FAC_002-to-CU_GENJOUR" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="518.71,226.4688,509.71,222.4688,513.71,226.4688,509.71,230.4688,518.71,226.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="59" x="478.98" y="238.6074">«include»</text><!--MD5=[9e4b189d7cf9a25a331ac07f1b0b8660]
+link CU_VEN_001_EMAIL to CU_VEN_001--><path d="M157.46,671.7188 C157.46,671.7188 294.92,671.7188 294.92,671.7188 " fill="none" id="CU_VEN_001_EMAIL-to-CU_VEN_001" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="299.92,671.7188,290.92,667.7188,294.92,671.7188,290.92,675.7188,299.92,671.7188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="57" x="227.19" y="668.8574">«extend»</text><!--MD5=[ee88bc52bb4204f780e87cff54bac02c]
+link CU_VEN_001_DISC to CU_VEN_001--><path d="M195.19,733.4688 C233.35,733.4688 269,733.4688 269,733.4688 C269,733.4688 269,700.9588 269,700.9588 " fill="none" id="CU_VEN_001_DISC-to-CU_VEN_001" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="269,695.9588,265,704.9588,269,700.9588,273,704.9588,269,695.9588" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="57" x="249.35" y="745.6074">«extend»</text><!--MD5=[4bc16225ded8c404c5e291d636c0079c]
+link CU_ENT_002_MTO to CU_ENT_002--><path d="M182,349.1188 C182,363.6588 182,382.4688 182,382.4688 C182,382.4688 257.63,382.4688 257.63,382.4688 " fill="none" id="CU_ENT_002_MTO-to-CU_ENT_002" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="262.63,382.4688,253.63,378.4688,257.63,382.4688,253.63,386.4688,262.63,382.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="57" x="145.14" y="394.6074">«extend»</text><!--MD5=[1f6b8080336217933a4d33ce58577a16]
+link CU_ENT_004_BACK to CU_ENT_004--><path d="M166.42,520.2188 C166.42,520.2188 293.69,520.2188 293.69,520.2188 " fill="none" id="CU_ENT_004_BACK-to-CU_ENT_004" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="298.69,520.2188,289.69,516.2188,293.69,520.2188,289.69,524.2188,298.69,520.2188" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="57" x="231.05" y="532.3574">«extend»</text><!--MD5=[8bd05b7dc0f5d53115d155d138791c98]
+link CU_FAC_002_VAL to CU_FAC_002--><path d="M183.75,226.4688 C183.75,226.4688 273.58,226.4688 273.58,226.4688 " fill="none" id="CU_FAC_002_VAL-to-CU_FAC_002" style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="278.58,226.4688,269.58,222.4688,273.58,226.4688,269.58,230.4688,278.58,226.4688" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="57" x="229.67" y="238.6074">«extend»</text><rect fill="#DDDDDD" height="79.8438" rx="5" ry="5" style="stroke:#000000;stroke-width:1.0;" width="264" x="409.0488" y="932.2331"/><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="144" x="415.0488" y="948.3718">Proyecto: SAP-TFI-2026</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="120" x="415.0488" y="962.3406">Agente: saptfi2026</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="242" x="415.0488" y="976.3093">Metodologia: ICONIX (extend e include)</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="252" x="415.0488" y="990.2781">Fuente: Ingenieria inversa de Odoo 19.0</text><text fill="#000000" font-family="Arial" font-size="12" lengthAdjust="spacing" textLength="144" x="415.0488" y="1004.2468">5 includes + 5 extends</text><!--MD5=[a80e9842225bf6b57f1ede118c40932c]
+@startuml D-CU-GEN-002 — Casos de Uso con extend e include
+
+title SAP-TFI-2026 — Casos de Uso del Flujo Comercial (con extend e include)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+left to right direction
+skinparam actorStyle awesome
+
+' ─── Actores ───
+actor "Vendedor" as V
+actor "Operario de Almacén" as OA
+actor "Facturador" as F
+actor "Sistema" as S
+
+' ─── CU principales ───
+usecase "CU-VEN-001\nCrear presupuesto" as CU_VEN_001
+usecase "CU-VEN-004\nConfirmar pedido" as CU_VEN_004
+usecase "CU-ENT-002\nReservar productos" as CU_ENT_002
+usecase "CU-ENT-004\nValidar entrega" as CU_ENT_004
+usecase "CU-FAC-001\nCrear factura" as CU_FAC_001
+usecase "CU-FAC-002\nPublicar factura" as CU_FAC_002
+usecase "CU-FAC-003\nRegistrar pago" as CU_FAC_003
+
+' ─── CU incluidos (5 includes) ───
+usecase "CU-AUTH-001\nValidar sesión\nde usuario" as CU_AUTH
+usecase "CU-CALC-001\nCalcular totales\ncon impuestos" as CU_CALC
+usecase "CU-GENPICK-001\nGenerar picking\nde entrega" as CU_GENPICK
+usecase "CU-VALLIN-001\nValidar líneas\npendientes" as CU_VALLIN
+usecase "CU-GENJOUR-001\nCrear asiento\ncontable" as CU_GENJOUR
+
+' ─── CU que extienden (5 extends) ───
+usecase "CU-VEN-001-EMAIL\nEnviar presupuesto\npor email" as CU_VEN_001_EMAIL
+usecase "CU-VEN-001-DISC\nAplicar descuento" as CU_VEN_001_DISC
+usecase "CU-ENT-002-MTO\nGenerar orden de\ncompra (MTO)" as CU_ENT_002_MTO
+usecase "CU-ENT-004-BACK\nCrear backorder\nde entrega parcial" as CU_ENT_004_BACK
+usecase "CU-FAC-002-VAL\nValidar asiento\nanormal" as CU_FAC_002_VAL
+
+' ─── Asociaciones de actores ───
+V - -> CU_VEN_001 : crea
+V - -> CU_VEN_004 : confirma
+OA - -> CU_ENT_002 : reserva
+OA - -> CU_ENT_004 : valida
+F - -> CU_FAC_001 : factura
+F - -> CU_FAC_002 : publica
+F - -> CU_FAC_003 : cobra
+S - -> CU_AUTH : autentica%
+
+' ─── Includes (5) — flechas con <<include>> ───
+CU_VEN_001 ..> CU_AUTH : <<include>>
+CU_VEN_001 ..> CU_CALC : <<include>>
+CU_VEN_004 ..> CU_AUTH : <<include>>
+CU_VEN_004 ..> CU_GENPICK : <<include>>
+CU_FAC_001 ..> CU_VALLIN : <<include>>
+CU_FAC_002 ..> CU_GENJOUR : <<include>>
+
+' ─── Extends (5) — flechas con <<extend>> ───
+CU_VEN_001_EMAIL ..> CU_VEN_001 : <<extend>>
+CU_VEN_001_DISC ..> CU_VEN_001 : <<extend>>
+CU_ENT_002_MTO ..> CU_ENT_002 : <<extend>>
+CU_ENT_004_BACK ..> CU_ENT_004 : <<extend>>
+CU_FAC_002_VAL ..> CU_FAC_002 : <<extend>>
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX (extend e include)
+Fuente: Ingenieria inversa de Odoo 19.0
+5 includes + 5 extends
+endlegend
+
+@enduml
+
+@startuml D-CU-GEN-002 — Casos de Uso con extend e include
+
+title SAP-TFI-2026 — Casos de Uso del Flujo Comercial (con extend e include)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Vendedor" as V
+actor "Operario de Almacén" as OA
+actor "Facturador" as F
+actor "Sistema" as S
+
+usecase "CU-VEN-001\nCrear presupuesto" as CU_VEN_001
+usecase "CU-VEN-004\nConfirmar pedido" as CU_VEN_004
+usecase "CU-ENT-002\nReservar productos" as CU_ENT_002
+usecase "CU-ENT-004\nValidar entrega" as CU_ENT_004
+usecase "CU-FAC-001\nCrear factura" as CU_FAC_001
+usecase "CU-FAC-002\nPublicar factura" as CU_FAC_002
+usecase "CU-FAC-003\nRegistrar pago" as CU_FAC_003
+
+usecase "CU-AUTH-001\nValidar sesión\nde usuario" as CU_AUTH
+usecase "CU-CALC-001\nCalcular totales\ncon impuestos" as CU_CALC
+usecase "CU-GENPICK-001\nGenerar picking\nde entrega" as CU_GENPICK
+usecase "CU-VALLIN-001\nValidar líneas\npendientes" as CU_VALLIN
+usecase "CU-GENJOUR-001\nCrear asiento\ncontable" as CU_GENJOUR
+
+usecase "CU-VEN-001-EMAIL\nEnviar presupuesto\npor email" as CU_VEN_001_EMAIL
+usecase "CU-VEN-001-DISC\nAplicar descuento" as CU_VEN_001_DISC
+usecase "CU-ENT-002-MTO\nGenerar orden de\ncompra (MTO)" as CU_ENT_002_MTO
+usecase "CU-ENT-004-BACK\nCrear backorder\nde entrega parcial" as CU_ENT_004_BACK
+usecase "CU-FAC-002-VAL\nValidar asiento\nanormal" as CU_FAC_002_VAL
+
+V - -> CU_VEN_001 : crea
+V - -> CU_VEN_004 : confirma
+OA - -> CU_ENT_002 : reserva
+OA - -> CU_ENT_004 : valida
+F - -> CU_FAC_001 : factura
+F - -> CU_FAC_002 : publica
+F - -> CU_FAC_003 : cobra
+S - -> CU_AUTH : autentica%
+
+CU_VEN_001 ..> CU_AUTH : <<include>>
+CU_VEN_001 ..> CU_CALC : <<include>>
+CU_VEN_004 ..> CU_AUTH : <<include>>
+CU_VEN_004 ..> CU_GENPICK : <<include>>
+CU_FAC_001 ..> CU_VALLIN : <<include>>
+CU_FAC_002 ..> CU_GENJOUR : <<include>>
+
+CU_VEN_001_EMAIL ..> CU_VEN_001 : <<extend>>
+CU_VEN_001_DISC ..> CU_VEN_001 : <<extend>>
+CU_ENT_002_MTO ..> CU_ENT_002 : <<extend>>
+CU_ENT_004_BACK ..> CU_ENT_004 : <<extend>>
+CU_FAC_002_VAL ..> CU_FAC_002 : <<extend>>
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX (extend e include)
+Fuente: Ingenieria inversa de Odoo 19.0
+5 includes + 5 extends
+endlegend
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 14:25:22 ART 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: es
+Country: AR
+--></g></svg>

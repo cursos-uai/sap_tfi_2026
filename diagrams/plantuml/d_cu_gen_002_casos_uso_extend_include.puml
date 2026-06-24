@@ -1,0 +1,77 @@
+@startuml D-CU-GEN-002 — Casos de Uso con extend e include
+
+title SAP-TFI-2026 — Casos de Uso del Flujo Comercial (con extend e include)
+
+skinparam shadowing false
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam backgroundColor white
+
+left to right direction
+skinparam actorStyle awesome
+
+' ─── Actores ───
+actor "Vendedor" as V
+actor "Operario de Almacén" as OA
+actor "Facturador" as F
+actor "Sistema" as S
+
+' ─── CU principales ───
+usecase "CU-VEN-001\nCrear presupuesto" as CU_VEN_001
+usecase "CU-VEN-004\nConfirmar pedido" as CU_VEN_004
+usecase "CU-ENT-002\nReservar productos" as CU_ENT_002
+usecase "CU-ENT-004\nValidar entrega" as CU_ENT_004
+usecase "CU-FAC-001\nCrear factura" as CU_FAC_001
+usecase "CU-FAC-002\nPublicar factura" as CU_FAC_002
+usecase "CU-FAC-003\nRegistrar pago" as CU_FAC_003
+
+' ─── CU incluidos (5 includes) ───
+usecase "CU-AUTH-001\nValidar sesión\nde usuario" as CU_AUTH
+usecase "CU-CALC-001\nCalcular totales\ncon impuestos" as CU_CALC
+usecase "CU-GENPICK-001\nGenerar picking\nde entrega" as CU_GENPICK
+usecase "CU-VALLIN-001\nValidar líneas\npendientes" as CU_VALLIN
+usecase "CU-GENJOUR-001\nCrear asiento\ncontable" as CU_GENJOUR
+
+' ─── CU que extienden (5 extends) ───
+usecase "CU-VEN-001-EMAIL\nEnviar presupuesto\npor email" as CU_VEN_001_EMAIL
+usecase "CU-VEN-001-DISC\nAplicar descuento" as CU_VEN_001_DISC
+usecase "CU-ENT-002-MTO\nGenerar orden de\ncompra (MTO)" as CU_ENT_002_MTO
+usecase "CU-ENT-004-BACK\nCrear backorder\nde entrega parcial" as CU_ENT_004_BACK
+usecase "CU-FAC-002-VAL\nValidar asiento\nanormal" as CU_FAC_002_VAL
+
+' ─── Asociaciones de actores ───
+V --> CU_VEN_001 : crea
+V --> CU_VEN_004 : confirma
+OA --> CU_ENT_002 : reserva
+OA --> CU_ENT_004 : valida
+F --> CU_FAC_001 : factura
+F --> CU_FAC_002 : publica
+F --> CU_FAC_003 : cobra
+S --> CU_AUTH : autentica%
+
+' ─── Includes (5) — flechas con <<include>> ───
+CU_VEN_001 ..> CU_AUTH : <<include>>
+CU_VEN_001 ..> CU_CALC : <<include>>
+CU_VEN_004 ..> CU_AUTH : <<include>>
+CU_VEN_004 ..> CU_GENPICK : <<include>>
+CU_FAC_001 ..> CU_VALLIN : <<include>>
+CU_FAC_002 ..> CU_GENJOUR : <<include>>
+
+' ─── Extends (5) — flechas con <<extend>> ───
+CU_VEN_001_EMAIL ..> CU_VEN_001 : <<extend>>
+CU_VEN_001_DISC ..> CU_VEN_001 : <<extend>>
+CU_ENT_002_MTO ..> CU_ENT_002 : <<extend>>
+CU_ENT_004_BACK ..> CU_ENT_004 : <<extend>>
+CU_FAC_002_VAL ..> CU_FAC_002 : <<extend>>
+
+legend right
+Proyecto: SAP-TFI-2026
+Agente: saptfi2026
+Metodologia: ICONIX (extend e include)
+Fuente: Ingenieria inversa de Odoo 19.0
+5 includes + 5 extends
+endlegend
+
+@enduml

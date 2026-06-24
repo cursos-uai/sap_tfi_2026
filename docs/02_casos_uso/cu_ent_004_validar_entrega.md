@@ -1,151 +1,104 @@
-# CU-ENT-004 — Validar entrega
+# CU-ENT-004 — Validar Entrega
+
+## Nombre
+
+**Validar Entrega de Productos**
 
 ## Objetivo
 
-Confirmar la salida física de los productos del almacén, completando el picking y disparando los efectos downstream (actualización de stock, facturación).
+El operario de almacén confirma la salida física de los productos del almacén, completando el picking y actualizando el stock cuantitativo.
 
-## Alcance
+## Pre-condición
 
-Módulo `stock` de Odoo 19.0. Aplica al modelo `stock.picking`.
-
-## Nivel
-
-Primario (esencial para cerrar el flujo de inventario).
-
-## Actor principal
-
-Operador de almacén (usuario con permisos `stock.group_stock_user` o `stock.group_stock_manager`).
-
-## Actores secundarios
-
-- Sistema de cuenta (puede disparar facturación al validar).
-
-## Interesados
-
-- Operador de almacén.
-- Cliente (recibe productos).
-- Responsable de facturación (recibe señal para facturar).
-
-## Disparador
-
-El operador hace clic en "Validar" en la vista form del picking.
-
-## Precondiciones
-
-- El picking está en estado `assigned` (con todas las reservas) o `partially_available` (parcial).
+- El picking está en estado `assigned` o `partially_available`.
 - Las cantidades reservadas o a entregar son válidas.
 
-## Garantías mínimas
+## Post-condición
 
-El sistema cambia el estado del picking a `done` o muestra un error explicativo.
+- El estado del picking cambia a `done`.
+- El stock cuantitativo (`stock.quant`) se actualiza con las cantidades entregadas.
+- Se crea un backorder si hay cantidades pendientes (opcional).
 
-## Garantías de éxito
+## Pasos trascendentes (camino feliz, en voz activa)
 
-- Estado del picking: `done`.
-- Stock actualizado (las cantidades reservadas se descuentan del stock disponible).
-- Posible creación automática de factura si está configurado.
+1. El operario **presiona** "Validar" en el form del picking.
+2. El sistema **invoca** `button_validate()`.
+3. El sistema **abre** el wizard de validación inmediata (`stock.immediate.transfer`).
+4. El operario **confirma** las cantidades reales entregadas.
+5. El sistema **actualiza** `stock.move` con las cantidades reales.
+6. El sistema **crea** `stock.move.line` definitivos.
+7. El sistema **actualiza** el stock cuantitativo en `stock.quant`.
+8. El sistema **cambia** el estado del picking a `done`.
+9. El sistema **muestra** el resultado al operario.
 
-## Flujo principal
+## Caminos alternativos (en voz activa)
 
-1. Operador hace clic en "Validar" → sistema invoca `button_validate()` (ver `addons/stock/models/stock_picking.py:1398`).
-2. Sistema muestra wizard de validación con cantidades (permite ajustar).
-3. Operador confirma las cantidades reales entregadas.
-4. Sistema actualiza `stock.move` con las cantidades reales.
-5. Sistema crea `stock.move.line` definitivos.
-6. Sistema actualiza el stock cuantitativo (`stock.quant`).
-7. Estado del picking cambia a `done`.
+### FA-01 — El operario hace entrega parcial (extiende CU-ENT-004-BACK)
 
-## Flujos alternativos
+1. El operario **confirma** cantidades menores a las reservadas.
+2. El sistema **crea** un nuevo picking (backorder) con las cantidades pendientes.
+3. El sistema **completa** el picking original con las cantidades entregadas.
+4. El sistema **deja** el backorder en estado `assigned` o `confirmed`.
+5. El operario **procesa** el backorder posteriormente.
 
-### FA-01 — Entrega parcial con backorder
+### FA-02 — El sistema crea la factura automáticamente
 
-1. Operador entrega solo una parte de las cantidades.
-2. Sistema crea un nuevo picking (backorder) con las cantidades pendientes.
-3. Picking original queda en `done` con las cantidades entregadas.
-4. Backorder queda en `assigned` o `confirmed` para entrega posterior.
+1. El sistema **detecta** que está configurada la facturación automática al validar.
+2. El sistema **invoca** `_create_invoices()` desde el picking.
+3. El sistema **crea** la factura (`account.move`).
+4. El sistema **vincula** la salida de stock con la factura.
 
-### FA-02 — Crear factura al validar
+### FA-03 — El sistema valida sin wizard
 
-1. Si está configurado, al validar, sistema crea automáticamente una factura (`account.move`).
-2. Esto vincula la salida de stock con la facturación inmediata.
+1. El operario **presiona** "Validar" sin necesidad de wizard (configuración).
+2. El sistema **ejecuta** la validación directa.
+3. El sistema **completa** el picking.
 
-## Excepciones
+## Excepciones (en voz activa)
 
-### EX-01 — Cantidad excede lo reservado
+### EX-01 — La cantidad excede lo reservado
 
-1. Operador intenta entregar más cantidad de la que está reservada.
-2. Sistema valida y rechaza si excede.
-3. Sistema muestra error claro.
+1. El operario **intenta** entregar más cantidad de la reservada.
+2. El sistema **valida** y **rechaza** si excede.
+3. El sistema **muestra** el error.
 
-### EX-02 — Picking no asignable
+### EX-02 — El picking está en estado inválido
 
-1. Picking en estado `draft` o `cancel`.
-2. Sistema no permite validar.
+1. El picking está en estado `draft` o `cancel`.
+2. El sistema **detecta** el estado inválido.
+3. El sistema **impide** la validación.
 
 ## Reglas de negocio
 
 - **RN-ENT-004**: Al validar, las cantidades reservadas pasan a `done`.
-- **RN-ENT-005**: Backorder automático configurable vía `stock.backorder_confirmation_policy`.
+- **RN-ENT-005**: El backorder automático depende de `stock.backorder_confirmation_policy`.
 
-## Datos de entrada
+## Relaciones con otros CU
 
-- Picking en estado `assigned` o `partially_available`.
-- Cantidades reales (pueden diferir de las reservadas).
+- **<<extend>> CU-ENT-004-BACK**: Crea backorder cuando hay entrega parcial (opcional).
 
-## Datos de salida
+## Diagrama de robustez asociado
 
-- Picking en `done`.
-- Stock actualizado.
-- Posible factura generada.
+`diagrams/plantuml/d_rob_ven_001_crear_presupuesto.puml` (compartido conceptualmente; este CU no tiene ROB dedicado en la primera iteración)
 
-## Estados involucrados
+## Verbos clave (para validar la voz activa)
 
-- `assigned` → `done` (validación completa).
-- `partially_available` → `done` (validación parcial, genera backorder).
-
-## Pantallas involucradas
-
-- `view_picking_form` — botón "Validar".
-- `view_stock_immediate_transfer` — wizard de validación.
-
-## Modelos de Odoo relacionados
-
-- `stock.picking` (principal).
-- `stock.move` (movimientos).
-- `stock.move.line` (líneas definitivas).
-- `stock.quant` (stock cuantitativo actualizado).
-- `stock.backorder.confirmation` (wizard de backorder).
-
-## Métodos de Odoo relacionados
-
-- `button_validate()` — entry point (ver `addons/stock/models/stock_picking.py:1398`).
-
-## Permisos requeridos
-
-- `stock.group_stock_user` (puede validar pickings simples).
-- `stock.group_stock_manager` (puede validar pickings complejos o cancelar reservas).
-
-## Configuraciones relevantes
-
-- `stock.backorder_confirmation_policy` — política de backorder.
-- `stock.move.auto_fill` — auto-llenar cantidades.
-
-## Casos de uso relacionados
-
-- CU-ENT-002 Reservar productos (precondición).
-- CU-FAC-001 Crear factura (downstream, opcional).
-
-## Criterios de aceptación
-
-- [ ] Al validar un picking completo, el stock se descuenta correctamente.
-- [ ] Al validar parcialmente, se crea un backorder automático.
-- [ ] El estado del picking cambia a `done`.
-
-## Evidencias de ingeniería inversa
-
-- **EV-COD-012**: `addons/stock/models/stock_picking.py:1398` — método `button_validate`.
-
-## Supuestos y aspectos pendientes de validación
-
-- **EV-INF-008**: La lógica interna de `button_validate()` (cómo ajusta cantidades, cómo crea backorder) no fue leída en detalle.
-- **EV-INF-009**: La integración con facturación automática al validar requiere verificación.
+| Verbo | Actor | Acción sobre |
+|-------|-------|--------------|
+| **presiona** | Operario | Botón "Validar" |
+| **invoca** | Sistema | `button_validate()` |
+| **abre** | Sistema | Wizard de validación |
+| **confirma** | Operario | Cantidades reales |
+| **actualiza** | Sistema | `stock.move`, `stock.quant` |
+| **crea** | Sistema | `stock.move.line`, backorder, factura |
+| **cambia** | Sistema | Estado del picking |
+| **muestra** | Sistema | Resultado |
+| **completa** | Sistema | Picking original |
+| **deja** | Sistema | Backorder |
+| **procesa** | Operario | Backorder |
+| **detecta** | Sistema | Configuración de facturación |
+| **vincula** | Sistema | Salida de stock con factura |
+| **ejecuta** | Sistema | Validación directa |
+| **intenta** | Operario | Entregar cantidad |
+| **rechaza** | Sistema | Cantidad excedida |
+| **impide** | Sistema | Validación |

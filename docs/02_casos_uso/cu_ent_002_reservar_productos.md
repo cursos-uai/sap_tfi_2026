@@ -1,146 +1,108 @@
-# CU-ENT-002 — Reservar productos
+# CU-ENT-002 — Reservar Productos
+
+## Nombre
+
+**Reservar Productos en Almacén**
 
 ## Objetivo
 
-Reservar las cantidades pedidas de cada producto en el almacén, asegurando disponibilidad antes de la entrega.
+El sistema (o el operario de almacén) reserva las cantidades pedidas de cada producto, asegurando disponibilidad antes de la entrega.
 
-## Alcance
+## Pre-condición
 
-Módulo `stock` de Odoo 19.0. Aplica al modelo `stock.picking`.
+- El picking está en estado `draft`, `waiting` o `confirmed`.
+- Los productos tienen stock disponible o reglas de reabastecimiento aplicables.
 
-## Nivel
+## Post-condición
 
-Primario (esencial para garantizar disponibilidad).
+- Las cantidades reservadas quedan en `stock.move.line` con `reserved_availability`.
+- El estado del picking cambia a `assigned` (si todas las líneas tienen reserva) o `partially_available` (si hay parcial).
 
-## Actor principal
+## Pasos trascendentes (camino feliz, en voz activa)
 
-Sistema (operador de inventario puede forzarlo manualmente).
+1. El sistema (o el operario) **dispara** el trigger de reserva (confirmación de pedido o botón manual).
+2. El sistema **lee** el picking y sus líneas.
+3. El sistema **invoca** `action_assign()` sobre el picking.
+4. El sistema **recorre** cada línea del picking.
+5. Para cada línea, el sistema **busca** stock disponible en `stock.quant`.
+6. El sistema **encuentra** cantidad suficiente.
+7. El sistema **reserva** la cantidad creando `stock.move.line`.
+8. El sistema **actualiza** `reserved_availability` en la línea.
+9. El sistema **actualiza** el estado del picking.
+10. El sistema **asigna** el estado `assigned` cuando todas las líneas tienen reserva.
 
-## Actores secundarios
+## Caminos alternativos (en voz activa)
 
-- Sistema de Odoo (acción automática al confirmar pedido de venta).
+### FA-01 — El sistema no encuentra stock suficiente
 
-## Interesados
+1. El sistema **busca** stock disponible y **encuentra** cantidad insuficiente.
+2. El sistema **consulta** las reglas de reabastecimiento (`stock.warehouse.orderpoint`).
+3. Si hay reglas MTO, el sistema **extiende** con `CU-ENT-002-MTO` para generar orden de compra.
+4. El sistema **crea** una `purchase.order` para reabastecer.
+5. El sistema **programa** la recepción del producto.
+6. El sistema **marca** la línea como `partially_available`.
 
-- Operador de inventario.
-- Vendedor (necesita saber si hay stock).
-- Cliente (recibe confirmación de entrega).
+### FA-02 — El sistema hace reserva parcial
 
-## Disparador
+1. El sistema **reserva** parte de las cantidades.
+2. El sistema **marca** las líneas con reserva como `assigned`.
+3. El sistema **deja** las líneas sin reserva como `partially_available`.
+4. El sistema **no cambia** el estado global del picking a `assigned`.
 
-- Confirmación de un pedido de venta (CU-VEN-004) — sistema dispara automáticamente.
-- Botón manual "Reservar" en el picking (interfaz de inventario).
+### FA-03 — El operario fuerza la reserva manualmente
 
-## Precondiciones
+1. El operario **presiona** "Reservar" en el form del picking.
+2. El sistema **invoca** `action_assign()`.
+3. El sistema **ejecuta** los pasos trascendentes.
 
-- El picking está en estado `draft` o `waiting` o `confirmed`.
-- Los productos tienen stock disponible o se puede conseguir (vía reglas de abastecimiento).
+## Excepciones (en voz activa)
 
-## Garantías mínimas
+### EX-01 — El picking no tiene movimientos
 
-El sistema intenta reservar las cantidades; si no puede, deja el picking en `partially_available` o `confirmed`.
+1. El sistema **detecta** que no hay movimientos para reservar.
+2. El sistema **muestra** el error "Nothing to check the availability for".
 
-## Garantías de éxito
+### EX-02 — No hay stock ni reglas aplicables
 
-- Estado del picking: `assigned`.
-- Las cantidades reservadas se reflejan en `stock.move.line` con `reserved_availability`.
-
-## Flujo principal
-
-1. Sistema invoca `action_assign()` sobre el picking (ver `addons/stock/models/stock_picking.py:1195`).
-2. Sistema busca cantidades disponibles por cada línea.
-3. Si hay stock disponible, sistema crea `stock.move.line` con `product_qty = reserved_availability`.
-4. Si NO hay stock, sistema busca reglas de reabastecimiento (MTO, MTS, etc.).
-5. Si se reabastece, sistema programa una orden de compra.
-6. Si nada funciona, sistema deja el picking en estado `partially_available`.
-7. Estado del picking cambia a `assigned` cuando todas las líneas tienen reserva.
-
-## Flujos alternativos
-
-### FA-01 — Reserva parcial
-
-1. Sistema reserva parte de las cantidades.
-2. Líneas con reserva quedan con `assigned`.
-3. Líneas sin reserva quedan con `partially_available`.
-4. El picking NO cambia a `assigned` global.
-
-### FA-02 — Backorder automático
-
-1. Al validar (CU-ENT-004), si hay líneas pendientes, sistema crea un nuevo picking con backorder.
-
-## Excepciones
-
-### EX-01 — Sin stock y sin regla de reabastecimiento
-
-1. Sistema no encuentra stock ni reglas aplicables.
-2. Sistema deja el picking en `partially_available` o `confirmed`.
-3. Operador debe decidir acción manual.
+1. El sistema **busca** stock y **no encuentra** cantidad.
+2. El sistema **consulta** reglas de reabastecimiento y **no encuentra** aplicables.
+3. El sistema **deja** el picking en estado `partially_available`.
+4. El operario **debe** decidir acción manual.
 
 ## Reglas de negocio
 
 - **RN-ENT-002**: La reserva no afecta disponibilidad para otros pedidos hasta que se confirme el picking.
 - **RN-ENT-003**: Las reservas se liberan automáticamente al cancelar el pedido o el picking.
 
-## Datos de entrada
+## Relaciones con otros CU
 
-- Picking con líneas (`stock.move`).
+- **<<extend>> CU-ENT-002-MTO**: Genera orden de compra (MTO) cuando no hay stock (opcional).
 
-## Datos de salida
+## Diagrama de robustez asociado
 
-- Stock.move.line con reservas.
-- Estado del picking actualizado.
-- Posibles órdenes de compra generadas.
+`diagrams/plantuml/d_rob_ent_002_reservar_productos.puml`
 
-## Estados involucrados
+## Verbos clave (para validar la voz activa)
 
-- `draft` → `confirmed` → `assigned` (reserva completa).
-- `draft` → `confirmed` → `partially_available` (reserva parcial).
-
-## Pantallas involucradas
-
-- `view_picking_form` — form del picking.
-- `view_stock_move_line_tree` — vista tree de movimientos reservados.
-
-## Modelos de Odoo relacionados
-
-- `stock.picking` (principal).
-- `stock.move` (líneas del picking).
-- `stock.move.line` (reservas).
-- `stock.warehouse.orderpoint` (reglas de reabastecimiento).
-- `procurement.order` (orden de compra generada).
-
-## Métodos de Odoo relacionados
-
-- `action_assign()` — entry point (ver `addons/stock/models/stock_picking.py:1195`).
-- `action_confirm()` — confirma el picking (ver `addons/stock/models/stock_picking.py:1186`).
-
-## Permisos requeridos
-
-- `stock.group_stock_user` — para reservar.
-- Sistema automático al confirmar pedido.
-
-## Configuraciones relevantes
-
-- Reglas de reabastecimiento (`stock.warehouse.orderpoint`).
-- Política de stock (MTO, MTS, etc.).
-
-## Casos de uso relacionados
-
-- CU-VEN-004 Confirmar pedido de venta (disparador).
-- CU-ENT-004 Validar entrega (siguiente paso).
-
-## Criterios de aceptación
-
-- [ ] Al confirmar un pedido, el picking cambia a `assigned` si hay stock.
-- [ ] Si no hay stock, el picking queda en `partially_available`.
-- [ ] Las reservas se reflejan en `stock.move.line`.
-
-## Evidencias de ingeniería inversa
-
-- **EV-COD-010**: `addons/stock/models/stock_picking.py:1195` — método `action_assign`.
-- **EV-COD-011**: `addons/stock/models/stock_picking.py:1186` — método `action_confirm`.
-
-## Supuestos y aspectos pendientes de validación
-
-- **EV-INF-006**: La lógica interna de `action_assign()` (cómo busca stock, cómo aplica reglas de reabastecimiento) no fue leída en detalle. Solo se confirmó que existe.
-- **EV-INF-007**: La integración con `procurement.order` requiere verificación adicional.
+| Verbo | Actor | Acción sobre |
+|-------|-------|--------------|
+| **dispara** | Sistema/Operario | Trigger de reserva |
+| **lee** | Sistema | Picking y líneas |
+| **invoca** | Sistema | `action_assign()` |
+| **recorre** | Sistema | Líneas del picking |
+| **busca** | Sistema | Stock en `stock.quant` |
+| **encuentra** | Sistema | Cantidad disponible |
+| **reserva** | Sistema | `stock.move.line` |
+| **actualiza** | Sistema | `reserved_availability`, estado |
+| **asigna** | Sistema | Estado `assigned` |
+| **consulta** | Sistema | `stock.warehouse.orderpoint` |
+| **extiende** | Sistema | `CU-ENT-002-MTO` |
+| **crea** | Sistema | `purchase.order` |
+| **programa** | Sistema | Recepción |
+| **marca** | Sistema | `partially_available` |
+| **deja** | Sistema | Estado sin cambio |
+| **presiona** | Operario | Botón "Reservar" |
+| **ejecuta** | Sistema | Pasos trascendentes |
+| **detecta** | Sistema | Movimientos / reglas |
+| **muestra** | Sistema | Error |
+| **libera** | Sistema | Reservas (al cancelar) |

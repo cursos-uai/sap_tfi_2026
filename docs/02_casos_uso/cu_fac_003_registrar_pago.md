@@ -1,160 +1,112 @@
-# CU-FAC-003 — Registrar pago
+# CU-FAC-003 — Registrar Pago
+
+## Nombre
+
+**Registrar Pago de Factura**
 
 ## Objetivo
 
-Registrar el pago de una factura, marcando el saldo como cobrado y actualizando el estado de pago del cliente.
+El facturador (o el contador) registra el pago de una factura, marcando el saldo como cobrado y actualizando el estado de pago del cliente.
 
-## Alcance
-
-Módulo `account` de Odoo 19.0. Aplica al modelo `account.move`.
-
-## Nivel
-
-Primario (cierra el circuito de venta).
-
-## Actor principal
-
-Responsable de facturación o Contador (usuario con permisos `account.group_account_invoice` o `account.group_account_user`).
-
-## Actores secundarios
-
-- Sistema bancario (si hay integración).
-- Cliente (origen del pago).
-
-## Interesados
-
-- Contador (visualiza estado de pagos).
-- Cliente (ve su saldo actualizado).
-
-## Disparador
-
-El usuario hace clic en "Registrar pago" en la factura.
-
-## Precondiciones
+## Pre-condición
 
 - La factura está en estado `posted`.
-- La factura no está completamente pagada (o se requiere un pago parcial).
+- La factura no está completamente pagada.
+- El diario de banco/caja está configurado.
 
-## Garantías mínimas
+## Post-condición
 
-El sistema crea un `account.payment` o equivalente y actualiza el estado de pago.
+- Existe un `account.payment` registrado.
+- El asiento contable del pago queda generado.
+- El `payment_state` de la factura se actualiza (`paid`, `partial`, o `in_payment`).
 
-## Garantías de éxito
+## Pasos trascendentes (camino feliz, en voz activa)
 
-- Pago registrado en el sistema.
-- Estado de pago de la factura: `paid` (si es pago completo) o `partial` (si parcial).
-- Asiento contable de pago generado.
+1. El facturador **presiona** "Registrar pago" en el form de la factura.
+2. El sistema **invoca** `action_register_payment()`.
+3. El sistema **abre** el wizard `account.payment.register`.
+4. El facturador **completa** los datos del pago (fecha, diario, método, monto).
+5. El facturador **confirma** el wizard.
+6. El sistema **crea** un `account.payment` con los datos ingresados.
+7. El sistema **genera** el asiento contable del pago (débito banco, crédito cliente).
+8. El sistema **reconcilia** el pago con la factura.
+9. El sistema **actualiza** `payment_state` de la factura a `paid`.
+10. El sistema **muestra** el pago registrado.
 
-## Flujo principal
+## Caminos alternativos (en voz activa)
 
-1. Usuario hace clic en "Registrar pago" → sistema invoca `action_register_payment()` (ver `addons/account/models/account_move.py:6022`).
-2. Sistema abre wizard de registro de pago (`account.payment.register`).
-3. Usuario completa:
-   - Fecha del pago.
-   - Diario de banco/caja.
-   - Método de pago.
-   - Monto (por defecto, saldo pendiente).
-4. Usuario confirma.
-5. Sistema crea `account.payment` con el monto y método.
-6. Sistema genera el asiento contable del pago (débito a banco, crédito a cuenta del cliente).
-7. Sistema reconcilia el pago con la factura.
-8. Sistema actualiza `payment_state` de la factura:
-   - `paid` si el pago completa el saldo.
-   - `partial` si es parcial.
-   - `in_payment` si está en proceso (cheques, etc.).
+### FA-01 — El facturador hace pago parcial
 
-## Flujos alternativos
+1. El facturador **ingresa** un monto menor al saldo pendiente.
+2. El sistema **crea** el pago parcial.
+3. El sistema **actualiza** `payment_state` a `partial`.
+4. El sistema **deja** saldo pendiente para pagos futuros.
+5. El facturador **registra** más pagos hasta completar el saldo.
 
-### FA-01 — Pago parcial
+### FA-02 — El facturador hace pago múltiple
 
-1. Usuario registra un pago menor al saldo.
-2. Sistema crea el pago parcial.
-3. `payment_state` queda en `partial`.
-4. Queda saldo pendiente para pagos futuros.
+1. El facturador **registra** varios pagos para la misma factura.
+2. Para cada pago, el sistema **ejecuta** los pasos trascendentes.
+3. El sistema **acumula** los pagos.
+4. Cuando se completa el saldo, el sistema **actualiza** `payment_state` a `paid`.
 
-### FA-02 — Pago múltiple
+### FA-03 — El sistema integra con pasarela de pago
 
-1. Usuario registra varios pagos para la misma factura.
-2. Cada pago genera un `account.payment` separado.
-3. Cuando se completa el saldo, `payment_state` pasa a `paid`.
+1. El sistema **detecta** que hay una pasarela configurada.
+2. El sistema **redirige** al cliente a la pasarela.
+3. El sistema **recibe** la confirmación de pago.
+4. El sistema **crea** el `account.payment` automáticamente.
 
-## Excepciones
+## Excepciones (en voz activa)
 
-### EX-01 — Factura no posted
+### EX-01 — La factura no está posted
 
-1. Factura en estado `draft` o `cancel`.
-2. Sistema no permite registrar pago.
+1. La factura está en estado `draft` o `cancel`.
+2. El sistema **detecta** el estado inválido.
+3. El sistema **impide** el registro del pago.
 
-### EX-02 — Pago mayor al saldo
+### EX-02 — El pago excede el saldo
 
-1. Usuario intenta pagar más de lo adeudado.
-2. Sistema advierte o rechaza según configuración.
+1. El facturador **intenta** pagar más de lo adeudado.
+2. El sistema **advierte** o **rechaza** según configuración.
+3. El sistema **muestra** el mensaje de error.
 
 ## Reglas de negocio
 
 - **RN-FAC-005**: Una factura pagada no puede recibir más pagos (saldo = 0).
-- **RN-FAC-006**: El estado `payment_state` se calcula automáticamente en función de los pagos.
+- **RN-FAC-006**: El estado `payment_state` se calcula automáticamente.
 
-## Datos de entrada
+## Relaciones con otros CU
 
-- Factura en estado `posted`.
-- Datos del pago (fecha, diario, método, monto).
+(No tiene relaciones `<<include>>` o `<<extend>>` explícitas en este CU; es terminal del flujo)
 
-## Datos de salida
+## Diagrama de robustez asociado
 
-- `account.payment` creado.
-- Asiento contable de pago.
-- `payment_state` actualizado.
+(No tiene ROB dedicado en la primera iteración)
 
-## Estados involucrados
+## Verbos clave (para validar la voz activa)
 
-- Factura: `posted` → `payment_state=in_payment` → `payment_state=paid`.
-- O `posted` → `payment_state=partial` → `payment_state=paid` (pagos múltiples).
-
-## Pantallas involucradas
-
-- `account.view_move_form` — botón "Registrar pago".
-- `account.view_account_payment_form` — wizard.
-
-## Modelos de Odoo relacionados
-
-- `account.move` (factura).
-- `account.payment` (pago).
-- `account.payment.register` (wizard).
-- `account.journal` (diario de banco).
-- `account.account` (cuentas contables).
-
-## Métodos de Odoo relacionados
-
-- `action_register_payment()` — entry point (ver `addons/account/models/account_move.py:6022`).
-
-## Permisos requeridos
-
-- `account.group_account_invoice` o `account.group_account_user`.
-
-## Configuraciones relevantes
-
-- Diarios de banco/caja.
-- Métodos de pago disponibles.
-- Configuración de reconciliación.
-
-## Casos de uso relacionados
-
-- CU-FAC-002 Publicar factura (precondición).
-
-## Criterios de aceptación
-
-- [ ] Una factura posted puede recibir un pago.
-- [ ] Al pagar el saldo completo, `payment_state` cambia a `paid`.
-- [ ] Los pagos parciales dejan `payment_state=partial`.
-
-## Evidencias de ingeniería inversa
-
-- **EV-COD-019**: `addons/account/models/account_move.py:6022` — método `action_register_payment`.
-- **EV-COD-020**: `addons/account/models/account_move.py:600` — campo `payment_state = fields.Selection(...)` (probablemente con valores como `not_paid`, `in_payment`, `paid`, `partial`, `reversed`).
-
-## Supuestos y aspectos pendientes de validación
-
-- **EV-INF-014**: Los valores exactos de `payment_state` requieren verificación leyendo las opciones del campo.
-- **EV-INF-015**: La lógica de reconciliación requiere lectura adicional.
-- **EV-INF-016**: El método `action_register_payment` puede haber cambiado entre versiones.
+| Verbo | Actor | Acción sobre |
+|-------|-------|--------------|
+| **presiona** | Facturador | Botón "Registrar pago" |
+| **invoca** | Sistema | `action_register_payment()` |
+| **abre** | Sistema | Wizard de pago |
+| **completa** | Facturador | Datos del pago |
+| **confirma** | Facturador | Wizard |
+| **crea** | Sistema | `account.payment` |
+| **genera** | Sistema | Asiento contable |
+| **reconcilia** | Sistema | Pago con factura |
+| **actualiza** | Sistema | `payment_state` |
+| **muestra** | Sistema | Pago registrado |
+| **ingresa** | Facturador | Monto parcial |
+| **deja** | Sistema | Saldo pendiente |
+| **registra** | Facturador | Más pagos |
+| **ejecuta** | Sistema | Pasos trascendentes |
+| **acumula** | Sistema | Pagos |
+| **detecta** | Sistema | Pasarela / estado |
+| **redirige** | Sistema | Cliente a pasarela |
+| **recibe** | Sistema | Confirmación de pago |
+| **impide** | Sistema | Registro de pago |
+| **intenta** | Facturador | Pagar de más |
+| **advierte** | Sistema | Pago excedido |
+| **rechaza** | Sistema | Pago excedido |

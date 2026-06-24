@@ -1,154 +1,108 @@
-# CU-FAC-001 — Crear factura desde pedido
+# CU-FAC-001 — Crear Factura desde Pedido
+
+## Nombre
+
+**Crear Factura desde Pedido de Venta**
 
 ## Objetivo
 
-Generar una factura (`account.move`) basada en un pedido de venta confirmado, para registrar la venta en el sistema contable.
+El facturador (o el vendedor) genera una factura (`account.move`) basada en un pedido de venta confirmado, para registrar la venta en el sistema contable.
 
-## Alcance
-
-Módulo `sale` (Odoo 19.0) que invoca a `account` para crear la factura. Aplica al modelo `sale.order`.
-
-## Nivel
-
-Primario (esencial para el circuito contable).
-
-## Actor principal
-
-Responsable de facturación o sistema (acción automática configurable).
-
-## Actores secundarios
-
-- Vendedor (solicita facturación).
-- Sistema contable (registra el asiento).
-
-## Interesados
-
-- Responsable de facturación.
-- Contador (visualiza asientos).
-- Cliente (recibe factura).
-
-## Disparador
-
-- Manual: vendedor o facturador hace clic en "Crear factura" en el pedido.
-- Automático: al validar la entrega (CU-ENT-004), si está configurado.
-- Automático: al alcanzar la política de facturación del pedido (`invoice_status`).
-
-## Precondiciones
+## Pre-condición
 
 - El pedido está en estado `sale`.
-- Hay productos a facturar (no todo está ya facturado).
+- Hay productos a facturar (`invoice_status != 'invoiced'`).
 - El cliente y la compañía tienen configurados los diarios contables.
+- El sistema validó las líneas pendientes (`CU-VALLIN-001`).
 
-## Garantías mínimas
+## Post-condición
 
-El sistema crea un `account.move` en estado `draft` o muestra un error.
-
-## Garantías de éxito
-
-- Factura creada en estado `draft`.
-- Línea de factura con `quantity`, `price_unit`, `tax_ids` correctos.
+- Existe un `account.move` en estado `draft` con tipo `out_invoice`.
+- Las líneas tienen `quantity`, `price_unit`, `tax_ids` correctos.
 - `invoice_origin` apunta al pedido original.
+- El pedido referencia la factura vía `invoice_ids`.
 
-## Flujo principal
+## Pasos trascendentes (camino feliz, en voz activa)
 
-1. Usuario hace clic en "Crear factura" → sistema invoca `_create_invoices()` (ver `addons/sale/models/sale_order.py:1550`).
-2. Sistema prepara las líneas de factura con `_prepare_invoice()` (ver `addons/sale/models/sale_order.py:1411`).
-3. Sistema crea un nuevo `account.move` con tipo `out_invoice` (factura de cliente).
-4. Sistema crea las `account.move.line` correspondientes.
-5. Sistema vincula el pedido con la factura vía `invoice_ids` (Many2many).
-6. Sistema actualiza `invoice_status` del pedido según corresponda.
-7. Factura queda en estado `draft`.
+1. El facturador **presiona** "Crear Factura" en el form del pedido.
+2. El sistema **invoca** `_create_invoices()` sobre el pedido.
+3. El sistema **lee** el pedido (`sale.order` en estado `sale`).
+4. El sistema **verifica** el `invoice_status` del pedido.
+5. El sistema **lee** las líneas pendientes (`sale.order.line`).
+6. El sistema **aplica** los impuestos (`account.tax`) a cada línea.
+7. Para cada línea, el sistema **crea** un `account.move.line`.
+8. El sistema **construye** los valores del invoice con `_prepare_invoice()`.
+9. El sistema **crea** un `account.move` en estado `draft`.
+10. El sistema **asocia** la factura al pedido vía `invoice_ids`.
+11. El sistema **actualiza** `invoice_status` del pedido.
+12. El sistema **muestra** la factura creada al facturador.
 
-## Flujos alternativos
+## Caminos alternativos (en voz activa)
 
-### FA-01 — Facturación agrupada
+### FA-01 — El facturador hace facturación agrupada
 
-1. Sistema agrupa múltiples pedidos en una sola factura (cuando `grouped=True`).
-2. Sistema crea una factura con líneas de todos los pedidos.
-3. Cada pedido referencia la factura agrupada.
+1. El facturador **selecciona** múltiples pedidos.
+2. El facturador **presiona** "Crear Factura" con `grouped=True`.
+3. El sistema **agrupa** las líneas de todos los pedidos.
+4. El sistema **crea** una sola factura con todas las líneas.
+5. El sistema **asocia** la factura a cada pedido.
 
-### FA-02 — Facturación parcial
+### FA-02 — El facturador hace facturación parcial
 
-1. Sistema factura solo una parte de las cantidades (parcial o downpayment).
-2. Resto queda pendiente para futuras facturas.
+1. El facturador **selecciona** las líneas específicas a facturar.
+2. El sistema **factura** solo esas líneas.
+3. El sistema **deja** las demás líneas pendientes.
+4. El sistema **actualiza** `invoice_status` a `to invoice` parcial.
 
-## Excepciones
+### FA-03 — El sistema crea factura automáticamente al validar entrega
 
-### EX-01 — Todo ya facturado
+1. El sistema **detecta** que la entrega fue validada.
+2. El sistema **invoca** `_create_invoices()` automáticamente.
+3. El sistema **ejecuta** los pasos trascendentes.
 
-1. Sistema detecta que `invoice_status` es `invoiced`.
-2. Sistema retorna mensaje "Nothing to invoice".
+## Excepciones (en voz activa)
 
-### EX-02 — Compañía sin diario configurado
+### EX-01 — No hay nada que facturar
 
-1. Compañía no tiene `currency_id` o `journal_id` configurado.
-2. Sistema retorna error de configuración.
+1. El sistema **verifica** que `invoice_status` es `invoiced`.
+2. El sistema **muestra** el mensaje "Nothing to invoice".
+
+### EX-02 — La compañía no tiene diario configurado
+
+1. El sistema **detecta** que `journal_id` está vacío.
+2. El sistema **muestra** el error de configuración.
 
 ## Reglas de negocio
 
 - **RN-FAC-001**: Solo se puede facturar un pedido en estado `sale`.
-- **RN-FAC-002**: Una factura no se puede modificar después de publicarse (CU-FAC-002), solo cancelar.
+- **RN-FAC-002**: Una factura no se puede modificar después de publicarse.
 
-## Datos de entrada
+## Relaciones con otros CU
 
-- Pedido en estado `sale`.
-- Cantidades a facturar (pueden ser parciales).
+- **<<include>> CU-VALLIN-001**: Valida líneas pendientes antes de facturar.
 
-## Datos de salida
+## Diagrama de robustez asociado
 
-- `account.move` (factura) en estado `draft`.
-- `account.move.line` (líneas de factura).
+`diagrams/plantuml/d_rob_fac_001_crear_factura.puml`
 
-## Estados involucrados
+## Verbos clave (para validar la voz activa)
 
-- Factura: `draft` → `posted` (después de CU-FAC-002).
-
-## Pantallas involucradas
-
-- `view_sale_order_form` — botón "Crear factura".
-- `account.view_move_form` — form de la factura creada.
-
-## Modelos de Odoo relacionados
-
-- `sale.order` (origen).
-- `sale.order.line` (líneas a facturar).
-- `account.move` (factura creada).
-- `account.move.line` (líneas de factura).
-- `account.tax` (impuestos aplicados).
-
-## Métodos de Odoo relacionados
-
-- `_create_invoices()` — entry point (ver `addons/sale/models/sale_order.py:1550`).
-- `_prepare_invoice()` — prepara valores (ver `addons/sale/models/sale_order.py:1411`).
-
-## Permisos requeridos
-
-- `sales_team.group_sale_salesman_all` o `account.group_account_invoice` — para crear facturas.
-
-## Configuraciones relevantes
-
-- Política de facturación del pedido (`invoice_policy`).
-- Diarios contables en `res.company`.
-
-## Casos de uso relacionados
-
-- CU-VEN-004 Confirmar pedido de venta (precondición).
-- CU-ENT-004 Validar entrega (puede disparar).
-- CU-FAC-002 Publicar factura (siguiente paso).
-
-## Criterios de aceptación
-
-- [ ] Al facturar un pedido confirmado, se crea una factura en estado `draft`.
-- [ ] La factura referencia correctamente al pedido origen.
-- [ ] Los totales coinciden con las líneas facturadas.
-
-## Evidencias de ingeniería inversa
-
-- **EV-COD-013**: `addons/sale/models/sale_order.py:1550` — método `_create_invoices`.
-- **EV-COD-014**: `addons/sale/models/sale_order.py:1411` — método `_prepare_invoice`.
-- **EV-COD-015**: `addons/account/models/account_move.py:72-73` — definición de `AccountMove` con `_name = 'account.move'`.
-
-## Supuestos y aspectos pendientes de validación
-
-- **EV-INF-010**: La lógica de agrupación de facturas (`grouped=True`) no fue leída en detalle.
-- **EV-INF-011**: La integración con `_action_invoice_create` (versión legacy) requiere verificación.
+| Verbo | Actor | Acción sobre |
+|-------|-------|--------------|
+| **presiona** | Facturador | Botón "Crear Factura" |
+| **invoca** | Sistema | `_create_invoices()` |
+| **lee** | Sistema | Pedido, líneas, taxes |
+| **verifica** | Sistema | `invoice_status` |
+| **aplica** | Sistema | Impuestos a líneas |
+| **crea** | Sistema | `account.move`, `account.move.line` |
+| **construye** | Sistema | `_prepare_invoice()` |
+| **asocia** | Sistema | `invoice_ids` |
+| **actualiza** | Sistema | `invoice_status` |
+| **muestra** | Sistema | Factura al facturador |
+| **selecciona** | Facturador | Múltiples pedidos |
+| **agrupa** | Sistema | Líneas agrupadas |
+| **factura** | Sistema | Líneas específicas |
+| **deja** | Sistema | Líneas pendientes |
+| **detecta** | Sistema | Validación de entrega / config |
+| **ejecuta** | Sistema | Pasos trascendentes |
+| **muestra** | Sistema | Mensaje de error |

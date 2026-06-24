@@ -1,186 +1,100 @@
-# CU-VEN-001 — Crear presupuesto
+# CU-VEN-001 — Crear Presupuesto
+
+## Nombre
+
+**Crear Presupuesto de Venta**
 
 ## Objetivo
 
-Crear un presupuesto de venta (sales quotation) para un cliente en estado `draft`.
+El vendedor registra un presupuesto de venta en estado `draft` para un cliente, con sus líneas de productos, precios y totales calculados.
 
-## Alcance
+## Pre-condición
 
-Módulo `sale` de Odoo 19.0. Aplica al modelo `sale.order`.
-
-## Nivel
-
-Primario (esencial para el proceso de ventas).
-
-## Actor principal
-
-Vendedor (usuario con permisos `sales_team.group_sale_salesman`).
-
-## Actores secundarios
-
-- Cliente (consulta estado).
-- Servicio de correo (envía presupuesto).
-
-## Interesados
-
-- Responsable de ventas (aprueba descuentos).
-- Administración (visualiza pipeline).
-
-## Disparador
-
-El vendedor hace clic en "Nuevo" desde la vista kanban o tree de `sale.order`, o desde el menú Ventas → Presupuestos.
-
-## Precondiciones
-
-- El usuario tiene acceso al módulo `sale`.
+- El vendedor tiene sesión iniciada (`CU-AUTH-001`).
 - Existe al menos un cliente activo en `res.partner`.
-- El catálogo de productos contiene productos publicables.
-- La compañía del usuario tiene configurada la secuencia de presupuestos en `ir.sequence`.
+- El catálogo contiene productos publicables en `product.product`.
+- La compañía tiene configurada la secuencia de presupuestos en `ir.sequence`.
 
-## Garantías mínimas
+## Post-condición
 
-El sistema crea un registro `sale.order` en estado `draft` sin errores.
+- Existe un registro `sale.order` en estado `draft` con `name` único.
+- Las líneas tienen productos, cantidades, precios unitarios, impuestos y descuentos.
+- Los totales (`amount_untaxed`, `amount_tax`, `amount_total`) están calculados.
+- El cliente tiene una lista de precios asociada por defecto.
 
-## Garantías de éxito
+## Pasos trascendentes (camino feliz, en voz activa)
 
-- El presupuesto tiene un `name` único asignado por la secuencia `sale.order`.
-- Los totales se calculan automáticamente con impuestos.
-- Se puede confirmar el presupuesto (cambio de estado a `sale`).
+1. El vendedor **presiona** "Nuevo" desde el menú Ventas → Presupuestos.
+2. El sistema **crea** un `sale.order` en estado `draft` con `name` provisional.
+3. El sistema **abre** el form `view_sale_order_form`.
+4. El vendedor **selecciona** el cliente.
+5. El sistema **carga** la lista de precios por defecto del cliente.
+6. El vendedor **agrega** líneas con productos y cantidades.
+7. El sistema **actualiza** `partner_id` y `order_line` en `sale.order`.
+8. El sistema **calcula** los totales con `_compute_amounts()`.
+9. El sistema **muestra** los totales en el form.
+10. El vendedor **guarda** el presupuesto.
 
-## Flujo principal
+## Caminos alternativos (en voz activa)
 
-1. Vendedor hace clic en "Nuevo" → sistema crea `sale.order` en estado `draft`.
-2. Sistema asigna `name` con valor por defecto `_("New")` (será reemplazado por la secuencia al guardar).
-3. Vendedor selecciona `partner_id` → sistema carga `pricelist_id` por defecto del cliente.
-4. Vendedor agrega líneas en `sale.order.line` con productos.
-5. Sistema calcula `amount_untaxed`, `amount_tax`, `amount_total` (método `_compute_amounts()`).
-6. Vendedor hace clic en "Enviar por email" → sistema invoca `action_quotation_send()` que abre un wizard de email.
-7. Estado cambia de `draft` a `sent` (al confirmar el envío).
-8. Vendedor confirma → estado cambia a `sale` (ver CU-VEN-004).
+### FA-01 — El vendedor envía el presupuesto por email
 
-## Flujos alternativos
+1. El vendedor **presiona** "Enviar por email".
+2. El sistema **invoca** `action_quotation_send()`.
+3. El sistema **valida** la distribución analítica.
+4. El sistema **marca** el presupuesto como enviado.
+5. El sistema **cambia** el estado de `draft` a `sent`.
+6. El sistema **crea** un `mail.compose.message`.
+7. El sistema **genera** el `mail.mail`.
+8. El sistema **envía** el email al cliente.
 
-### FA-01 — Aplicar descuento
+### FA-02 — El vendedor aplica un descuento (incluye CU-VEN-001-DISC)
 
-1. Vendedor edita `discount` en una línea de `sale.order.line`.
-2. Sistema recalcula el monto de la línea.
-3. Si supera el descuento máximo permitido, sistema puede bloquear o notificar.
+1. El vendedor **edita** el campo `discount` en una línea.
+2. El sistema **recalcula** el subtotal de la línea.
+3. Si el descuento supera el máximo permitido, el sistema **bloquea** o **notifica**.
 
-### FA-02 — Duplicar presupuesto
+### FA-03 — El vendedor duplica el presupuesto
 
-1. Vendedor selecciona un presupuesto existente y elige "Duplicar".
-2. Sistema crea un nuevo `sale.order` copiando las líneas.
-3. Estado del nuevo registro: `draft`.
-
-## Excepciones
-
-### EX-01 — Cliente sin dirección de entrega
-
-1. Al intentar confirmar (estado `sale`), sistema valida que exista `partner_shipping_id`.
-2. Si no existe, sistema muestra error "Configure la dirección de entrega".
-
-### EX-02 — Líneas sin producto
-
-1. Al confirmar, sistema valida que cada línea tenga `product_id`.
-2. Si falta, sistema muestra error "Some order lines are missing a product".
+1. El vendedor **selecciona** un presupuesto existente.
+2. El vendedor **presiona** "Duplicar".
+3. El sistema **crea** un nuevo `sale.order` copiando las líneas.
+4. El sistema **asigna** estado `draft` al nuevo presupuesto.
 
 ## Reglas de negocio
 
-- **RN-VEN-001**: `state` solo puede pasar de `draft` → `sent` → `sale`, o a `cancel`.
-- **RN-VEN-002**: El campo `name` se genera automáticamente por la secuencia configurada en la compañía.
-- **RN-VEN-003**: Descuentos mayores al 10% (configurable) pueden requerir aprobación.
+- **RN-VEN-001**: El estado `state` solo puede pasar de `draft` → `sent` → `sale`, o a `cancel`.
+- **RN-VEN-002**: El campo `name` se genera por la secuencia configurada en la compañía.
+- **RN-VEN-003**: Los descuentos mayores al 10% pueden requerir aprobación.
 
-## Datos de entrada
+## Relaciones con otros CU
 
-- Cliente (`partner_id`).
-- Compañía (`company_id`).
-- Moneda (`currency_id`).
-- Lista de precios (`pricelist_id`, opcional).
-- Líneas (`order_line` con productos).
+- **<<include>> CU-AUTH-001**: Valida la sesión antes de crear el presupuesto.
+- **<<include>> CU-CALC-001**: Calcula los totales con impuestos.
+- **<<extend>> CU-VEN-001-EMAIL**: Envía el presupuesto por email (opcional).
+- **<<extend>> CU-VEN-001-DISC**: Aplica descuento (opcional).
 
-## Datos de salida
+## Diagrama de robustez asociado
 
-- Registro `sale.order` persistido.
-- Líneas `sale.order.line` relacionadas.
-- Correo enviado (opcional).
+`diagrams/plantuml/d_rob_ven_001_crear_presupuesto.puml`
 
-## Estados involucrados
+## Verbos clave (para validar la voz activa)
 
-- `draft` (Quotation) — estado inicial.
-- `sent` (Quotation Sent) — al enviar por email.
-- `sale` (Sales Order) — al confirmar.
-- `cancel` (Cancelled) — al cancelar.
-
-## Pantallas involucradas
-
-- `view_sale_order_form` — form principal (ver `addons/sale/views/sale_order_view.xml`).
-- `view_sale_order_kanban` — vista kanban (ver mismo archivo).
-- `view_sale_order_tree` — vista tree (listado).
-
-## Modelos de Odoo relacionados
-
-- `sale.order` (principal, `_name = 'sale.order'`).
-- `sale.order.line` (líneas).
-- `res.partner` (cliente).
-- `product.product` (productos).
-- `account.tax` (impuestos).
-- `product.pricelist` (lista de precios).
-
-## Métodos de Odoo relacionados
-
-- `action_quotation_send()` — abre wizard de email (ver `addons/sale/models/sale_order.py:1067`).
-- `action_confirm()` — confirma el pedido (ver `addons/sale/models/sale_order.py:1166`).
-- `action_cancel()` — cancela el pedido (ver `addons/sale/models/sale_order.py:1324`).
-- `_compute_amounts()` — calcula totales (ver `addons/sale/models/sale_order.py:513`).
-
-## Permisos requeridos
-
-- `sales_team.group_sale_salesman` — para crear y editar presupuestos.
-- `sales_team.group_sale_manager` — para aprobar descuentos y confirmar pedidos.
-
-## Configuraciones relevantes
-
-- Política de facturación en `res.company` (`sale_order_template_id`).
-- Secuencia de presupuestos en `ir.sequence` (`sale.order.template` o equivalente según versión).
-- Configuración de descuentos máximos.
-
-## Casos de uso relacionados
-
-- CU-VEN-002 Modificar presupuesto.
-- CU-VEN-003 Enviar presupuesto al cliente.
-- CU-VEN-004 Confirmar pedido de venta.
-
-## Criterios de aceptación
-
-- [ ] El vendedor puede crear un presupuesto en menos de 5 clicks.
-- [ ] El sistema valida la dirección de entrega antes de confirmar.
-- [ ] El correo al cliente incluye el PDF del presupuesto.
-- [ ] Los totales se calculan automáticamente.
-
-## Evidencias de ingeniería inversa
-
-- **EV-COD-001**: `addons/sale/models/sale_order.py:34-36` — definición de la clase `SaleOrder` con `_name = 'sale.order'`.
-  ```python
-  class SaleOrder(models.Model):
-      _name = 'sale.order'
-      _inherit = ['portal.mixin', 'product.catalog.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin', 'account.document.import.mixin']
-      _description = "Sales Order"
-  ```
-- **EV-COD-002**: `addons/sale/models/sale_order.py:26-31` — definición de `SALE_ORDER_STATE`.
-  ```python
-  SALE_ORDER_STATE = [
-      ('draft', "Quotation"),
-      ('sent', "Quotation Sent"),
-      ('sale', "Sales Order"),
-      ('cancel', "Cancelled"),
-  ]
-  ```
-- **EV-COD-003**: `addons/sale/models/sale_order.py:1067` — método `action_quotation_send`.
-- **EV-COD-004**: `addons/sale/models/sale_order.py:1166` — método `action_confirm`.
-- **EV-COD-005**: `addons/sale/models/sale_order.py:54-58` — campo `name` con default `_("New")`.
-
-## Supuestos y aspectos pendientes de validación
-
-- **EV-INF-001**: El wizard de email usa `mail.compose.message` (verificado por contexto en `action_quotation_send`).
-- **EV-INF-002**: La secuencia `sale.order` puede variar según configuración de la compañía.
-- **EV-INF-003**: La validación de descuento máximo depende de configuración que requiere verificación.
+| Verbo | Actor | Acción sobre |
+|-------|-------|--------------|
+| **presiona** | Vendedor | Botón "Nuevo" |
+| **crea** | Sistema | `sale.order` (draft) |
+| **abre** | Sistema | `view_sale_order_form` |
+| **selecciona** | Vendedor | Cliente |
+| **carga** | Sistema | Lista de precios |
+| **agrega** | Vendedor | Líneas |
+| **actualiza** | Sistema | `partner_id`, `order_line` |
+| **calcula** | Sistema | `_compute_amounts()` |
+| **muestra** | Sistema | Totales en form |
+| **guarda** | Vendedor | Presupuesto |
+| **invoca** | Sistema | `action_quotation_send()` |
+| **valida** | Sistema | Distribución analítica |
+| **marca** | Sistema | `mark_so_as_sent` |
+| **cambia** | Sistema | Estado `draft` → `sent` |
+| **genera** | Sistema | `mail.mail` |
+| **envía** | Sistema | Email al cliente |
