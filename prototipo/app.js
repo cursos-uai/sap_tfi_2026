@@ -60,7 +60,8 @@ function renderScenario(key){
   document.querySelector("#record-state").textContent=scenario.state;
   document.querySelector("#primary-actions").innerHTML=scenario.actions.map(([label,kind,action])=>`<button class="${kind}" data-action="${action}">${label}</button>`).join("");
   document.querySelector("#trace-grid").innerHTML=scenario.trace.map(row=>`<article class="trace-row"><div class="trace-cell boundary-cell"><span>Boundary</span><strong>${row[0]}</strong><p>Elemento que ve o utiliza el actor.</p></div><div class="trace-cell control-cell"><span>Control</span><strong>${row[1]}</strong><p>Comportamiento disparado.</p></div><div class="trace-cell entity-cell"><span>Entity</span><strong>${row[2]}</strong><p>Datos consultados o modificados.</p></div></article>`).join("");
-  document.querySelector("#diagram-link").href=`../diagrams/svg/${encodeURIComponent(scenario.diagram)}%20${encodeURIComponent("—")}%20${diagramFilename(key)}.svg`;
+  const diagramBase=location.pathname.includes("/prototipo/")?"../diagrams/svg/":"diagrams/svg/";
+  document.querySelector("#diagram-link").href=`${diagramBase}${encodeURIComponent(scenario.diagram)}%20${encodeURIComponent("—")}%20${diagramFilename(key)}.svg`;
   log("Pantalla preparada",`Estás explorando ${scenario.diagram}. Usá los botones para simular el flujo.`);
 }
 
