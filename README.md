@@ -53,19 +53,22 @@ sap_tfi_2026/
 
 ---
 
+## Recursos interactivos para el Trabajo Práctico
+
+| Recurso | Para qué sirve | Abrir |
+|---------|----------------|-------|
+| **Prototipo ICONIX** | Explorar pantallas, acciones y trazabilidad `Boundary → Control → Entity`. | [Abrir prototipo](https://cursos-uai.github.io/sap_tfi_2026/) |
+| **Ejercicios interactivos** | Practicar fundamentos de diseño y los diagramas principales de ICONIX. | [Abrir ejercicios](https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html) |
+| **Guías paso a paso** | Resolver casos de diseño con una hoja de ruta, pistas y soluciones modelo. | [Abrir guías](https://cursos-uai.github.io/sap_tfi_2026/guias.html) |
+| **Checklist del TP** | Controlar los 59 criterios, registrar evidencias y verificar la trazabilidad de la entrega. | [Abrir checklist](https://cursos-uai.github.io/sap_tfi_2026/checklist.html) |
+
+Se recomienda comenzar por las **guías paso a paso** durante la elaboración del
+trabajo y utilizar la **checklist del TP** antes de cada revisión y de la
+entrega final.
+
+---
+
 ## Prototipo navegable de fronteras ICONIX
-
-> **Abrir la versión web:**
-> [https://cursos-uai.github.io/sap_tfi_2026/](https://cursos-uai.github.io/sap_tfi_2026/)
-
-> **Practicar con ejercicios interactivos:**
-> [https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html](https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html)
-
-> **Resolver casos con hojas de ruta paso a paso:**
-> [https://cursos-uai.github.io/sap_tfi_2026/guias.html](https://cursos-uai.github.io/sap_tfi_2026/guias.html)
-
-> **Controlar la entrega con la checklist interactiva:**
-> [https://cursos-uai.github.io/sap_tfi_2026/checklist.html](https://cursos-uai.github.io/sap_tfi_2026/checklist.html)
 
 El directorio **`prototipo/`** contiene una representación interactiva de las
 pantallas que actúan como fronteras (*boundaries*) en los diagramas de robustez.
