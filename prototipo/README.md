@@ -59,7 +59,10 @@ razonamiento, solicitar una pista y comparar al final con una solución modelo.
 Abrir `checklist.html` para controlar los diez grupos de entregables del TP:
 requerimientos, casos de uso, dominio, prototipo, arquitectura, robustez,
 secuencia, clases, patrones y testing estructural. Cada criterio admite una
-evidencia y el progreso queda guardado localmente en el navegador.
+referencia precisa al borrador —página, sección, tabla, figura, párrafo u otra—
+y el progreso queda guardado localmente en el navegador. Al finalizar se puede
+generar un informe `.md`, descargarlo y preparar el correo de seguimiento para
+el profesor Alejandro Sartorio.
 
 ## Alcance
 

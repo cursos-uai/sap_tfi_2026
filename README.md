@@ -60,7 +60,7 @@ sap_tfi_2026/
 | **Prototipo ICONIX** | Explorar pantallas, acciones y trazabilidad `Boundary → Control → Entity`. | [Abrir prototipo](https://cursos-uai.github.io/sap_tfi_2026/) |
 | **Ejercicios interactivos** | Practicar fundamentos de diseño y los diagramas principales de ICONIX. | [Abrir ejercicios](https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html) |
 | **Guías paso a paso** | Resolver casos de diseño con una hoja de ruta, pistas y soluciones modelo. | [Abrir guías](https://cursos-uai.github.io/sap_tfi_2026/guias.html) |
-| **Checklist del TP** | Controlar los 59 criterios, registrar evidencias y verificar la trazabilidad de la entrega. | [Abrir checklist](https://cursos-uai.github.io/sap_tfi_2026/checklist.html) |
+| **Checklist del TP** | Referenciar evidencias del borrador, generar el informe `.md` y preparar su envío al profesor. | [Abrir checklist](https://cursos-uai.github.io/sap_tfi_2026/checklist.html) |
 
 Se recomienda comenzar por las **guías paso a paso** durante la elaboración del
 trabajo y utilizar la **checklist del TP** antes de cada revisión y de la
