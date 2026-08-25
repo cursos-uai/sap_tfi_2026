@@ -53,14 +53,63 @@ sap_tfi_2026/
 
 ---
 
+## Prototipo navegable de fronteras ICONIX
+
+> **Abrir la versión web:**
+> [https://cursos-uai.github.io/sap_tfi_2026/](https://cursos-uai.github.io/sap_tfi_2026/)
+
+El directorio **`prototipo/`** contiene una representación interactiva de las
+pantallas que actúan como fronteras (*boundaries*) en los diagramas de robustez.
+Permite observar cómo los botones, formularios, tablas, mensajes y otros
+componentes de interfaz se relacionan con las acciones de control y con los
+datos del dominio.
+
+### Escenarios incluidos
+
+| Pantalla | Caso de uso | Diagrama de robustez | Acciones representadas |
+|----------|-------------|-----------------------|------------------------|
+| Presupuesto | `CU-VEN-001` | `D-ROB-VEN-001` | Guardar, enviar por email, cancelar y agregar productos |
+| Confirmación | `CU-VEN-004` | `D-ROB-VEN-004` | Validar y confirmar el pedido |
+| Reserva | `CU-ENT-002` | `D-ROB-ENT-002` | Comprobar disponibilidad y reservar productos |
+| Facturación | `CU-FAC-001` | `D-ROB-FAC-001` | Seleccionar modalidad y crear una factura borrador |
+
+### Relación con ICONIX
+
+Cada escenario dispone de dos vistas:
+
+- **Pantalla**: simula la interacción del actor con botones, campos,
+  formularios, tablas, estados y mensajes.
+- **Trazabilidad**: vincula cada elemento visible con la terna
+  **Boundary → Control → Entity**.
+
+| Elemento ICONIX | Representación en el prototipo | Ejemplo |
+|-----------------|----------------------------------|---------|
+| **Boundary** | Componente visible o interactivo | Botón **Confirmar**, formulario del pedido |
+| **Control** | Acción disparada por la interfaz | `action_confirm()` |
+| **Entity** | Modelo consultado o modificado | `sale.order`, `stock.picking` |
+
+Al ejecutar una acción, el panel inferior informa qué control se invoca y
+qué entidades intervienen. Desde la vista **Trazabilidad** también se puede
+abrir el diagrama de robustez SVG asociado.
+
+### Uso local
+
+El prototipo es estático y no requiere instalar dependencias. Se puede abrir
+directamente con `prototipo/index.html` o servir desde la raíz del repositorio:
+
+```bash
+python3 -m http.server 8000 --directory prototipo
+```
+
+Luego visitar <http://localhost:8000>.
+
+> **Alcance:** es una herramienta didáctica con datos ficticios. No está
+> conectada a una instancia de Odoo ni pretende reproducir exactamente todas
+> sus vistas, permisos o reglas de visibilidad.
+
+---
+
 ## Cómo usar este repositorio para el TP
-
-### Explorar el prototipo de fronteras
-
-Abrí **`prototipo/index.html`** para recorrer las pantallas de presupuesto,
-confirmación, reserva y facturación. La vista **Trazabilidad** muestra la
-relación entre cada componente de interfaz (boundary), la acción que dispara
-(control) y los modelos afectados (entity).
 
 ### Paso 1: Entender la metodología ICONIX
 
