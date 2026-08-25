@@ -62,7 +62,9 @@ secuencia, clases, patrones y testing estructural. Cada criterio admite una
 referencia precisa al borrador —página, sección, tabla, figura, párrafo u otra—
 y el progreso queda guardado localmente en el navegador. Al finalizar se puede
 generar un informe `.md`, descargarlo y preparar el correo de seguimiento para
-el profesor Alejandro Sartorio.
+el profesor Alejandro Sartorio. Para la entrega definitiva antes de rendir, la
+página también guía el fork del repositorio, la ubicación obligatoria
+`trabajo_final/Apellido_Nombre/` y el pull request que registra cada versión.
 
 ## Alcance
 
