@@ -47,12 +47,20 @@ sap_tfi_2026/
 │   └── pdf/                                   ← versiones PDF
 ├── evidence/
 │   └── index.md                               ← catálogo de evidencias
+├── prototipo/                                  ← pantallas navegables y trazabilidad ICONIX
 └── .gitignore
 ```
 
 ---
 
 ## Cómo usar este repositorio para el TP
+
+### Explorar el prototipo de fronteras
+
+Abrí **`prototipo/index.html`** para recorrer las pantallas de presupuesto,
+confirmación, reserva y facturación. La vista **Trazabilidad** muestra la
+relación entre cada componente de interfaz (boundary), la acción que dispara
+(control) y los modelos afectados (entity).
 
 ### Paso 1: Entender la metodología ICONIX
 

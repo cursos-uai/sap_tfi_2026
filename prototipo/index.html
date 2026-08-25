@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototipo educativo de fronteras ICONIX para SAP-TFI-2026">
+  <title>Prototipo ICONIX · SAP-TFI-2026</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#presupuesto" aria-label="Ir al inicio">
+      <span class="brand-mark">S</span>
+      <span><strong>SAP · TFI</strong><small>Laboratorio ICONIX</small></span>
+    </a>
+    <div class="course"><span>UAI · Ingeniería</span><span class="status-dot">Prototipo educativo</span></div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar" aria-label="Escenarios">
+      <p class="eyebrow">Flujo comercial</p>
+      <nav id="scenario-nav">
+        <button class="nav-item active" data-scenario="presupuesto"><span>01</span>Presupuesto<small>CU-VEN-001</small></button>
+        <button class="nav-item" data-scenario="confirmacion"><span>02</span>Confirmación<small>CU-VEN-004</small></button>
+        <button class="nav-item" data-scenario="reserva"><span>03</span>Reserva<small>CU-ENT-002</small></button>
+        <button class="nav-item" data-scenario="factura"><span>04</span>Facturación<small>CU-FAC-001</small></button>
+      </nav>
+      <div class="legend">
+        <p class="eyebrow">Leyenda ICONIX</p>
+        <span><i class="dot boundary"></i>Frontera</span>
+        <span><i class="dot control"></i>Control</span>
+        <span><i class="dot entity"></i>Entidad</span>
+      </div>
+    </aside>
+
+    <section class="stage">
+      <div class="stage-heading">
+        <div><p class="eyebrow" id="diagram-id">D-ROB-VEN-001</p><h1 id="screen-title">Crear presupuesto</h1></div>
+        <div class="view-switch" aria-label="Vista del prototipo">
+          <button class="active" data-view="ui">Pantalla</button>
+          <button data-view="trace">Trazabilidad</button>
+        </div>
+      </div>
+
+      <div id="ui-view" class="view active">
+        <div class="browser-frame">
+          <div class="browser-bar"><span></span><span></span><span></span><p>Ventas / Presupuestos / Nuevo</p></div>
+          <div class="app-shell">
+            <div class="actionbar">
+              <div id="primary-actions"></div>
+              <span class="record-state" id="record-state">BORRADOR</span>
+            </div>
+
+            <div id="screen-presupuesto" class="screen active">
+              <div class="form-title"><span>Presupuesto</span><strong id="order-name">Nuevo</strong></div>
+              <div class="form-grid">
+                <label>Cliente<input id="customer" value="Industrias Horizonte S.A."></label>
+                <label>Vendedor<input value="Ana Torres"></label>
+                <label>Lista de precios<select><option>ARS · Mayorista</option></select></label>
+                <label>Validez<input type="date" value="2026-09-30"></label>
+              </div>
+              <div class="tabs"><button class="active">Líneas del pedido</button><button>Otra información</button></div>
+              <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Dto.</th><th>Impuesto</th><th>Subtotal</th></tr></thead><tbody id="order-lines"></tbody></table></div>
+              <button class="text-button" id="add-line">+ Agregar producto</button>
+              <div class="totals"><span>Base imponible <b id="untaxed">$ 0</b></span><span>IVA 21% <b id="tax">$ 0</b></span><strong>Total <b id="total">$ 0</b></strong></div>
+            </div>
+
+            <div id="screen-confirmacion" class="screen">
+              <div class="summary-card"><span class="icon success">✓</span><div><p>Pedido listo para confirmar</p><h2>S00042 · Industrias Horizonte S.A.</h2></div><strong>$ 588.060</strong></div>
+              <div class="validation-grid"><article><span>Estado</span><strong>Presupuesto enviado</strong></article><article><span>Líneas</span><strong>2 productos válidos</strong></article><article><span>Stock</span><strong>Se generará una entrega</strong></article><article><span>Facturación</span><strong>Según cantidades entregadas</strong></article></div>
+              <div class="callout"><b>Al confirmar</b><p>El sistema cambia el estado del pedido, fija la fecha y genera el picking de almacén.</p></div>
+            </div>
+
+            <div id="screen-reserva" class="screen">
+              <div class="form-title"><span>Transferencia</span><strong>WH/OUT/00031</strong></div>
+              <div class="progress"><span class="done">Pedido</span><span class="active">Reserva</span><span>Preparado</span><span>Entregado</span></div>
+              <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Demanda</th><th>Disponible</th><th>Reservado</th><th>Resultado</th></tr></thead><tbody><tr><td>Notebook Pro 14</td><td>2</td><td>5</td><td id="reserved-a">0</td><td><span class="pill waiting" id="reserve-state-a">Pendiente</span></td></tr><tr><td>Dock USB-C</td><td>3</td><td>1</td><td id="reserved-b">0</td><td><span class="pill waiting" id="reserve-state-b">Pendiente</span></td></tr></tbody></table></div>
+              <div class="callout warning"><b>Disponibilidad parcial</b><p>La segunda línea puede requerir reabastecimiento según la regla configurada.</p></div>
+            </div>
+
+            <div id="screen-factura" class="screen">
+              <div class="summary-card"><span class="icon invoice">$</span><div><p>Pedido confirmado</p><h2>S00042 · Pendiente de facturar</h2></div><strong>$ 588.060</strong></div>
+              <div class="invoice-options"><label><input type="radio" name="invoice" checked> Factura regular <small>Facturar las líneas disponibles.</small></label><label><input type="radio" name="invoice"> Anticipo porcentual <small>Crear una factura por un porcentaje.</small></label></div>
+              <div class="model-preview"><p class="eyebrow">Datos que se crearán</p><div><span>account.move</span><b>Estado: draft</b></div><div><span>account.move.line</span><b>2 líneas</b></div><div><span>account.tax</span><b>IVA 21%</b></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="event-log"><div><p class="eyebrow">Acción observada</p><strong id="event-title">Formulario preparado</strong></div><p id="event-detail">Seleccioná una acción para ver su relación con ICONIX.</p></div>
+      </div>
+
+      <div id="trace-view" class="view">
+        <div class="trace-intro"><p>Esta vista une cada elemento visible con el control que invoca y las entidades que consulta o modifica.</p><a id="diagram-link" href="../diagrams/svg/D-ROB-VEN-001%20%E2%80%94%20Diagrama%20de%20Robustez:%20Crear%20Presupuesto.svg" target="_blank">Abrir diagrama SVG ↗</a></div>
+        <div class="trace-grid" id="trace-grid"></div>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
