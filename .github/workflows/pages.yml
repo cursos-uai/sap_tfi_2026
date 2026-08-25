@@ -1,0 +1,47 @@
+name: Publicar prototipo en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "prototipo/**"
+      - "diagrams/svg/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v7
+
+      - name: Preparar sitio
+        run: |
+          mkdir -p _site/diagrams/svg
+          cp -R prototipo/. _site/
+          cp diagrams/svg/*.svg _site/diagrams/svg/
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v6
+
+      - name: Empaquetar sitio
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v5

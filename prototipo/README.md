@@ -12,6 +12,9 @@ trazabilidad entre:
 
 No requiere instalación ni servidor. Abrir `index.html` en un navegador.
 
+La versión publicada está disponible en:
+<https://cursos-uai.github.io/sap_tfi_2026/>.
+
 Para servirlo localmente (opcional):
 
 ```bash
