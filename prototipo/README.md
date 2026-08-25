@@ -32,6 +32,21 @@ Luego visitar <http://localhost:8000>.
 | Reserva | CU-ENT-002 | D-ROB-ENT-002 |
 | Facturación | CU-FAC-001 | D-ROB-FAC-001 |
 
+## Ejercicios interactivos
+
+Abrir `ejercicios.html` para recorrer seis estaciones de aprendizaje:
+
+1. fundamentos de diseño para el cambio y ocultamiento de información;
+2. modelo de dominio;
+3. casos de uso;
+4. diagramas de robustez;
+5. diagramas de secuencia;
+6. diagramas de clases.
+
+Los ejercicios ofrecen corrección inmediata, explicación de la respuesta y
+progreso persistente en el navegador. La base teórica se encuentra citada al
+pie de cada estación.
+
 ## Alcance
 
 Es un prototipo educativo, no una reproducción exacta ni conectada a Odoo. Los

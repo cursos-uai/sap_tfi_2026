@@ -58,6 +58,9 @@ sap_tfi_2026/
 > **Abrir la versión web:**
 > [https://cursos-uai.github.io/sap_tfi_2026/](https://cursos-uai.github.io/sap_tfi_2026/)
 
+> **Practicar con ejercicios interactivos:**
+> [https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html](https://cursos-uai.github.io/sap_tfi_2026/ejercicios.html)
+
 El directorio **`prototipo/`** contiene una representación interactiva de las
 pantallas que actúan como fronteras (*boundaries*) en los diagramas de robustez.
 Permite observar cómo los botones, formularios, tablas, mensajes y otros
