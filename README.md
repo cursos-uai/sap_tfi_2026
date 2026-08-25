@@ -64,6 +64,9 @@ sap_tfi_2026/
 > **Resolver casos con hojas de ruta paso a paso:**
 > [https://cursos-uai.github.io/sap_tfi_2026/guias.html](https://cursos-uai.github.io/sap_tfi_2026/guias.html)
 
+> **Controlar la entrega con la checklist interactiva:**
+> [https://cursos-uai.github.io/sap_tfi_2026/checklist.html](https://cursos-uai.github.io/sap_tfi_2026/checklist.html)
+
 El directorio **`prototipo/`** contiene una representación interactiva de las
 pantallas que actúan como fronteras (*boundaries*) en los diagramas de robustez.
 Permite observar cómo los botones, formularios, tablas, mensajes y otros

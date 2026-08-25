@@ -54,6 +54,13 @@ comprender el problema, anticipar cambios, descomponer, diseñar interfaces,
 establecer relaciones y validar el diseño. Cada paso permite registrar el
 razonamiento, solicitar una pista y comparar al final con una solución modelo.
 
+## Checklist del Trabajo Práctico
+
+Abrir `checklist.html` para controlar los diez grupos de entregables del TP:
+requerimientos, casos de uso, dominio, prototipo, arquitectura, robustez,
+secuencia, clases, patrones y testing estructural. Cada criterio admite una
+evidencia y el progreso queda guardado localmente en el navegador.
+
 ## Alcance
 
 Es un prototipo educativo, no una reproducción exacta ni conectada a Odoo. Los
