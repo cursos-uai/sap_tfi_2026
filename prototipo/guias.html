@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hojas de ruta para resolver problemas de diseño de software paso a paso">
+  <title>Guías paso a paso · SAP-TFI-2026</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="guias.css">
+</head>
+<body class="guide-body">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">S</span><span><strong>SAP · TFI</strong><small>Laboratorio ICONIX</small></span></a>
+    <nav class="course lab-links"><a href="index.html">Prototipo</a><a href="ejercicios.html">Ejercicios</a><a class="active" href="guias.html">Guías</a></nav>
+  </header>
+
+  <main class="guide-shell">
+    <section class="guide-hero">
+      <div><p class="eyebrow">Práctica acompañada</p><h1>Resolver diseño, paso a paso</h1><p>No mires primero la respuesta. Registrá tus decisiones, pedí una pista cuando la necesites y compará tu propuesta recién al final.</p></div>
+      <div class="guide-progress"><strong id="guide-completed">0 / 6</strong><span>casos completados</span></div>
+    </section>
+
+    <section class="case-picker" id="case-picker" aria-label="Casos disponibles"></section>
+
+    <section class="case-workspace">
+      <aside class="roadmap"><p class="eyebrow">Hoja de ruta</p><ol id="roadmap"></ol></aside>
+      <article class="step-panel">
+        <header><div><p class="eyebrow" id="case-label"></p><h2 id="case-title"></h2></div><span id="step-counter"></span></header>
+        <div class="problem-box" id="problem-box"></div>
+        <div id="step-content"></div>
+        <div class="step-actions"><button id="previous-step">← Paso anterior</button><button id="hint-button">Ver una pista</button><button id="next-step" class="primary">Guardar y continuar →</button></div>
+      </article>
+    </section>
+
+    <section class="method-card">
+      <p class="eyebrow">Método reutilizable para la práctica completa</p>
+      <h2>La misma hoja de ruta sirve para los problemas no resueltos</h2>
+      <div class="method-grid"><span><b>1</b>Separar hechos de decisiones</span><span><b>2</b>Anticipar cambios</span><span><b>3</b>Un secreto por módulo</span><span><b>4</b>Diseñar interfaces</span><span><b>5</b>Elegir relaciones</span><span><b>6</b>Documentar y someter a cambios</span></div>
+      <p>Aplicala a Celda de producción, Museo, Balanza de camiones, Procesamiento de imágenes, Estación climatológica, Exclusa y los demás enunciados de la práctica.</p>
+    </section>
+
+    <footer class="guide-sources"><b>Material de estudio:</b> <a href="https://www.fceia.unr.edu.ar/ingsoft/p-diseno.pdf" target="_blank" rel="noreferrer">Práctica de Diseño ↗</a><a href="https://www.fceia.unr.edu.ar/ingsoft/problemasDiseno.pdf" target="_blank" rel="noreferrer">Problemas resueltos ↗</a></footer>
+  </main>
+  <dialog id="solution-dialog"><div class="solution-mark">✓</div><h2>Compará con la solución modelo</h2><div id="solution-content"></div><button id="close-solution">Cerrar</button></dialog>
+  <script src="guias.js"></script>
+</body>
+</html>
