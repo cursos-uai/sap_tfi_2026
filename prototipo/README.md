@@ -47,6 +47,13 @@ Los ejercicios ofrecen corrección inmediata, explicación de la respuesta y
 progreso persistente en el navegador. La base teórica se encuentra citada al
 pie de cada estación.
 
+## Guías paso a paso
+
+Abrir `guias.html` para resolver seis casos progresivos con una hoja de ruta:
+comprender el problema, anticipar cambios, descomponer, diseñar interfaces,
+establecer relaciones y validar el diseño. Cada paso permite registrar el
+razonamiento, solicitar una pista y comparar al final con una solución modelo.
+
 ## Alcance
 
 Es un prototipo educativo, no una reproducción exacta ni conectada a Odoo. Los
