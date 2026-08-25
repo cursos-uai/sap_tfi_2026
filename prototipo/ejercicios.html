@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio interactivo para aprender diseño de software e ICONIX">
+  <title>Ejercicios ICONIX · SAP-TFI-2026</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="ejercicios.css">
+</head>
+<body class="lab-body">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">S</span><span><strong>SAP · TFI</strong><small>Laboratorio ICONIX</small></span></a>
+    <nav class="course lab-links"><a href="index.html">Prototipo</a><a class="active" href="ejercicios.html">Ejercicios</a></nav>
+  </header>
+
+  <main class="lab-layout">
+    <aside class="lesson-nav">
+      <div><p class="eyebrow">Tu recorrido</p><h2>Del cambio a las clases</h2><div class="progress-meter"><i id="progress-bar"></i></div><small id="progress-copy">0 de 6 estaciones completadas</small></div>
+      <nav id="lesson-list"></nav>
+      <button id="reset-progress" class="reset-button">Reiniciar progreso</button>
+    </aside>
+
+    <section class="lesson-stage">
+      <header class="lesson-header"><div><p class="eyebrow" id="lesson-kicker">Fundamentos</p><h1 id="lesson-title">Diseñar para el cambio</h1><p id="lesson-summary"></p></div><span id="lesson-score" class="score-chip">0 / 0</span></header>
+      <div id="lesson-content"></div>
+      <footer class="lesson-footer"><button id="previous-lesson">← Anterior</button><button id="next-lesson" class="primary">Siguiente →</button></footer>
+    </section>
+  </main>
+
+  <dialog id="completion-dialog"><div class="celebration">✦</div><h2>Recorrido completado</h2><p>Ya conectaste fundamentos de diseño con los cinco artefactos principales de ICONIX.</p><button id="close-dialog">Seguir practicando</button></dialog>
+  <script src="ejercicios.js"></script>
+</body>
+</html>
