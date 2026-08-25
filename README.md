@@ -48,6 +48,7 @@ sap_tfi_2026/
 ├── evidence/
 │   └── index.md                               ← catálogo de evidencias
 ├── prototipo/                                  ← pantallas navegables y trazabilidad ICONIX
+├── trabajo_final/                              ← entregas de alumnos por pull request
 └── .gitignore
 ```
 
@@ -65,6 +66,24 @@ sap_tfi_2026/
 Se recomienda comenzar por las **guías paso a paso** durante la elaboración del
 trabajo y utilizar la **checklist del TP** antes de cada revisión y de la
 entrega final.
+
+---
+
+## Procedimiento de entrega final
+
+Antes de rendir, cada alumno debe entregar el trabajo mediante GitHub:
+
+1. Hacer un [fork de este repositorio](https://github.com/cursos-uai/sap_tfi_2026/fork).
+2. Subir el trabajo completo dentro de
+   **`trabajo_final/Apellido_Nombre/`**, reemplazando el ejemplo por los datos
+   del alumno y sin utilizar espacios.
+3. Abrir un **pull request** desde el fork hacia la rama `main` de este
+   repositorio.
+4. Presentar cada actualización posterior mediante un **nuevo pull request**.
+
+Las instrucciones completas y la estructura esperada están en
+[`trabajo_final/README.md`](trabajo_final/README.md). No se deben modificar las
+carpetas correspondientes a otros alumnos.
 
 ---
 
