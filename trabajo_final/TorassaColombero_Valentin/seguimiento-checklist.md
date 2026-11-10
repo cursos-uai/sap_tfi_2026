@@ -2,7 +2,7 @@
 
 - **Alumno/a o equipo:** Valentín Torassa Colombero
 - **Comisión:** T1-23-47 — Seminario de Trabajo Final de Ingeniería
-- **Documento de esta entrega:** [Torassa_Valentin_E3-2C_v2.pdf](Torassa_Valentin_E3-2C_v2.pdf)
+- **Documento de esta entrega:** [Torassa_Valentin_E3-2C_v3.pdf](Torassa_Valentin_E3-2C_v3.pdf)
 - **Última actualización:** 10/11/2026
 - **Avance referenciado:** documento completo, puntos 1 a 11. 59/59 criterios de la checklist tecnológica documentados; los puntos 7, 8 y 9 se verificaron aparte contra la guía.
 - **Cambios de numeración respecto de la versión 4:** la Sección 5.3.3 y la Tabla 9 son nuevas, así que los puntos 7 a 11 quedan tres páginas más adelante (10.4.3 y 10.4.4, cuatro) y las tablas posteriores a la 9 suman uno. Las figuras conservan su número.
@@ -173,4 +173,4 @@ Todas las cifras del punto 8 salen de `modelo_financiero.py` (incluido en el paq
 
 ---
 
-Informe generado con la checklist interactiva SAP-TFI-2026 y actualizado con la numeración de la versión 1.9.
+Informe generado con la checklist interactiva SAP-TFI-2026 y actualizado con la numeración de la versión 1.9, que la versión 1.10 conserva.

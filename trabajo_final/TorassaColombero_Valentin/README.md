@@ -4,7 +4,7 @@
 - **Comisión:** T1-23-47 — Seminario de Trabajo Final de Ingeniería
 - **Carrera:** Ingeniería en Sistemas Informáticos — Facultad de Tecnología Informática, UAI Rosario
 - **Dirección:** María Eugenia Casco y Santiago Enrique Roatta
-- **Versión:** 5 (Tercera Entrega, 2.º cuatrimestre 2026). Actualiza la versión 4 (PR #17).
+- **Versión:** 6 (Tercera Entrega, 2.º cuatrimestre 2026). Actualiza la versión 5 (PR #18).
 
 ## De qué se trata el trabajo
 
@@ -17,8 +17,8 @@ y no como un emprendimiento.
 
 | Archivo | Descripción |
 |---|---|
-| Torassa_Valentin_E3-2C_v2.pdf | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 86 páginas (versión 1.9 del documento). |
-| seguimiento-checklist.md | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de la checklist tecnológica y de los enlaces de la solución, con la numeración de la versión 1.9. |
+| Torassa_Valentin_E3-2C_v3.pdf | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 87 páginas (versión 1.10 del documento). |
+| seguimiento-checklist.md | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de la checklist tecnológica y de los enlaces de la solución, con la numeración de la versión 1.9, que la 1.10 conserva. |
 | registro-revision-prototipo.md | Registro anónimo de las tres pruebas individuales del prototipo (Sección 10.9), sin cambios desde la versión 3. |
 | modelo/modelo_financiero.py | Modelo mensual reproducible del punto 8, sin cambios desde la versión 4. Genera las tablas y las cifras que cita el texto. |
 
@@ -34,7 +34,19 @@ La Sección 10.1 del documento (pág. 55) reúne los enlaces:
 | Contribución a Podman | https://github.com/containers/podman/pull/28637 |
 | Contribuciones a Debian | https://bugs.debian.org/1152837 y https://bugs.debian.org/1153126 |
 
-## Qué incorpora la versión 5
+## Qué incorpora la versión 6
+
+- **Estado de los aportes a Debian (Tabla 9, pág. 24, y Anexo 11.4, págs. 84 y 85).**
+  El 10 de noviembre se enviaron el parche de `invesalius` con los resultados de
+  las pruebas al bug [#1136204](https://bugs.debian.org/1136204) y el debdiff de
+  `pydicom` a la lista del equipo Debian Med. El documento deja de darlos como
+  «sin presentar». Siguen sin estar en el archivo de Debian.
+- **Historial de revisión (pág. 3)** con la fila de la versión 1.10.
+- La numeración de secciones, tablas y páginas es la de la versión 1.9: el índice
+  no cambia y `seguimiento-checklist.md` conserva sus referencias. El documento
+  pasa de 86 a 87 páginas porque la bibliografía termina una página después.
+
+## Qué incorporó la versión 5
 
 - **Enlaces y repositorios en la documentación (10.1).** La carátula del punto 10
   lista el sitio publicado, los repositorios, las contribuciones *upstream* y
@@ -92,4 +104,5 @@ Se detiene si algún escenario supera el tope de horas del autor de la Tabla 23.
 - Encuadre fiscal de los servicios (régimen general o monotributo), alícuotas de
   Ingresos Brutos y DReI: a confirmar con un contador antes del primer servicio pago.
 - Debian: seguir los bugs #1152837 y #1153126 hasta que la actualización de `gdcm`
-  entre en la versión estable, y presentar las de `invesalius` y `pydicom`.
+  entre en la versión estable; seguir el bug #1136204 de `invesalius` y la respuesta
+  del equipo sobre `pydicom`, y pedir después sus actualizaciones para Debian 13.
