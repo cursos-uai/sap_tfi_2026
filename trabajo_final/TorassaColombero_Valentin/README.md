@@ -4,7 +4,7 @@
 - **Comisión:** T1-23-47 — Seminario de Trabajo Final de Ingeniería
 - **Carrera:** Ingeniería en Sistemas Informáticos — Facultad de Tecnología Informática, UAI Rosario
 - **Dirección:** María Eugenia Casco y Santiago Enrique Roatta
-- **Versión:** 6 (Tercera Entrega, 2.º cuatrimestre 2026). Actualiza la versión 5 (PR #18).
+- **Versión:** 7 (Tercera Entrega, 2.º cuatrimestre 2026). Actualiza la versión 6 (PR #19).
 
 ## De qué se trata el trabajo
 
@@ -17,14 +17,14 @@ y no como un emprendimiento.
 
 | Archivo | Descripción |
 |---|---|
-| Torassa_Valentin_E3-2C_v3.pdf | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 87 páginas (versión 1.10 del documento). |
-| seguimiento-checklist.md | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de la checklist tecnológica y de los enlaces de la solución, con la numeración de la versión 1.9, que la 1.10 conserva. |
+| Torassa_Valentin_E3-2C_v4.pdf | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 94 páginas (versión 1.11 del documento). |
+| seguimiento-checklist.md | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de la checklist tecnológica y de los enlaces de la solución, con la numeración de la versión 1.11. |
 | registro-revision-prototipo.md | Registro anónimo de las tres pruebas individuales del prototipo (Sección 10.9), sin cambios desde la versión 3. |
 | modelo/modelo_financiero.py | Modelo mensual reproducible del punto 8, sin cambios desde la versión 4. Genera las tablas y las cifras que cita el texto. |
 
 ## Dónde está la solución tecnológica
 
-La Sección 10.1 del documento (pág. 55) reúne los enlaces:
+La Sección 10.1 del documento (pág. 58) reúne los enlaces:
 
 | Qué | Enlace |
 |---|---|
@@ -33,8 +33,31 @@ La Sección 10.1 del documento (pág. 55) reúne los enlaces:
 | Repositorio de parches y debdiffs | https://github.com/ValentinTorassa/VT-Security-Fixes |
 | Contribución a Podman | https://github.com/containers/podman/pull/28637 |
 | Contribuciones a Debian | https://bugs.debian.org/1152837 y https://bugs.debian.org/1153126 |
+| Herramienta propia (`blackice`) | https://github.com/ValentinTorassa/blackice |
+| Aportes a Vercel Labs, sin integrar | https://github.com/vercel-labs/deepsec/pull/137 y https://github.com/vercel-labs/fx/pull/1659 |
 
-## Qué incorpora la versión 6
+## Qué incorpora la versión 7
+
+- **`blackice` (Sección 5.3.5, págs. 26 y 27, y Anexo 11.5, pág. 90).** Cortafuegos de
+  aplicaciones para macOS, publicado como software libre (Apache 2.0) con Esteban Suárez.
+  Retiene cada conexión saliente que ninguna regla cubre hasta que una persona o un agente
+  de programación la aprueba o la niega. 21 versiones entre el 3 y el 10 de noviembre,
+  554 pruebas automáticas y 25 corridas registradas en una Mac real.
+- **Colaboración con Vercel (Sección 5.3.6, págs. 27 y 28, y Anexo 11.5, págs. 91 y 92).**
+  Dos aportes de código a proyectos abiertos de Vercel Labs, `deepsec` (PR #137) y `fx`
+  (PR #1659, que su mantenedor retomó en el PR #1747), y el sorteo de cinco cupones de v0
+  en la comunidad. No hay convenio ni patrocinio.
+- La carátula y la Figura 1 (pág. 9) suman el ícono de `blackice` y el logo de Vercel.
+- El historial de revisión suma la fila de la versión 1.11.
+- Los puntos 7, 8 y 9 no cambian de contenido; quedan tres páginas más adelante. Las tablas
+  conservan su número. `seguimiento-checklist.md` usa la numeración nueva. El documento pasa
+  de 87 a 94 páginas.
+
+Ninguno de los dos aportes a Vercel Labs está integrado: el documento los presenta como
+contribuciones en revisión, igual que las de Debian. `blackice` corrió en una sola Mac y
+sus corridas las hicieron sus autores.
+
+## Qué incorporó la versión 6
 
 - **Estado de los aportes a Debian (Tabla 9, pág. 24, y Anexo 11.4, págs. 84 y 85).**
   El 10 de noviembre se enviaron el parche de `invesalius` con los resultados de
@@ -106,3 +129,5 @@ Se detiene si algún escenario supera el tope de horas del autor de la Tabla 23.
 - Debian: seguir los bugs #1152837 y #1153126 hasta que la actualización de `gdcm`
   entre en la versión estable; seguir el bug #1136204 de `invesalius` y la respuesta
   del equipo sobre `pydicom`, y pedir después sus actualizaciones para Debian 13.
+- `blackice`: probarlo en otras Macs, con macOS 14 y 15, y con corridas de otras personas.
+- Vercel Labs: seguir el PR #137 de `deepsec` y el PR #1747 de `fx`.
