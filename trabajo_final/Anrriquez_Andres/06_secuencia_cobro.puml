@@ -1,0 +1,46 @@
+@startuml
+!include estilo.iuml
+title Secuencia – Registrar cobro con Mercado Pago (arquitectura MVC + capa de servicio)
+autonumber
+actor "Caja" as U
+boundary "pagos/create\n(Vista Blade)" as V
+control "PagoController" as C
+control "PagoRequest" as R
+control "PagoService" as S
+entity "Reparacion" as O
+entity "Pago" as P
+control "PasarelaFactory" as F
+control "MercadoPagoPasarela" as MP
+participant "API Mercado Pago" as API
+U -> V : completa medio, monto, cuotas
+V -> C : POST /ordenes/{id}/pagos
+C -> R : validar formato
+R --> C : datos válidos
+C -> S : iniciarPago(orden, medio, monto, cuotas)
+activate S
+S -> O : lockForUpdate()
+S -> S : validarPago()  [RN01..RN06]
+S -> S : calcularRecargo()
+S -> P : create(estado = pendiente)
+P -> P : Auditable: registrar "alta"
+S -> F : para("mercado_pago")
+F --> S : MercadoPagoPasarela
+S -> MP : iniciar(pago)
+MP -> API : POST /checkout/preferences
+API --> MP : id, init_point
+MP --> S : ResultadoPasarela(pendiente, url)
+S -> S : aplicarResultado() → guarda url_pago
+S --> C : [pago, resultado]
+deactivate S
+C --> U : redirect a init_point (checkout)
+== Pago del cliente y notificación asíncrona ==
+API -> C : POST /webhooks/mercadopago (type=payment, data.id)
+note right of C : WebhookController valida x-signature
+C -> MP : obtenerPago(data.id)
+MP -> API : GET /v1/payments/{id}
+API --> MP : status = approved, external_reference
+C -> S : aplicarResultado(pago, aprobado)
+S -> P : estado = aprobado, fecha_aprobacion
+P -> P : Auditable: registrar "modificacion"\n(valores anteriores / nuevos)
+C --> API : 200 OK
+@enduml

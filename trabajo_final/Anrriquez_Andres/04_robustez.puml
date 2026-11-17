@@ -1,0 +1,44 @@
+@startuml
+!include estilo.iuml
+left to right direction
+skinparam nodesep 25
+skinparam ranksep 40
+title Diagrama de robustez – CU-10 Registrar cobro de orden
+
+actor "Recepción / Caja" as Caja
+actor "Pasarela" as Pas
+rectangle "Lorebel" {
+boundary "Pantalla detalle\nde orden" as B1
+boundary "Pantalla de cobro" as B2
+boundary "Checkout\npasarela" as B3
+boundary "Comprobante\nde cobro" as B4
+control "Calcular máximo\ncobrable" as C1
+control "Validar cobro\n(RN01..RN06)" as C2
+control "Calcular\nrecargo" as C3
+control "Registrar pago\npendiente" as C4
+control "Iniciar en\npasarela" as C5
+control "Aplicar resultado\n(aprobar/rechazar)" as C6
+control "Registrar\nauditoría" as C7
+entity "Orden" as E1
+entity "Pago" as E2
+entity "Auditoría" as E3
+}
+Caja --> B1
+B1 --> B2 : Cobrar
+B2 --> C1
+C1 --> E1
+B2 --> C2 : Confirmar cobro
+C2 --> E1
+C2 --> C3
+C3 --> C4
+C4 --> E2
+C4 --> C5
+C5 --> B3 : MP / MODO
+Pas --> C6 : webhook / retorno
+B3 --> C6
+C5 --> C6 : efectivo / tarjeta
+C6 --> E2
+E2 --> C7
+C7 --> E3
+C6 --> B4
+@enduml

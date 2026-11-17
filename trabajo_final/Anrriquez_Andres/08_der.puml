@@ -1,0 +1,93 @@
+@startuml
+!include estilo.iuml
+title DER implementado – Iteración 2 (PK = clave primaria, FK = clave foránea)
+hide circle
+skinparam linetype ortho
+entity clientes {
+  * id : bigint <<PK>>
+  --
+  nombre : varchar
+  telefono : varchar
+  email : varchar <<UQ>>
+  dni_cuit : varchar <<UQ>>
+  deleted_at : timestamp
+}
+entity tecnicos {
+  * id : bigint <<PK>>
+  --
+  nombre, apellido : varchar
+  email : varchar <<UQ>>
+  activo : boolean
+}
+entity reparaciones {
+  * id : bigint <<PK>>
+  --
+  cliente_id : bigint <<FK>>
+  tecnico_id : bigint <<FK>> (null)
+  estado : enum
+  presupuesto : decimal(10,2)
+  presupuesto_aprobado : boolean
+  costo_total : decimal(10,2)
+  fecha_ingreso : date
+  fecha_entrega : date
+  deleted_at : timestamp
+}
+entity pagos {
+  * id : bigint <<PK>>
+  --
+  codigo : uuid <<UQ>>
+  reparacion_id : bigint <<FK>>
+  user_id : bigint <<FK>> (null)
+  medio_pago : enum
+  estado : enum
+  monto : decimal(12,2)
+  cuotas : tinyint
+  recargo : decimal(12,2)
+  monto_total : decimal(12,2)
+  referencia_externa : varchar
+  url_pago : varchar(1024)
+  comprobante : varchar
+  datos_pasarela : json
+  motivo_rechazo : varchar
+  fecha_aprobacion : timestamp
+}
+entity users {
+  * id : bigint <<PK>>
+  --
+  name : varchar
+  email : varchar <<UQ>>
+  password : varchar
+  rol : varchar(20)
+  activo : boolean
+}
+entity auditorias {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>> (null)
+  usuario_nombre : varchar
+  accion : varchar(30)
+  entidad : varchar(60)
+  entidad_id : bigint
+  valores_anteriores : json
+  valores_nuevos : json
+  ip : varchar(45)
+  user_agent : varchar
+  created_at : timestamp
+}
+entity registro_sesiones {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>> (null)
+  email : varchar
+  evento : enum
+  ip : varchar(45)
+  user_agent : varchar
+  created_at : timestamp
+}
+clientes ||--o{ reparaciones
+tecnicos |o--o{ reparaciones
+reparaciones ||--o{ pagos
+users |o--o{ pagos
+users |o--o{ auditorias
+users |o--o{ registro_sesiones
+@enduml

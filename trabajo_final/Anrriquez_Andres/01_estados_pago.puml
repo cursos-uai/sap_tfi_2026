@@ -1,0 +1,37 @@
+@startuml
+!include estilo.iuml
+title Ciclo de vida de un Pago (cobro de orden)
+hide empty description
+[*] --> Pendiente : registrarCobro()\n[RN01..RN06 válidas]
+state Pendiente : monto, medio, cuotas, recargo\nsin imputar al saldo
+state Aprobado : imputado a la orden\nfecha_aprobacion registrada
+state Rechazado
+state Anulado
+state Reintegrado
+Pendiente --> Aprobado : efectivo / tarjeta con cupón\n(en el acto)
+Pendiente --> Aprobado : notificación pasarela = approved\n(MP / MODO)
+Pendiente --> Aprobado : confirmarTransferencia(nro operación)
+Pendiente --> Rechazado : pasarela = rejected / cancelled\no tarjeta sin cupón
+Pendiente --> Anulado : anular(motivo)
+Aprobado --> Reintegrado : reintegrar(motivo)\n[solo administrador]
+Rechazado --> [*]
+Anulado --> [*]
+Reintegrado --> [*]
+Aprobado --> [*]
+note right of Pendiente
+  RN04: mientras está pendiente reserva el monto:
+  máximo cobrable = saldo − pendientes.
+  RN07: transferencia, MP y MODO
+  nacen en este estado.
+end note
+note right of Aprobado
+  RN10: una notificación repetida
+  sobre un pago ya resuelto no tiene efecto.
+  RN09: con saldo 0 la orden puede
+  pasar a "Entregado".
+end note
+note left of Anulado
+  RN08: solo se anula
+  un pago pendiente.
+end note
+@enduml

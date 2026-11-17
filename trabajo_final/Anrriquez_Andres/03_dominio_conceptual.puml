@@ -1,0 +1,23 @@
+@startuml
+!include estilo.iuml
+title Modelo de dominio conceptual – Cobro de órdenes
+hide members
+hide circle
+class Cliente
+class "Orden de reparación" as Orden
+class Técnico
+class Pago
+class "Medio de pago" as Medio
+class Usuario
+class "Pasarela de pago" as Pasarela
+class "Registro de auditoría" as Auditoria
+Cliente "1" -- "0..*" Orden : solicita
+Técnico "0..1" -- "0..*" Orden : repara
+Orden "1" -- "0..*" Pago : se cancela con
+Pago "0..*" -- "1" Medio : se realiza con
+Medio "0..*" -- "0..1" Pasarela : se procesa en
+Usuario "0..1" -- "0..*" Pago : registra
+Usuario "0..1" -- "0..*" Auditoria : genera
+Auditoria "0..*" -- "1" Orden : traza
+Auditoria "0..*" -- "1" Pago : traza
+@enduml

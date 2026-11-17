@@ -1,0 +1,16 @@
+digraph G {
+  graph [rankdir=TB, fontname="Arial", dpi=160, label="Grafo de flujo – PagoService::validarPago()", labelloc=t, fontsize=14];
+  node [shape=circle, fontname="Arial", fontsize=11, width=0.45, fixedsize=true, style=filled, fillcolor="#F8FAFC", color="#475569"];
+  edge [fontname="Arial", fontsize=9, color="#475569"];
+  1 [label="1\nP1", fillcolor="#DBEAFE"]; 2 [label="2"]; 3 [label="3\nP2", fillcolor="#DBEAFE"]; 4 [label="4"];
+  5 [label="5\nP3", fillcolor="#DBEAFE"]; 6 [label="6"]; 7 [label="7\nP4", fillcolor="#DBEAFE"]; 8 [label="8"];
+  9 [label="9\nP5", fillcolor="#DBEAFE"]; 10 [label="10\nP6", fillcolor="#DBEAFE"]; 11 [label="11"]; 12 [label="12\nP7", fillcolor="#DBEAFE"]; 13 [label="13"]; 14 [label="14\nfin"];
+  1 -> 2 [label="V"]; 1 -> 3 [label="F"];
+  3 -> 4 [label="V"]; 3 -> 5 [label="F"];
+  5 -> 6 [label="V"]; 5 -> 7 [label="F"];
+  7 -> 8 [label="V"]; 7 -> 9 [label="F"];
+  9 -> 10 [label="V"]; 9 -> 12 [label="F"];
+  10 -> 11 [label="V"]; 10 -> 14 [label="F"];
+  12 -> 13 [label="V"]; 12 -> 14 [label="F"];
+  2 -> 14; 4 -> 14; 6 -> 14; 8 -> 14; 11 -> 14; 13 -> 14;
+}

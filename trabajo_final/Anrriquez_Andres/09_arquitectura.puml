@@ -1,0 +1,43 @@
+@startuml
+!include estilo.iuml
+title Arquitectura en capas – Lorebel (Laravel MVC + capa de servicios)
+skinparam componentStyle rectangle
+package "Presentación" {
+  [Vistas Blade + Bootstrap 5\nChart.js (reportes)] as V
+}
+package "Control (Http)" {
+  [Middleware\nauth · rol · CSRF · throttle] as MW
+  [Controladores\nOrden · Pago · Reporte · Auditoría · Login] as C
+  [Form Requests\n(validación de formato)] as FR
+  [WebhookController] as WH
+}
+package "Dominio / Servicios" {
+  [PagoService\n(reglas RN01–RN10)] as S
+  [PasarelaFactory] as F
+  [Pasarelas (Strategy)\nEfectivo · Transferencia · Tarjeta\nMercado Pago · MODO] as P
+}
+package "Modelo / Persistencia" {
+  [Modelos Eloquent\nReparacion · Pago · Cliente · User] as M
+  [Trait Auditable\n+ eventos Login/Logout] as A
+  database "MySQL" as DB
+}
+cloud "Servicios externos" {
+  [API Mercado Pago] as MPA
+  [API MODO] as MOA
+}
+V --> MW
+MW --> C
+C --> FR
+C --> S
+WH --> S
+S --> F
+F --> P
+S --> M
+M --> A
+M --> DB
+A --> DB
+P --> MPA : HTTPS
+P --> MOA : HTTPS
+MPA --> WH : webhook
+MOA --> WH : webhook
+@enduml
