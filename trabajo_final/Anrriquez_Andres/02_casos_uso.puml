@@ -1,0 +1,39 @@
+@startuml
+!include estilo.iuml
+left to right direction
+title Casos de uso – Iteración 2: Cobro de órdenes de reparación
+actor "Recepción / Caja" as Caja
+actor Administrador as Admin
+actor "Cliente del taller" as Cliente
+actor "Pasarela de pago\n(Mercado Pago / MODO)" as Pasarela <<sistema>>
+Admin -|> Caja
+rectangle "Lorebel" {
+  usecase "CU-10 Registrar cobro\nde orden (CORE)" as CU10 #DBEAFE
+  usecase "CU-11 Validar reglas\nde cobro" as CU11
+  usecase "CU-12 Calcular recargo\npor cuotas" as CU12
+  usecase "CU-13 Pagar en checkout\nde pasarela" as CU13
+  usecase "CU-14 Procesar notificación\nde pago" as CU14
+  usecase "CU-15 Confirmar\ntransferencia" as CU15
+  usecase "CU-16 Anular cobro\npendiente" as CU16
+  usecase "CU-17 Reintegrar\npago aprobado" as CU17
+  usecase "CU-18 Consultar estado\nde cuenta de la orden" as CU18
+  usecase "CU-19 Entregar equipo" as CU19
+  usecase "CU-20 Verificar saldo\npendiente" as CU20
+  usecase "CU-21 Registrar\nauditoría" as CU21
+}
+Caja --> CU10
+Caja --> CU15
+Caja --> CU16
+Caja --> CU18
+Caja --> CU19
+Admin --> CU17
+Cliente --> CU13
+Pasarela --> CU14
+CU10 ..> CU11 : <<include>>
+CU10 ..> CU21 : <<include>>
+CU12 ..> CU10 : <<extend>>\n[tarjeta de crédito]
+CU13 ..> CU10 : <<extend>>\n[Mercado Pago / MODO]
+CU13 ..> CU14 : <<include>>
+CU19 ..> CU20 : <<include>>
+CU15 ..> CU21 : <<include>>
+@enduml

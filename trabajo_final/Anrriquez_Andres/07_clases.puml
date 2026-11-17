@@ -1,0 +1,122 @@
+@startuml
+!include estilo.iuml
+title Diagrama de clases – Módulo de cobros
+skinparam classAttributeIconSize 0
+package "Controladores (Http)" {
+  class PagoController {
+    - servicio : PagoService
+    - pasarelas : PasarelaFactory
+    + index(Request) : View
+    + create(Reparacion) : View
+    + store(PagoRequest, Reparacion) : Redirect
+    + show(Pago) : View
+    + confirmar(Request, Pago) : Redirect
+    + anular(Request, Pago) : Redirect
+    + reintegrar(Request, Pago) : Redirect
+    + retorno(Request, Pago) : Redirect
+    + simulador(Pago) : View
+    + procesarSimulacion(Request, Pago) : Redirect
+  }
+  class WebhookController {
+    + mercadoPago(Request, MercadoPagoPasarela) : Json
+    + modo(Request, ModoPasarela) : Json
+  }
+  class PagoRequest {
+    + rules() : array
+    # prepareForValidation() : void
+  }
+}
+package "Servicios (dominio)" {
+  class PagoService {
+    + validarPago(Reparacion, string, float, int) : void
+    + montoMaximoCobrable(Reparacion) : float
+    + calcularRecargo(string, float, int) : float
+    + iniciarPago(...) : array
+    + aplicarResultado(Pago, ResultadoPasarela) : Pago
+    + confirmarTransferencia(Pago, string, ?string) : Pago
+    + anular(Pago, string) : Pago
+    + reintegrar(Pago, string) : Pago
+    - aprobar(...) : Pago
+    - rechazar(...) : Pago
+  }
+  class ResultadoPasarela <<value object>> {
+    + estado : string
+    + referencia : ?string
+    + urlRedireccion : ?string
+    + datos : array
+    + mensaje : ?string
+    + {static} aprobado() : ResultadoPasarela
+    + {static} pendiente() : ResultadoPasarela
+    + {static} rechazado() : ResultadoPasarela
+    + requiereRedireccion() : bool
+  }
+  class ReglaNegocioException
+  interface PasarelaPago <<strategy>> {
+    + iniciar(Pago) : ResultadoPasarela
+    + consultar(Pago, ?string) : ResultadoPasarela
+    + enSimulacion() : bool
+  }
+  class PasarelaFactory {
+    + para(string medio) : PasarelaPago
+  }
+  class EfectivoPasarela
+  class TransferenciaPasarela
+  class TarjetaPasarela
+  class MercadoPagoPasarela {
+    + obtenerPago(string) : ?array
+    + {static} mapearEstado(array) : ResultadoPasarela
+    + firmaValida(...) : bool
+  }
+  class ModoPasarela {
+    + {static} mapearEstado(array) : ResultadoPasarela
+    + firmaValida(string, ?string) : bool
+    - token() : string
+  }
+}
+package "Modelos (Eloquent)" {
+  class Reparacion {
+    + estado : string
+    + presupuesto_aprobado : ?bool
+    + costo_total : decimal
+    + pagos() : HasMany
+    + getImporteACobrar() : float
+    + getTotalPagado() : float
+    + getSaldo() : float
+    + getEstadoCobro() : string
+  }
+  class Pago {
+    + codigo : uuid
+    + medio_pago : string
+    + estado : string
+    + monto : decimal
+    + cuotas : int
+    + recargo : decimal
+    + monto_total : decimal
+    + reparacion() : BelongsTo
+    + estaPendiente() : bool
+  }
+  class Auditoria
+  abstract class Auditable <<trait>> {
+    + {static} bootAuditable() : void
+    # registrarAuditoria(accion, anteriores, nuevos) : void
+    + auditorias() : Builder
+  }
+}
+PagoController --> PagoService
+PagoController --> PasarelaFactory
+PagoController ..> PagoRequest
+WebhookController --> PagoService
+PagoService --> PasarelaFactory
+PagoService ..> ResultadoPasarela
+PagoService ..> ReglaNegocioException
+PasarelaFactory ..> PasarelaPago
+PasarelaPago <|.. EfectivoPasarela
+PasarelaPago <|.. TransferenciaPasarela
+PasarelaPago <|.. TarjetaPasarela
+PasarelaPago <|.. MercadoPagoPasarela
+PasarelaPago <|.. ModoPasarela
+Reparacion "1" *-- "0..*" Pago
+Auditable <|.. Reparacion
+Auditable <|.. Pago
+Auditable ..> Auditoria : crea
+@enduml

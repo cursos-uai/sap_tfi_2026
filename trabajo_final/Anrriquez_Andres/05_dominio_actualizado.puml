@@ -1,0 +1,68 @@
+@startuml
+!include estilo.iuml
+title Modelo de dominio actualizado (atributos, relaciones y multiplicidad)
+hide circle
+hide methods
+class Cliente {
+  nombre
+  telefono
+  whatsapp
+  email
+  dni_cuit
+}
+class Reparacion as "Orden (Reparacion)" {
+  dispositivo, marca, modelo
+  imei_serial
+  problema_reportado
+  estado
+  presupuesto
+  presupuesto_aprobado
+  costo_repuestos, costo_mano_obra
+  costo_total
+  fecha_ingreso, fecha_entrega
+  /importe_a_cobrar
+  /total_pagado
+  /saldo
+}
+class Tecnico {
+  nombre, apellido
+  especialidad
+  activo
+}
+class Pago {
+  codigo (uuid)
+  medio_pago
+  estado
+  monto
+  cuotas
+  recargo
+  monto_total
+  referencia_externa
+  url_pago
+  comprobante
+  fecha_aprobacion
+}
+class User as "Usuario" {
+  name, email
+  rol
+  activo
+}
+class Auditoria {
+  accion
+  entidad, entidad_id
+  valores_anteriores
+  valores_nuevos
+  ip, fecha_hora
+}
+class RegistroSesion {
+  evento
+  email, ip
+  fecha_hora
+}
+Cliente "1" -- "0..*" Reparacion
+Tecnico "0..1" -- "0..*" Reparacion
+Reparacion "1" *-- "0..*" Pago
+User "0..1" -- "0..*" Pago : registra >
+User "0..1" -- "0..*" Auditoria
+User "0..1" -- "0..*" RegistroSesion
+@enduml

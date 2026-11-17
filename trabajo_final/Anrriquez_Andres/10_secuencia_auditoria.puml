@@ -1,0 +1,31 @@
+@startuml
+!include estilo.iuml
+title Secuencia – Auditoría de trazabilidad y de sesiones
+autonumber
+actor Usuario as U
+control "Controlador" as C
+entity "Modelo Auditable\n(Reparacion / Pago / Cliente)" as M
+control "Trait Auditable" as T
+entity "Auditoria" as A
+control "Auth (Laravel)" as AU
+control "AppServiceProvider\n(listeners)" as L
+entity "RegistroSesion" as RS
+== Trazabilidad ==
+U -> C : modifica orden / registra cobro
+C -> M : save()
+M -> T : evento updated
+T -> T : getChanges() + getRawOriginal()
+T -> A : create(usuario, acción, entidad, id,\nanteriores, nuevos, IP, navegador)
+== Login / Logout ==
+U -> AU : attempt(email, password)
+alt credenciales válidas
+  AU -> L : evento Login
+  L -> RS : create(evento = login)
+else inválidas
+  AU -> L : evento Failed
+  L -> RS : create(evento = login_fallido)
+end
+U -> AU : logout()
+AU -> L : evento Logout
+L -> RS : create(evento = logout)
+@enduml
