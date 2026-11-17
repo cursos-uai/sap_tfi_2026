@@ -1,0 +1,61 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{CU-002-001 -- Administrar Campañas}
+{\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash\bfseries}p{3.2cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+Objetivo & Permitir al DM crear y administrar sus campañas: armar el grupo de jugadores, mantener los datos de la campaña y controlar quién puede entrar. \\ \hline
+Identificación & CU-002-001 \\ \hline
+Nombre & Administrar Campañas \\ \hline
+Descripción & El usuario autenticado crea una campaña, elige su sistema de reglas base y pasa a ser su DM. El sistema genera un código de invitación único que el DM comparte con su grupo; los jugadores se unen con ese código. El DM consulta el detalle completo de la campaña, edita su nombre y descripción, regenera el código de invitación cuando quiere cerrar el acceso al anterior, remueve jugadores y, si lo desea, elimina la campaña. Los jugadores ven una vista reducida de la campaña, sin datos exclusivos del DM. \\ \hline
+Precondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El usuario está autenticado.
+\item Para editar, eliminar, gestionar el código o remover jugadores, el usuario es DM de la campaña.
+\end{itemize} \\ \hline
+Postcondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item La campaña existe con sus datos actualizados, su código de invitación vigente y su lista de jugadores, o bien fue eliminada junto con sus datos dependientes.
+\end{itemize} \\ \hline
+Actores primarios & DM \\ \hline
+Actores secundarios & Jugador (se une, consulta y abandona la campaña). \\ \hline
+Eventos disparadores & El usuario quiere iniciar una campaña nueva o administrar una existente. \\ \hline
+Extensiones y condiciones & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{include}: CU-002-002 Crear Campaña. Al iniciar una campaña (incluye CU-006-002 Asignar Sistema de Reglas Base)
+\item \textbf{include}: CU-002-003 Consultar Campañas y Detalle. Siempre que se revisa una campaña
+\item \textbf{extend}: CU-002-004 Editar Campaña. El DM cambia nombre o descripción
+\item \textbf{extend}: CU-002-005 Eliminar Campaña. El DM decide eliminarla
+\item \textbf{extend}: CU-002-006 Gestionar Código de Invitación. El DM consulta o regenera el código
+\item \textbf{extend}: CU-002-007 Remover Jugador de la Campaña. El DM saca a un jugador
+\item \textbf{extend}: CU-002-008 Unirse a una Campaña. Lo realiza el Jugador con un código válido
+\item \textbf{extend}: CU-002-009 Abandonar una Campaña. Lo realiza el Jugador
+\end{itemize}
+Reglas: cada campaña tiene un único DM, su creador, que no puede removerse a sí mismo; el código de invitación es único.
+
+Requisitos relacionados: RF-006 a RF-016, RD-001 a RD-003, RNF-001, RNF-002, RNF-004 (ver HU-01, HU-02, HU-04). \\ \hline
+Escenario principal & \begin{enumerate}[itemsep=2pt,topsep=2pt]
+\item \textbf{Usuario:} solicita crear una campaña e ingresa nombre, descripción y sistema de reglas.
+\item \textbf{Sistema:} crea la campaña, lo designa DM y muestra el código de invitación.
+\item \textbf{DM:} comparte el código con sus jugadores.
+\item \textbf{Jugador:} ingresa el código de invitación.
+\item \textbf{Sistema:} agrega al jugador a la campaña y la muestra en su lista.
+\item \textbf{DM:} abre la campaña.
+\item \textbf{Sistema:} muestra el detalle completo: datos, jugadores y código de invitación.
+\item \textbf{DM:} modifica el nombre o la descripción.
+\item \textbf{Sistema:} guarda los cambios y los muestra.
+\end{enumerate} \\ \hline
+Escenarios alternativos & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Paso 1 — datos incompletos:} el sistema indica los campos faltantes y no crea la campaña.
+\item \textbf{Paso 4 — código inválido:} el sistema informa que el código no existe y no agrega al jugador.
+\item \textbf{Paso 4 — el jugador ya pertenece a la campaña:} el sistema informa que ya forma parte.
+\item \textbf{Paso 7 — consulta de un Jugador:} el sistema muestra una vista reducida, sin datos exclusivos del DM.
+\item \textbf{Regenerar código:} el DM solicita un código nuevo; el sistema invalida el anterior, muestra el nuevo y conserva a los jugadores ya unidos.
+\item \textbf{Remover jugador:} el DM elige a un jugador; el sistema lo saca de la campaña. Si el DM intenta removerse a sí mismo, el sistema lo rechaza.
+\item \textbf{Abandonar:} un Jugador abandona la campaña y el sistema lo saca de la lista.
+\item \textbf{Eliminar campaña:} el DM confirma la eliminación; el sistema elimina la campaña con sus sesiones, personajes, RuleSet y bitácoras.
+\item \textbf{Usuario sin permiso:} si el usuario no es DM de la campaña, el sistema rechaza editar, eliminar, regenerar el código o remover jugadores.
+\end{itemize} \\ \hline
+\end{longtable}}
+\subparagraph{Prototipo de la interfaz de usuario}
+Pantallas: Mis campañas (lista con rol); Crear campaña (nombre, descripción, sistema de reglas); Detalle de campaña (datos, jugadores, código de invitación con botón Regenerar, acciones Editar y Eliminar); Unirse con código.
+
+\figdiagh{\subparagraph{Diagrama de casos de uso}}{regiardo_manuel/uc-cu-002-001}{Diagrama de casos de uso de CU-002-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de robustez}}{regiardo_manuel/robustness-cu-002-001}{Diagrama de robustez de CU-002-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de secuencia}}{regiardo_manuel/sequence-cu-002-001}{Diagrama de secuencia de CU-002-001.}{0.9}

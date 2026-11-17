@@ -1,0 +1,161 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{Requisitos Funcionales}
+
+\subparagraph{Cuenta de usuario}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-001] Registrar un usuario nuevo (email, password, displayName) con cuenta propia, sin proveedor de identidad externo.
+\item[RF-002] Iniciar sesión mediante email y password.
+\item[RF-003] Roles globales de usuario (\texttt{user}, \texttt{admin}). Reservado para tareas de administración del sistema.
+\item[RF-004] Cerrar sesión e invalidar credenciales de acceso.
+\item[RF-005] Recuperar contraseña.
+\end{description}
+\subparagraph{Campañas}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-006] Un usuario autenticado crea una campaña y pasa a ser su DM.
+\item[RF-007] El sistema genera un código de invitación único por campaña.
+\item[RF-008] Un usuario se une a una campaña ingresando el código de invitación.
+\item[RF-009] Un jugador abandona una campaña de la que forma parte.
+\item[RF-010] El DM edita el nombre y la descripción de su campaña.
+\item[RF-011] El DM elimina su campaña.
+\item[RF-012] Un usuario lista las campañas en las que participa (como DM o Player).
+\item[RF-013] El detalle de una campaña se devuelve filtrado según el rol del solicitante (el DM ve todo; el Player, una vista reducida).
+\item[RF-014] El DM consulta y regenera el código de invitación de su campaña.
+\item[RF-015] El DM remueve a un jugador de su campaña.
+\item[RF-016] Al crear la campaña se asigna un sistema de reglas base (RuleSystem).
+\end{description}
+\subparagraph{Personajes}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-017] Un jugador crea un personaje en una campaña (raza, clase, nivel, estadísticas, HP, AC, habilidades, equipo, trasfondo).
+\item[RF-018] Un usuario consulta el detalle de un personaje y la lista de sus personajes.
+\item[RF-019] Un usuario actualiza o elimina sus propios personajes.
+\item[RF-020] Los miembros de una campaña listan todos los personajes de la campaña.
+\item[RF-021] Al crear o editar un personaje, el sistema ofrece el catálogo de razas, clases, estadísticas, traits, habilidades e ítems.
+\end{description}
+\subparagraph{Sesiones}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-022] El DM crea sesiones en una campaña (título, descripción, número de sesión). La fecha de inicio es opcional al crear.
+\item[RF-023] Un jugador se une o abandona una sesión como participante.
+\item[RF-024] El DM inicia, reanuda, pausa y finaliza una sesión (\texttt{planned $\rightarrow$ ongoing $\rightarrow$ paused/\allowbreak{}completed}).
+\item[RF-025] Al iniciar o reanudar, el sistema compara el día de la acción con \texttt{start\_\allowbreak{}date}: mismo día, no modifica la fecha; día distinto, prevalece el momento real de inicio.
+\item[RF-026] El DM edita las notas de la sesión (privadas y públicas).
+\item[RF-027] El DM transfiere las notas (privadas, públicas o ambas) a otra sesión de la misma campaña; el sistema ofrece trasladar las de la sesión inmediatamente anterior al crear una sesión nueva.
+\item[RF-028] El sistema oculta las notas privadas a los jugadores.
+\item[RF-029] Un usuario consulta el listado de sesiones de una campaña y el detalle de una sesión.
+\item[RF-030] El DM propone fechas para una sesión y quita propuestas mientras no haya una fecha confirmada.
+\item[RF-031] Cada jugador vota sí, no o tal vez en cada fecha propuesta y puede cambiar su voto hasta la confirmación.
+\item[RF-032] Los miembros ven los votos individuales y los totales por fecha; el sistema sugiere una fecha.
+\item[RF-033] El DM confirma una fecha propuesta, que se guarda como fecha de inicio de la sesión.
+\item[RF-034] El DM reprograma una sesión \texttt{planned} o \texttt{paused} fijando una nueva fecha de inicio.
+\end{description}
+\subparagraph{Eventos y bitácora}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-035] El DM registra eventos de sesión (daño, curación, XP, loot, personalizado) sobre uno, varios o todos los personajes de la campaña.
+\item[RF-036] Al registrar un evento, el sistema lo difunde en tiempo real a los jugadores conectados a la sesión.
+\item[RF-037] El DM redacta entradas de bitácora de tipo \texttt{combat} y \texttt{general}, opcionalmente asociadas a personajes.
+\item[RF-038] Los miembros de la campaña consultan la bitácora completa de una sesión en orden cronológico.
+\item[RF-039] Cada evento registrado genera automáticamente una entrada de bitácora de tipo \texttt{action}.
+\item[RF-040] Los miembros de la campaña consultan el historial de eventos de una sesión.
+\item[RF-041] Un cliente que se reconecta reconstruye el estado de la sesión consultando bitácora, eventos y fichas.
+\end{description}
+\subparagraph{Enemigos}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-042] El DM gestiona enemigos de la campaña (nombre, tipo, challenge rating, HP, AC, atributos, resistencias, acciones, loot).
+\end{description}
+\subparagraph{RuleSets}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-043] El DM modifica estadísticas de un ítem o hechizo dentro de su campaña (\texttt{modify\_\allowbreak{}stat}).
+\item[RF-044] El DM banea un arma, hechizo o categoría (p. ej. magia) dentro de su campaña (\texttt{ban}).
+\item[RF-045] El DM consulta el RuleSet efectivo de su campaña (reglas base más overrides).
+\item[RF-046] El DM quita un override existente.
+\item[RF-047] Los overrides rigen solo en la campaña donde se definieron.
+\end{description}
+\subparagraph{Diálogo de NPC}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-048] Durante una sesión en curso, el DM define los parámetros del NPC (raza, clase, rasgos de estado) y una idea del diálogo, y solicita su generación.
+\item[RF-049] El DM regenera o descarta el diálogo generado.
+\item[RF-050] El DM decide si guarda el diálogo como entrada de bitácora general; no se guarda automáticamente.
+\item[RF-051] El DM consulta el historial de diálogos guardados.
+\item[RF-052] Si el servicio de IA no está disponible, el sistema informa el error al DM y el resto de la aplicación sigue operando.
+\end{description}
+\subparagraph{Interfaz de usuario}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RF-053] Las rutas privadas exigen sesión activa y redirigen a \texttt{/\allowbreak{}login} si no la hay.
+\item[RF-054] La aplicación ofrece páginas para login, registro, home, campañas, personajes, sesiones, bitácora y generación de diálogo de NPC.
+\end{description}
+\paragraph{Requisitos No Funcionales}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RNF-001] (Seguridad) Toda ruta protegida valida la credencial del usuario y resuelve el usuario de contexto antes de continuar. Aplica a todos los casos de uso salvo registro e inicio de sesión.
+\item[RNF-002] (Autorización) Las operaciones sobre campañas y sesiones se validan según el rol del usuario en esa campaña (DM o Player), independientemente de su rol global. Aplica a todos los casos de uso de campañas, sesiones, eventos, RuleSets y diálogo de NPC.
+\item[RNF-003] (Validación) Todo payload de entrada se valida contra un esquema antes de llegar al controlador.
+\item[RNF-004] (Confidencialidad por rol) El filtrado de datos por rol se realiza en el servidor; un Player nunca recibe datos exclusivos del DM.
+\item[RNF-005] (Seguridad de credenciales) Las contraseñas se almacenan con hash, nunca en texto plano.
+\item[RNF-006] (Resiliencia) La caída o latencia de un servicio externo (API DnD5e, servicio de IA) no bloquea al resto del sistema; se espera manejo de errores y tiempos de espera.
+\item[RNF-007] (Consistencia en tiempo real) La difusión por WebSocket es solo un canal de entrega; SQL Server es la única fuente de verdad.
+\item[RNF-008] (Mantenibilidad) Todo el código está tipado con TypeScript.
+\item[RNF-009] (Escalabilidad modular) El diseño modular permite agregar módulos sin afectar a los existentes.
+\item[RNF-010] (Extensibilidad de reglas) Agregar un sistema de reglas nuevo no requiere modificar los existentes.
+\item[RNF-011] (Usabilidad) Estilos consistentes y layout común para todas las vistas autenticadas.
+\item[RNF-012] (Fechas) Las fechas se almacenan en UTC; la comparación de días usa la zona horaria del servidor y los clientes convierten a la zona del usuario.
+\end{description}
+\paragraph{Requisitos de Dominio}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RD-001] Los roles DM y Player son \textbf{por campaña}; un mismo usuario puede ser DM de una campaña y Player de otra.
+\item[RD-002] Cada campaña tiene exactamente un DM, su creador.
+\item[RD-003] El código de invitación es único por campaña.
+\item[RD-004] Una sesión tiene estado \texttt{planned}, \texttt{ongoing}, \texttt{paused} o \texttt{completed}; transiciona \texttt{planned $\rightarrow$ ongoing $\rightarrow$ paused $\leftrightarrow$ ongoing $\rightarrow$ completed}.
+\item[RD-005] La fecha de inicio de una sesión es opcional hasta que el DM confirma una fecha; la fecha confirmada es \texttt{start\_\allowbreak{}date} (no existe otro indicador de confirmación).
+\item[RD-006] Un jugador tiene un único voto por propuesta (sí, no o tal vez) y puede cambiarlo hasta que se confirme la fecha; no hay fecha límite.
+\item[RD-007] La fecha sugerida es la de más votos "sí"; ante empate, la de menos votos "no"; si persiste, no se sugiere ninguna. La sugerencia es orientativa y el DM decide.
+\item[RD-008] Reprogramar no reabre la votación ni cambia el estado; una sesión \texttt{paused} reprogramada sigue \texttt{paused} hasta que el grupo se reúna y el DM la reanude.
+\item[RD-009] Las notas de sesión son dos campos de texto plano; las privadas son solo del DM y las públicas son visibles para los jugadores.
+\item[RD-010] Transferir notas es una copia por agregado entre sesiones de la misma campaña, sin vínculo ni sincronización posterior.
+\item[RD-011] Los tipos de evento son \texttt{damage}, \texttt{healing}, \texttt{xp}, \texttt{loot} y \texttt{custom}.
+\item[RD-012] Cada evento genera una entrada de bitácora \texttt{action}; los tipos de bitácora son \texttt{combat}, \texttt{general} y \texttt{action}.
+\item[RD-013] Cada campaña tiene un único RuleSet, basado en un RuleSystem.
+\item[RD-014] Un override es de tipo \texttt{ban} o \texttt{modify\_\allowbreak{}stat}, apunta a un ítem, hechizo, arma o categoría del catálogo base y es propio de la campaña.
+\item[RD-015] Un diálogo de NPC solo puede generarse en una sesión en curso y no se persiste salvo que el DM lo guarde como entrada general.
+\item[RD-016] Un personaje pertenece a una única campaña y a un único dueño; su nivel va de 1 a 20.
+\item[RD-017] Los eventos de sesión solo pueden registrarse mientras la sesión está en curso.
+\item[RD-018] Al aplicar eventos de daño y de curación, los puntos de vida del personaje se mantienen entre 0 y su máximo.
+\item[RD-019] Un evento de loot se rechaza si alguno de sus ítems está baneado en el RuleSet de la campaña.
+\item[RD-020] Todos los miembros de la campaña pueden ver todos los eventos de una sesión.
+\end{description}
+\paragraph{Requisitos de Sistema e Interfaces}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RS-001] Integración con la API pública DnD5e para obtener los catálogos del juego, con caché.
+\item[RS-002] El diálogo de NPC lo genera un servicio externo independiente, consumido por HTTP/JSON desde el módulo \texttt{npc-dialogue}.
+\item[RS-003] Persistencia relacional en SQL Server, con Prisma como ORM y migraciones, y tablas intermedias para relaciones muchos-a-muchos.
+\item[RS-004] Canal de tiempo real por WebSocket (Socket.IO), un canal por sesión; el cliente envía su JWT en el handshake y el servidor verifica credencial y pertenencia a la campaña.
+\item[RS-005] Autenticación propia con JWT.
+\item[RS-006] Arquitectura de 3 capas cliente-servidor; backend estratificado y modular (\texttt{Routes $\rightarrow$ Controller $\rightarrow$ Service $\rightarrow$ Repository}); frontend MVC.
+\item[RS-007] Los RuleSets se implementan con Strategy (un proveedor por sistema), Decorator (overrides por campaña) y Factory (selección del proveedor).
+\item[RS-008] El servicio de diálogo es una decisión de arquitectura: un pipeline Pipes \& Filters con una arquitectura Blackboard en la construcción del prompt (ver \texttt{architecture.\allowbreak{}md}, sección 4). El proveedor de IA se oculta tras una Facade (patrón de diseño).
+\item[RS-009] Frontend como SPA con React, Redux Toolkit (estado de autenticación global), react-router y TailwindCSS.
+\item[RS-010] Backend en Node.js, TypeScript y Express.
+\end{description}
+\paragraph{Requisitos de Entorno}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=2pt]
+\item[RE-001] El backend y la base de datos se ejecutan en contenedores LXC sobre Proxmox VE; el artefacto de despliegue se construye con Dockerfile y Makefile.
+\item[RE-002] El despliegue de demostración corre en un servidor propio (Proxmox VE) con NGINX como proxy inverso, que debe reenviar las cabeceras de actualización a WebSocket, y Cloudflare como proveedor de DNS.
+\item[RE-003] SQL Server requiere al menos 2 GB de RAM.
+\item[RE-004] Clientes: navegador web para el DM y aplicación móvil para los jugadores.
+\item[RE-005] La configuración se entrega por variables de entorno; no se versionan secretos.
+\end{description}
+\paragraph{Historias de usuario}
+\begin{description}[leftmargin=2.2cm,labelwidth=2cm,itemsep=3pt]
+\item[HU-01] Como \textbf{DM} quiero crear una campaña y compartir un código para que mis jugadores se unan sin cargar sus datos a mano. \textit{(Requisitos: RF-006, RF-007, RF-008, RF-014)}
+\item[HU-02] Como \textbf{DM} quiero elegir el sistema de reglas de mi campaña para que los personajes se creen con el juego que usamos. \textit{(Requisitos: RF-016, RF-021)}
+\item[HU-03] Como \textbf{DM} quiero desactivar ítems o cambiar sus valores (p. ej. sin magia) para adaptar las reglas a mi mesa. \textit{(Requisitos: RF-043, RF-044, RF-045, RF-046, RF-047)}
+\item[HU-04] Como \textbf{DM} quiero remover a un jugador o eliminar la campaña para mantener ordenado mi grupo. \textit{(Requisitos: RF-011, RF-015)}
+\item[HU-05] Como \textbf{DM} quiero proponer fechas y ver quién puede cada una para coordinar el próximo encuentro del grupo. \textit{(Requisitos: RF-030, RF-032, RF-033)}
+\item[HU-06] Como \textbf{Jugador} quiero votar las fechas propuestas y ver las respuestas de los demás para que nos pongamos de acuerdo. \textit{(Requisitos: RF-031, RF-032)}
+\item[HU-07] Como \textbf{DM} quiero reprogramar una sesión cuando el grupo no puede o la sesión se extendió para continuar en el próximo encuentro. \textit{(Requisitos: RF-034, RF-024, RF-025)}
+\item[HU-08] Como \textbf{DM} quiero iniciar, pausar y terminar una sesión para llevar el estado de la partida. \textit{(Requisitos: RF-024)}
+\item[HU-09] Como \textbf{DM} quiero escribir notas privadas y públicas y llevarlas a la sesión siguiente para recordar lo que importa. \textit{(Requisitos: RF-026, RF-027, RF-028)}
+\item[HU-10] Como \textbf{DM} quiero registrar eventos (daño, XP, loot) y que los jugadores los vean al instante para no frenar la partida. \textit{(Requisitos: RF-035, RF-036, RF-039)}
+\item[HU-11] Como \textbf{Jugador} quiero ver el historial de lo ocurrido para retomar la historia si me reconecto. \textit{(Requisitos: RF-038, RF-040, RF-041)}
+\item[HU-12] Como \textbf{DM} quiero generar el diálogo de un NPC improvisado indicando su raza, clase y una idea para no frenar la sesión. \textit{(Requisitos: RF-048, RF-049)}
+\item[HU-13] Como \textbf{DM} quiero guardar los diálogos que me gustaron y consultarlos luego para reutilizarlos. \textit{(Requisitos: RF-050, RF-051)}
+\item[HU-14] Como \textbf{DM} quiero que, si la IA falla, el resto de la sesión siga funcionando. \textit{(Requisitos: RF-052, RNF-006)}
+\item[HU-15] Como \textbf{Jugador} quiero crear mi personaje dentro de las reglas de la campaña. \textit{(Requisitos: RF-017, RF-021, RF-047)}
+\end{description}

@@ -1,0 +1,176 @@
+% Capítulo 10 (carpeta técnica) de Regiardo, Manuel. Estructura propia: ver PLAN.md del repositorio.
+% Los archivos cu_01..04, requisitos, indice_cu, arquitectura y patrones se generan con scripts/cap10_gen.py
+% a partir de documentation/legacy; no se editan a mano.
+\capredactadotrue
+
+% Figura a página completa con encabezado opcional (#1), que se coloca en la misma página que la figura.
+% Si el diagrama es bastante más ancho que alto va en una página horizontal con los márgenes normales.
+\newcommand{\figdiagh}[4]{%
+  \sbox0{\includegraphics{#2}}%
+  \ifdim\wd0>1.2\ht0
+    \clearpage
+    \begin{landscape}
+      #1
+      \begin{figure}[H]\centering
+        \makebox[\textwidth]{\includegraphics[width=22.5cm,height=12.6cm,keepaspectratio]{#2}}
+        \caption{#3}
+      \end{figure}
+    \end{landscape}
+    \clearpage
+  \else
+    #1
+    \begin{figure}[H]\centering
+      \includegraphics[width=\textwidth,height=#4\textheight,keepaspectratio]{#2}
+      \caption{#3}
+    \end{figure}
+  \fi}
+\newcommand{\figdiag}[3]{\figdiagh{}{#1}{#2}{#3}}
+\newcommand{\pendtxt}{\par\textit{[Pendiente de redacción]}\par}
+
+\section{Aspectos Descriptivos de la Solución Tecnológica}
+
+\subsection{Carátula}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Proyecto} & \nombreproyecto \\ \hline
+\textbf{Documento} & Carpeta técnica (Capítulo 10) \\ \hline
+\textbf{Autor} & \autor{} (Legajo \legajo) \\ \hline
+\textbf{Fecha} & \fechadoc \\ \hline
+\end{tabularx}
+
+\subsection{Índice}
+El índice general de la carpeta técnica se encuentra al inicio del documento.
+
+\subsection{Historial de revisión}
+\begin{tabularx}{\textwidth}{|l|l|X|l|}
+\hline
+\textbf{Versión} & \textbf{Responsable} & \textbf{Descripción de la revisión} & \textbf{Fecha} \\ \hline
+0.5 & Regiardo, Manuel & Versión preliminar de la carpeta técnica, elaborada a mano con algunos de los diagramas ya dibujados, presentada al profesor Sartorio, Alejandro & 04/08/2026 \\ \hline
+1.0 & Regiardo, Manuel & Carpeta técnica con los casos de uso núcleo del DM & 17/11/2026 \\ \hline
+\end{tabularx}
+
+\subsection{Documento visión}
+\subsubsection{Propuesta de valor del proyecto para la empresa}
+\nombreproyecto{} centraliza en un único entorno digital la información de una campaña de juego de rol de mesa, sin reemplazar la experiencia presencial: mantiene el registro detallado de lo que ocurre alrededor de la partida para que el grupo dedique más tiempo a la narrativa y menos a la organización. Esta propuesta desarrolla, desde el punto de vista del sistema, la propuesta de valor para el cliente del Capítulo 1.
+
+Para el \textbf{Dungeon Master (DM)}, el beneficio se concreta en cinco capacidades:
+\begin{itemize}
+  \item \textbf{Administrar campañas:} crear la campaña, convocar a los jugadores con un código de invitación y mantener el grupo sin planillas ni mensajes sueltos.
+  \item \textbf{Gestionar sesiones:} acordar la fecha con el grupo mediante propuestas y votos, y llevar el estado de cada sesión (planificada, en curso, pausada o finalizada).
+  \item \textbf{Personalizar las reglas:} adaptar el sistema de reglas de la campaña (por ejemplo, prohibir la magia o modificar un arma) sin afectar a otras campañas.
+  \item \textbf{Generar diálogo de NPC:} obtener rápidamente el diálogo de un personaje improvisado, a partir de su raza, su clase y una idea aproximada, sin frenar la sesión.
+  \item \textbf{Gestionar eventos:} registrar durante la partida el daño, la curación, la experiencia y el botín, y que los jugadores vean los cambios al instante y puedan consultar lo ocurrido.
+\end{itemize}
+Para el \textbf{jugador}, el valor está en unirse a la campaña, votar las fechas, conocer el estado de la sesión y ver reflejados al instante los cambios sobre su personaje.
+
+\subsubsection{Especificaciones de requerimientos}
+Los requisitos del sistema se organizan en cinco categorías: funcionales (RF), no funcionales (RNF), de dominio (RD), de sistema e interfaces (RS) y de entorno (RE). Se incluyen todos, aunque algunos no estén cubiertos por los casos de uso documentados en detalle en este documento. Al final se presentan las historias de usuario que los motivan.
+\input{10_solucion_tecnologica/requisitos}
+\subsubsection{Alcance del desarrollo}
+Esta carpeta técnica especifica en detalle los siguientes casos de uso núcleo, junto con los casos de uso que incluyen o extienden:
+\begin{itemize}
+  \item \textbf{CU-004-001} Gestionar Sesiones de Campaña, que comprende la planificación de la fecha con el grupo.
+  \item \textbf{CU-007-001} Generar Diálogo de NPC.
+  \item \textbf{CU-006-001} Personalizar RuleSet de Campaña.
+  \item \textbf{CU-002-001} Administrar Campañas.
+  \item \textbf{CU-005-001} Gestionar Eventos de Sesión, que comprende la bitácora de la sesión.
+\end{itemize}
+Los demás casos de uso del sistema se listan en el índice de casos de uso, pero no se especifican en detalle.
+
+El alcance no incluye la gestión de enemigos, la recuperación de contraseña ni el soporte de sistemas de reglas distintos de D\&D 5e.
+
+\subsubsection{Definiciones, acrónimos y abreviaciones}
+\paragraph{Definiciones}
+\input{10_solucion_tecnologica/glosario}
+
+\paragraph{Acrónimos y abreviaciones}
+{\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{12.0cm}|}
+\hline
+\textbf{Sigla} & \textbf{Significado} \\ \hline\endhead
+DM & \textit{Dungeon Master}: director de juego de una campaña. \\ \hline
+TTRPG & \textit{Tabletop Role-Playing Game}: juego de rol de mesa. \\ \hline
+D\&D 5e & \textit{Dungeons \& Dragons}, quinta edición, sistema de reglas soportado. \\ \hline
+NPC & \textit{Non-Player Character}: personaje no jugador, manejado por el DM. \\ \hline
+CU & Caso de uso; se identifica con el formato CU-CCC-XXX. \\ \hline
+RF, RNF, RD, RS, RE & Requisitos funcionales, no funcionales, de dominio, de sistema e interfaces y de entorno. \\ \hline
+HU & Historia de usuario. \\ \hline
+API & \textit{Application Programming Interface}. \\ \hline
+REST & \textit{Representational State Transfer}: estilo de API sobre HTTP. \\ \hline
+JWT & \textit{JSON Web Token}: credencial firmada para autenticar solicitudes. \\ \hline
+ORM & \textit{Object-Relational Mapping}: capa de acceso a datos relacional (Prisma). \\ \hline
+SPA & \textit{Single-Page Application}: aplicación web de una sola página. \\ \hline
+MVC & Modelo-Vista-Controlador. \\ \hline
+IA, LLM & Inteligencia artificial; \textit{Large Language Model}, modelo de lenguaje. \\ \hline
+UML & \textit{Unified Modeling Language}. \\ \hline
+ICONIX & Proceso de diseño guiado por casos de uso (especificación, robustez, secuencia). \\ \hline
+UTC & Tiempo universal coordinado, en el que se almacenan las fechas. \\ \hline
+\end{longtable}}
+\subsubsection{Descripción del entorno del sistema}
+\paragraph{Plataforma del lado del cliente}
+\begin{itemize}
+  \item \textbf{DM:} aplicación web de una sola página (React), que se usa desde un navegador moderno en una computadora de escritorio o portátil.
+  \item \textbf{Jugador:} aplicación móvil, que se usa desde un teléfono inteligente.
+  \item Ambos clientes consumen la misma API REST y reciben los eventos de sesión en tiempo real por WebSocket.
+\end{itemize}
+
+\paragraph{Plataforma del lado del servidor}
+\begin{itemize}
+  \item \textbf{Backend:} Node.js, TypeScript y Express, organizado en módulos por dominio con capas Rutas, Controlador, Servicio y Repositorio.
+  \item \textbf{Base de datos:} SQL Server, con Prisma como ORM y sistema de migraciones.
+  \item \textbf{Autenticación:} propia, basada en JWT.
+  \item \textbf{Tiempo real:} canal WebSocket (Socket.IO) por sesión, con verificación de la credencial al conectarse.
+  \item \textbf{Servicio de generación de diálogo de NPC:} servicio independiente, consumido por HTTP.
+  \item \textbf{Servicio externo:} API pública de D\&D 5e para obtener los catálogos del juego.
+\end{itemize}
+
+\paragraph{Requisitos de entorno}
+\begin{itemize}
+  \item El backend y la base de datos se ejecutan en contenedores LXC sobre Proxmox VE; el artefacto de despliegue se construye con Dockerfile y Makefile. SQL Server requiere al menos 2~GB de memoria.
+  \item El despliegue se realiza en un servidor propio con Proxmox VE, con NGINX como proxy inverso (que debe reenviar las cabeceras de actualización a WebSocket) y Cloudflare como proveedor de DNS.
+  \item La configuración se entrega por variables de entorno; no se versionan secretos.
+  \item \textbf{Seguridad:} toda ruta protegida valida la credencial del usuario y su rol en la campaña; las contraseñas se almacenan con \textit{hash}.
+  \item \textbf{Disponibilidad y respaldo:} se establecen en el Capítulo 9 (Factibilidad técnica).
+\end{itemize}
+Estas condiciones se registran como requisitos de entorno RE-001 a RE-005.
+
+\subsection{Descripción global del producto}
+Los diagramas de esta sección se ajustarán para respetar la notación estándar propia de cada tipo de diagrama (por ejemplo, el diagrama de robustez).
+
+\figdiagh{\subsubsection{Diagrama de dominio}
+El diagrama de dominio muestra los conceptos del problema, sus atributos clave y sus relaciones, sin detalles técnicos de implementación.}{regiardo_manuel/domain-diagram}{Diagrama de dominio de DnDManager.}{0.8}
+
+\subsubsection{Índice de casos de uso}
+Cada caso de uso se identifica con el formato CU-CCC-XXX, donde CCC es el componente y XXX el caso de uso dentro del componente; el caso de uso núcleo de cada componente es el 001. Para cada uno se indican los requisitos que cubre.
+\input{10_solucion_tecnologica/indice_cu}
+
+\subsubsection{Casos de uso}
+Se documentan en detalle los casos de uso núcleo del Dungeon Master. Cada uno incluye su especificación, el prototipo de interfaz y los diagramas de casos de uso, de robustez y de secuencia.
+\input{10_solucion_tecnologica/cu_01}
+\input{10_solucion_tecnologica/cu_02}
+\iftfi
+\input{10_solucion_tecnologica/cu_03}
+\input{10_solucion_tecnologica/cu_04}
+\input{10_solucion_tecnologica/cu_05}
+\fi
+
+\subsubsection{Arquitectura}
+\input{10_solucion_tecnologica/arquitectura}
+\figdiag{regiardo_manuel/component-architecture}{Arquitectura general del sistema.}{0.9}
+\figdiag{regiardo_manuel/component-npc-dialogue-service}{Servicio de generación de diálogo de NPC (Pipes \& Filters con Blackboard).}{0.9}
+
+\subsubsection{Patrones de diseño}
+\input{10_solucion_tecnologica/patrones}
+
+\figdiagh{\subsubsection{Diagrama de clases}
+Se presenta la vista general del backend y, luego, el diagrama de clases de cada caso de uso núcleo.}{regiardo_manuel/class-full}{Diagrama de clases general del backend.}{0.9}
+\figdiag{regiardo_manuel/class-cu-004-001}{Diagrama de clases de CU-004-001.}{0.9}
+\figdiag{regiardo_manuel/class-cu-007-001}{Diagrama de clases de CU-007-001.}{0.9}
+\iftfi
+\figdiag{regiardo_manuel/class-cu-006-001}{Diagrama de clases de CU-006-001.}{0.9}
+\figdiag{regiardo_manuel/class-cu-002-001}{Diagrama de clases de CU-002-001.}{0.9}
+\figdiag{regiardo_manuel/class-cu-005-001}{Diagrama de clases de CU-005-001.}{0.9}
+\fi
+
+\subsubsection{Especificación de casos de prueba}
+\pendtxt

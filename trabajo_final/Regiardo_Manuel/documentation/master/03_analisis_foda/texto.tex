@@ -1,0 +1,101 @@
+\capredactadotrue
+\section{Análisis FODA}
+
+\subsection{Cuadro FODA}
+La figura~\ref{fig:foda} resume las fortalezas y debilidades del negocio (factores internos) y las oportunidades y amenazas del entorno (factores externos). Cada variable se justifica en el apartado siguiente con el análisis desarrollado en el capítulo~\ref{sec:analisis-estrategico}.
+
+\definecolor{foda1}{HTML}{D9A441}
+\definecolor{foda2}{HTML}{6FA8DC}
+\definecolor{foda3}{HTML}{4F8FD6}
+\definecolor{foda4}{HTML}{E0709C}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  caja/.style={rounded corners=8pt, text width=6.6cm, minimum height=4.6cm, inner sep=7pt, align=left, font=\small},
+  titulo/.style={font=\bfseries\large, text=white, align=center},
+  flecha/.style={-{Stealth[length=4mm,width=5mm]}, line width=3pt, draw=red!70!black!70}]
+  \node[caja, fill=foda1, anchor=south east] (F) at (-0.3,0.3) {%
+    \centerline{\textbf{\large\textcolor{white}{FORTALEZAS}}}\vspace{3pt}
+    \begin{itemize}\itemsep0pt\parskip0pt
+      \item Conocimiento directo del dominio TTRPG
+      \item Prototipo funcional ya validado
+      \item Diferenciación clara frente a los VTT tradicionales
+      \item Estructura de costos baja y escalable
+      \item Comunidad como generadora de contenido
+    \end{itemize}};
+  \node[caja, fill=foda2, anchor=south west] (D) at (0.3,0.3) {%
+    \centerline{\textbf{\large\textcolor{white}{DEBILIDADES}}}\vspace{3pt}
+    \begin{itemize}\itemsep0pt\parskip0pt
+      \item Marca desconocida
+      \item Recursos financieros y equipo reducidos
+      \item Dependencia del crecimiento de la comunidad
+      \item Necesidad de mantenimiento tecnológico constante
+    \end{itemize}};
+  \node[caja, fill=foda3, anchor=north east] (O) at (-0.3,-0.3) {%
+    \centerline{\textbf{\large\textcolor{white}{OPORTUNIDADES}}}\vspace{3pt}
+    \begin{itemize}\itemsep0pt\parskip0pt
+      \item Crecimiento del pasatiempo TTRPG
+      \item Segmento desatendido
+      \item Madurez de la infraestructura \textit{cloud} y adopción móvil
+      \item Potencial de IA aplicada a la asistencia narrativa
+      \item Escalabilidad internacional
+    \end{itemize}};
+  \node[caja, fill=foda4, anchor=north west] (A) at (0.3,-0.3) {%
+    \centerline{\textbf{\large\textcolor{white}{AMENAZAS}}}\vspace{3pt}
+    \begin{itemize}\itemsep0pt\parskip0pt
+      \item Competidores consolidados
+      \item Baja disposición a pagar dentro del pasatiempo
+      \item Contexto económico argentino
+      \item Cambios regulatorios
+      \item Dependencia de plataformas externas
+    \end{itemize}};
+  \draw[flecha, <->] (-7.4,0) -- (7.4,0);
+  \draw[flecha, <->] (0,-4.3) -- (0,4.3);
+\end{tikzpicture}
+\caption{Cuadro FODA de \nombreproyecto{}. Elaboración propia.}
+\label{fig:foda}
+\end{figure}
+
+\subsection{Análisis de fortalezas, oportunidades, debilidades y amenazas}
+
+\subsubsection{Fortalezas (internas, positivas)}
+\begin{itemize}
+  \item \textbf{Conocimiento directo del dominio TTRPG:} el equipo emprendedor juega activamente juegos de rol de mesa, lo que reduce el riesgo de construir funcionalidades desalineadas con las necesidades reales de DMs y jugadores.
+  \item \textbf{Prototipo funcional ya validado:} existen funcionalidades básicas implementadas (campañas, sesiones, personajes, autenticación) y retroalimentación directa de usuarios de prueba, lo que reduce el riesgo técnico y de mercado frente a un proyecto puramente conceptual.
+  \item \textbf{Diferenciación clara frente a los VTT tradicionales:} a diferencia de Roll20 o Foundry VTT, orientados a virtualizar toda la partida, el proyecto se posiciona como complemento de la partida presencial y evita competir de frente con los actores consolidados (véase \ref{sec:competidores}).
+  \item \textbf{Estructura de costos baja y escalable:} al ser un modelo SaaS, la inversión inicial se concentra en desarrollo y en un servidor propio de bajo costo, y la posibilidad de escalar a la nube permite crecer de forma gradual (véase \ref{sec:economicos} y \ref{sec:cadena-valor}).
+  \item \textbf{Comunidad como generadora de contenido:} el \textit{marketplace} C2C permite que los propios usuarios (creadores) generen parte del catálogo, lo que reduce la dependencia del equipo fundador para escalar la oferta (véase \ref{sec:fce}).
+\end{itemize}
+
+\subsubsection{Oportunidades (externas, positivas)}
+\begin{itemize}
+  \item \textbf{Crecimiento del pasatiempo TTRPG:} impulsado por \textit{Baldur's Gate 3}, la película de \textit{Dungeons \& Dragons} y el contenido de \textit{streaming} (como \textit{Critical Role} y \textit{Dimension 20}), una ola de nuevos jugadores ingresa al nicho (véase \ref{sec:oportunidades-amenazas}).
+  \item \textbf{Segmento desatendido:} los competidores principales (Roll20, Foundry VTT) apuntan a la virtualización completa; ninguno domina específicamente la gestión de campañas presenciales ni la organización de partidas físicas (véase \ref{sec:competidores}).
+  \item \textbf{Madurez de la infraestructura \textit{cloud} y adopción móvil:} facilita construir y escalar el producto con costos relativamente bajos y sin fricción de acceso para el usuario (véase \ref{sec:tecnologicos}).
+  \item \textbf{Potencial de IA aplicada a la asistencia narrativa:} podría ser un diferenciador futuro (resúmenes de campaña, asistencia al DM) que hoy ningún competidor directo explota por completo (véase \ref{sec:tecnologicos}).
+  \item \textbf{Escalabilidad internacional:} al ser un producto íntegramente digital, puede expandirse a otros mercados hispanohablantes o internacionales sin inversión en infraestructura física (véase \ref{sec:escenario-local}).
+\end{itemize}
+
+\subsubsection{Debilidades (internas, negativas)}
+\begin{itemize}
+  \item \textbf{Marca desconocida:} sin trayectoria ni reconocimiento frente a competidores establecidos como Roll20 o D\&D Beyond, se dificulta la captación inicial de usuarios (véase \ref{sec:competidores}).
+  \item \textbf{Recursos financieros y equipo reducidos:} al ser un equipo de dos personas, la capacidad de desarrollo, soporte y marketing simultáneos es limitada frente a competidores con equipos más grandes.
+  \item \textbf{Dependencia del crecimiento de la comunidad:} el valor del \textit{marketplace} y el efecto de red dependen de alcanzar una masa crítica de usuarios y creadores; hasta entonces el catálogo de contenido es limitado (véase \ref{sec:fce}).
+  \item \textbf{Necesidad de mantenimiento tecnológico constante:} con un equipo pequeño, sostener la estabilidad, la seguridad y la evolución continua de la plataforma implica una carga de trabajo permanente (véase \ref{sec:cadena-valor}).
+\end{itemize}
+
+\subsubsection{Amenazas (externas, negativas)}
+\begin{itemize}
+  \item \textbf{Competidores consolidados:} Roll20, Foundry VTT, D\&D Beyond y World Anvil cuentan con base de usuarios, marca reconocida y recursos muy superiores (véase \ref{sec:competidores}).
+  \item \textbf{Baja disposición a pagar dentro del pasatiempo:} parte de la comunidad está habituada a herramientas gratuitas o caseras (mensajería, papel), lo que puede dificultar la conversión a planes premium (véase \ref{sec:oportunidades-amenazas}).
+  \item \textbf{Contexto económico argentino:} la inflación y la volatilidad cambiaria pueden reducir el gasto discrecional en entretenimiento del público local, que es el principal mercado de lanzamiento (véase \ref{sec:economicos}).
+  \item \textbf{Cambios regulatorios:} modificaciones en la normativa de protección de datos, comercio electrónico o propiedad intelectual, especialmente relevante por el contenido generado por usuarios, pueden afectar el modelo de negocio (véase \ref{sec:politicos}).
+  \item \textbf{Dependencia de plataformas externas:} la distribución depende de las tiendas de aplicaciones (App Store y Google Play) y de las redes sociales y Discord para la visibilidad, factores fuera del control del proyecto (véase \ref{sec:oportunidades-amenazas}).
+\end{itemize}
+
+\subsection{Conclusión: atractivo de la industria y fortalezas del negocio}
+El sector de herramientas digitales para TTRPG presenta un atractivo de industria moderado-alto. El mercado se encuentra en expansión sostenida, impulsado por la exposición mediática del pasatiempo y la incorporación de nuevos jugadores, y las barreras de entrada tecnológicas son relativamente bajas gracias a la madurez de la infraestructura en la nube. Sin embargo, la industria ya cuenta con actores consolidados (Roll20, Foundry VTT, D\&D Beyond y World Anvil), lo que eleva la intensidad competitiva en los segmentos que ellos ya dominan.
+
+Frente a este escenario, las fortalezas del negocio (conocimiento directo del dominio, prototipo validado, estructura de costos escalable y un posicionamiento diferenciado en un segmento desatendido, la gestión de campañas presenciales) permiten evitar la confrontación directa con los líderes del mercado. En lugar de competir por el mismo espacio que Roll20 o Foundry VTT, \nombreproyecto{} compite por un espacio adyacente y sin un actor dominante.
+
+En conjunto, esto ubica al proyecto en un cuadrante favorable: una industria en crecimiento en la que el negocio cuenta con fortalezas relevantes para capturar una porción específica del mercado, aunque condicionado por debilidades de recursos y de marca que requerirán una estrategia de crecimiento gradual antes de intentar escalar de forma agresiva.

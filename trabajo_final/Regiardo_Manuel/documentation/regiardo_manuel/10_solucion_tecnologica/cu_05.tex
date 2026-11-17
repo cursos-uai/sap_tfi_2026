@@ -1,0 +1,62 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{CU-005-001 -- Gestionar Eventos de Sesión}
+{\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash\bfseries}p{3.2cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+Objetivo & Permitir al DM registrar durante la partida los hechos mecánicos que afectan a los personajes (daño, curación, experiencia, botín), de modo que el grupo los vea al instante y quede un historial consultable de lo ocurrido. \\ \hline
+Identificación & CU-005-001 \\ \hline
+Nombre & Gestionar Eventos de Sesión \\ \hline
+Descripción & Con la sesión en curso, el DM registra un evento sobre un personaje, sobre varios o sobre todo el grupo: daño, curación, experiencia, botín o un suceso personalizado. El sistema aplica el efecto sobre los personajes, guarda el evento y lo difunde en tiempo real a los jugadores conectados, que ven su ficha actualizada sin recargar la página. Cada evento deja además una entrada automática en la bitácora de la sesión, que el DM puede completar con entradas de combate o generales. Todos los miembros de la campaña pueden consultar el historial de eventos y la bitácora. Un cliente que pierde la conexión recupera el estado al reconectarse. \\ \hline
+Precondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El usuario está autenticado y es DM de la campaña.
+\item La sesión está en curso.
+\end{itemize} \\ \hline
+Postcondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El evento queda registrado y sus efectos aplicados a los personajes destinatarios.
+\item Existe una entrada de acción en la bitácora de la sesión.
+\item Los jugadores conectados recibieron el evento.
+\end{itemize} \\ \hline
+Actores primarios & DM \\ \hline
+Actores secundarios & Jugador (recibe los eventos en tiempo real y consulta el historial y la bitácora). \\ \hline
+Eventos disparadores & Ocurre en la partida un hecho que afecta a uno o más personajes. \\ \hline
+Extensiones y condiciones & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{include}: CU-005-002 Difundir Evento en Tiempo Real. Siempre, al registrar el evento
+\item \textbf{include}: CU-005-003 Registrar Entrada de Acción en Bitácora. Siempre, al registrar el evento
+\item \textbf{extend}: CU-005-004 Registrar Evento de Daño. El evento reduce los puntos de vida
+\item \textbf{extend}: CU-005-005 Registrar Evento de Curación. El evento aumenta los puntos de vida
+\item \textbf{extend}: CU-005-006 Registrar Evento de XP. El evento suma experiencia
+\item \textbf{extend}: CU-005-007 Registrar Evento de Loot. El evento entrega ítems al personaje
+\item \textbf{extend}: CU-005-008 Registrar Evento Personalizado. El evento solo deja constancia en el historial
+\item \textbf{extend}: CU-005-009 Consultar Historial de Eventos. Lo realiza el DM o un Jugador
+\item \textbf{extend}: CU-005-010 Reconstruir Estado tras Reconexión. Un cliente se reconecta
+\item \textbf{extend}: CU-005-011 Gestionar Bitácora de Sesión. El DM registra entradas de combate o generales (incluye registrar entrada de combate, registrar entrada general y consultar bitácora)
+\end{itemize}
+Reglas: los puntos de vida del personaje se mantienen entre 0 y su máximo; un evento de loot con algún ítem baneado por el RuleSet de la campaña se rechaza; todos los miembros de la campaña ven todos los eventos de la sesión.
+
+Requisitos relacionados: RF-035 a RF-041, RD-011, RD-012, RD-017 a RD-020, RNF-007, RS-004, RNF-001, RNF-002 (ver HU-10, HU-11). \\ \hline
+Escenario principal & \begin{enumerate}[itemsep=2pt,topsep=2pt]
+\item \textbf{DM:} elige el tipo de evento "daño", el personaje afectado e ingresa el valor 12.
+\item \textbf{Sistema:} valida que la sesión esté en curso, aplica el daño al personaje y registra el evento.
+\item \textbf{Sistema:} confirma al DM que el evento fue registrado.
+\item \textbf{Jugador:} ve su ficha de personaje actualizada al instante, sin recargar.
+\item \textbf{DM:} abre el historial de la sesión.
+\item \textbf{Sistema:} muestra los eventos y las entradas de la bitácora en orden cronológico, incluida la entrada del daño recién registrado.
+\end{enumerate} \\ \hline
+Escenarios alternativos & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Paso 1 — varios personajes o todo el grupo:} el DM elige a más de un personaje o a todo el grupo; el sistema aplica el evento a cada uno.
+\item \textbf{Paso 1 — otros tipos de evento:} curación, experiencia, botín o personalizado; el sistema aplica el efecto propio de cada tipo. El evento personalizado no modifica estadísticas y solo deja constancia.
+\item \textbf{Paso 2 — la sesión no está en curso:} el sistema rechaza el evento e informa que la sesión debe estar en curso.
+\item \textbf{Paso 2 — el daño supera los puntos de vida:} el sistema deja los puntos de vida del personaje en 0.
+\item \textbf{Paso 2 — la curación supera el máximo:} el sistema deja los puntos de vida en el máximo del personaje.
+\item \textbf{Paso 2 — loot con un ítem baneado:} el sistema rechaza el evento e informa qué ítem está baneado en la campaña.
+\item \textbf{Paso 4 — el jugador no está conectado:} no recibe el evento en vivo; al reconectarse, el cliente consulta la bitácora, el historial y su ficha y recupera el estado.
+\item \textbf{Después del paso 3 — bitácora manual:} el DM registra una entrada de combate o general, opcionalmente asociada a personajes, y el sistema la agrega a la bitácora.
+\item \textbf{Usuario sin permiso:} si el usuario no es DM de la campaña, el sistema rechaza el registro de eventos y de entradas de bitácora; la consulta del historial y de la bitácora está permitida a todos los miembros.
+\end{itemize} \\ \hline
+\end{longtable}}
+\subparagraph{Prototipo de la interfaz de usuario}
+Pantallas: Registrar evento (tipo, valor, personajes destinatarios o todo el grupo); Historial de la sesión (eventos y bitácora en orden cronológico, con filtro por tipo); Ficha del personaje con actualización en vivo (vista del jugador).
+
+\figdiagh{\subparagraph{Diagrama de casos de uso}}{regiardo_manuel/uc-cu-005-001}{Diagrama de casos de uso de CU-005-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de robustez}}{regiardo_manuel/robustness-cu-005-001}{Diagrama de robustez de CU-005-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de secuencia}}{regiardo_manuel/sequence-cu-005-001}{Diagrama de secuencia de CU-005-001.}{0.9}

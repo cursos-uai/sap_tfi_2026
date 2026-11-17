@@ -1,0 +1,82 @@
+% Preámbulo compartido (paquetes, encabezado, modo borrador).
+% Los datos del proyecto/autor se definen en el main.tex de cada carpeta ANTES de incluir este archivo.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[scaled=0.92]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{tikz}
+\usepackage{pgfgantt}
+\usetikzlibrary{arrows.meta}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage[margin=2.5cm,headheight=30pt]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[style=apa,backend=biber]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{../master/referencias.bib}
+
+\graphicspath{{../assets/}}
+\newcommand{\logo}{\includegraphics[height=1cm]{uai-logo-redondo.jpg}}
+\newcommand{\logoportada}{\includegraphics[height=3.5cm]{uai-logo-completo.jpg}}
+\newcommand{\logofacultad}{\includegraphics[height=2.5cm]{uai-tecnologia-informatica-logo.png}}
+
+% ---------- Niveles de numeración profundos (hasta 10.5.3.10.1) ----------
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{3}
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}[hang]{\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{1.2ex plus 1ex minus .2ex}{0.8ex}
+\titlespacing*{\subparagraph}{0pt}{1.2ex plus 1ex minus .2ex}{0.8ex}
+\renewcommand{\theparagraph}{\thesubsubsection.\arabic{paragraph}}
+\renewcommand{\thesubparagraph}{\theparagraph.\arabic{subparagraph}}
+
+% ---------- Encabezado y pie de página ----------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\logo}
+\chead{\nombreproyecto}
+\rhead{\autor}
+\cfoot{Página \thepage{} de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\cfoot{Página \thepage{} de \pageref{LastPage}}}
+
+% ---------- Modo borrador ----------
+% Inserta un marcador bajo cada encabezado para que las secciones vacías
+% puedan paginarse. Poner \borradorfalse al terminar la redacción.
+\newif\ifborrador
+\newif\ifcapredactado
+\borradortrue
+
+% ---------- Entregable ----------
+% \tfifalse: Seminario (Cap. 1-5, 2 CU). \tfitrue: Trabajo Final (Cap. 1-9, 4 CU).
+\newif\iftfi
+\tfifalse
+% \parcialtrue: entrega parcial (hasta el Cap. 9, sin carpeta técnica, contenido ni anexos).
+\newif\ifparcial
+\parcialfalse
+% Tipo de documento mostrado en la carátula.
+\newcommand{\tipodoc}{Seminario de Trabajo Final}
+\ifborrador
+  % Un capítulo ya redactado declara \capredactadotrue al inicio de su texto.tex
+  % (el marcador se omite); cuerpo.tex lo reinicia antes de cada capítulo.
+  \newcommand{\pend}{\ifcapredactado\else\par\textit{[Pendiente de redacción]}\par\fi}
+  \let\oldsubsection\subsection
+  \let\oldsubsubsection\subsubsection
+  \let\oldparagraph\paragraph
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subsection}[1]{\oldsubsection{#1}\pend}
+  \renewcommand{\subsubsection}[1]{\oldsubsubsection{#1}\pend}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\pend}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\pend}
+\fi
+

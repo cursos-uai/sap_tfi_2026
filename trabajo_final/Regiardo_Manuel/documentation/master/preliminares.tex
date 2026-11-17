@@ -1,0 +1,65 @@
+% ---------- Carátula ----------
+\begin{titlepage}
+  \centering
+  {\logoportada\par}
+  \vspace{0.8cm}
+  {\large\bfseries Universidad Abierta Interamericana\par}
+  {\large Facultad de Tecnología Informática\par}
+  \vspace{0.3cm}
+  {\logofacultad\par}
+  \vspace{1.5cm}
+  {\LARGE\bfseries \nombreproyecto\par}
+  \vspace{0.5cm}
+  {\large \titulodoc\par}
+  {\large \tipodoc\par}
+  \vspace{2.5cm}
+  {\large \autor\par}
+  {Legajo: \legajo\par}
+  \ifx\sede\empty\else{Sede: \sede\par}\fi
+  \vspace{1cm}
+  {Profesores: \profesores\par}
+  \vfill
+  {\fechadoc\par}
+\end{titlepage}
+
+% ---------- Ficha de seguimiento y revisión ----------
+% Cada alumno puede definir sus filas en ficha_revision.tex (en su carpeta); si no existe, las tablas quedan vacías.
+\newcommand{\filascambios}{ & & & \\ \hline}
+\newcommand{\filasrevisiones}{ & & & \\ \hline}
+\newcommand{\fechacreacion}{}
+\IfFileExists{ficha_revision.tex}{\input{ficha_revision}}{}
+\section*{Ficha de Seguimiento y Revisión}
+\addcontentsline{toc}{section}{Ficha de Seguimiento y Revisión}
+
+\medskip\noindent\textbf{Cambios del autor}\par\smallskip
+\begin{tabularx}{\textwidth}{|l|X|l|X|}
+\hline
+\textbf{Fecha} & \textbf{Autor} & \textbf{Versión} & \textbf{Referencia de los cambios}\\ \hline
+\filascambios
+\end{tabularx}
+
+\medskip\noindent\textbf{Revisiones}\par\smallskip
+\begin{tabularx}{\textwidth}{|X|l|X|l|}
+\hline
+\textbf{Auditor} & \textbf{Versión aprobada} & \textbf{Responsabilidad/Rol} & \textbf{Fecha}\\ \hline
+\filasrevisiones
+\end{tabularx}
+
+\medskip\noindent\textbf{Descripción del documento}\par\smallskip
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Ítem} & \textbf{Detalle}\\ \hline
+Título del documento & \titulodoc\\ \hline
+Autor & \autor\\ \hline
+Fecha de creación & \fechacreacion\\ \hline
+Última actualización & \fechadoc\\ \hline
+\end{tabularx}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ---------- A. Resumen ejecutivo ----------
+% Máximo tres páginas (ver 00_resumen_ejecutivo/requisito.md).
+\input{../master/00_resumen_ejecutivo/texto}
+\clearpage

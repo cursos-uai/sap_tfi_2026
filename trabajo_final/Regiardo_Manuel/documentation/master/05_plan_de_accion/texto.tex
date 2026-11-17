@@ -1,0 +1,246 @@
+\capredactadotrue
+\section{Plan de Acción}
+
+\nombreproyecto{} es una herramienta digital complementaria a la experiencia tradicional de los juegos de rol de mesa. El Plan de Acción transforma los objetivos estratégicos definidos en los apartados anteriores en programas y acciones concretas, que ordenan las actividades, establecen prioridades y definen los resultados esperados en cada etapa. Las acciones buscan facilitar la organización de las campañas, centralizar la información relevante y simplificar las tareas del \textit{Dungeon Master} (DM), sin reemplazar la dinámica de juego presencial ni la interacción entre los participantes.
+
+El plan cubre un horizonte de 36 meses y se organiza en tres etapas consecutivas: \emph{Lanzamiento} (meses 1 a 12), \emph{Consolidación} (meses 13 a 24) y \emph{Expansión} (meses 25 a 36). El mes 0 corresponde a la concreción de la inversión inicial, previa al inicio de las actividades de desarrollo. La planificación parte del estado actual del proyecto, un prototipo validado con las funcionalidades básicas ya implementadas, y se ajusta de forma progresiva según los resultados de las pruebas y las necesidades que surjan durante la utilización de la plataforma. Los meses indicados son de planificación: el paso de una etapa a la siguiente depende también de la evolución de la actividad comercial, de la cantidad de usuarios y de las necesidades operativas, por lo que las fechas podrán ajustarse.
+
+\subsection{Programas generales de acción}
+Se definen tres programas generales, uno por etapa, que ordenan el desarrollo, la validación y la evolución de \nombreproyecto{}.
+
+\subsubsection{Programa 1. Lanzamiento (meses 0 a 12)}
+El primer programa completa las funcionalidades esenciales de la plataforma, la pone a disposición del público en Rosario y valida su propuesta de valor en situaciones reales de juego.
+
+\paragraph{Producto mínimo viable.}
+El desarrollo se orienta a dos segmentos principales: los directores de juego novatos o ingresantes al pasatiempo, que necesitan herramientas para organizar y conducir sus primeras campañas, y los jugadores activos, que buscan acceder de manera centralizada a la información de sus personajes y a los acontecimientos de las sesiones. Con ese fin, el producto mínimo viable (MVP) consta de dos componentes:
+\begin{itemize}
+  \item una \textbf{aplicación web para DMs}, que incluye la creación y administración de campañas, la invitación e incorporación de jugadores, la creación de personajes por campaña y la gestión del ciclo de vida de las sesiones (inicio, pausa y finalización). Incorpora la actualización de eventos en tiempo real mediante WebSockets (experiencia, daño, objetos y personajes), un sistema de notas públicas y privadas por sesión con posibilidad de trasladar información a sesiones posteriores, y la configuración de reglas por campaña a partir del RuleSet base de \textit{Dungeons \& Dragons} 5.ª edición;
+  \item una \textbf{aplicación móvil para jugadores}, orientada a consultar la información de sus personajes y los eventos de la sesión.
+\end{itemize}
+Se incorpora además una funcionalidad básica de generación de diálogos mediante un servicio externo de inteligencia artificial, destinada a asistir al DM sin constituir una dependencia para las funciones centrales.
+
+\paragraph{Lanzamiento y validación.}
+Una vez estable el MVP web, se lo despliega sobre la infraestructura propia y se prepara una versión de demostración para presentarla ante comunidades de juegos de rol, grupos de jugadores y eventos de Rosario. Antes del lanzamiento se define el esquema de prestaciones gratuitas y premium, y se habilitan los cobros mediante pasarelas de pago. El lanzamiento es escalonado: la aplicación web se presenta en el mes 6 y la aplicación móvil se incorpora en el mes 9, de modo que la etapa genere ingresos desde su segundo semestre. Durante los primeros meses de operación se recoge información sobre la facilidad de uso, la utilidad de las funcionalidades y las dificultades que aparecen al organizar una partida, con atención especial a las diferencias entre los DMs que recién comienzan y los jugadores con experiencia. Esta instancia contrasta las decisiones de diseño con la experiencia efectiva de los usuarios, en lugar de asumir que todas las funcionalidades tienen la misma relevancia.
+
+\paragraph{Infraestructura.}
+La infraestructura inicial es propia (\textit{on-premise}): un servidor de bajo costo adquirido con la inversión inicial, que permite controlar el hardware, los datos y los costos fijos durante los primeros meses. La infraestructura en la nube se reserva como opción de escalado futuro, condicionada por la cantidad de usuarios que la plataforma llegue a tener.
+
+\subsubsection{Programa 2. Consolidación (meses 13 a 24)}
+El segundo programa mejora la plataforma a partir de los resultados del lanzamiento, amplía la cobertura geográfica y fortalece el equipo.
+
+Las acciones se centran en corregir los problemas detectados, simplificar los flujos de trabajo y ampliar progresivamente las capacidades de administración de campañas, personajes y sesiones. Se incorpora el primer grupo de profesionales (un desarrollador, un profesional de marketing y comunicación y un profesional de administración y finanzas) y se extiende la cobertura de Rosario al resto de la provincia de Santa Fe y a la región, mediante eventos y alianzas con tiendas especializadas.
+
+En el plano del contenido, se desarrolla la \emph{Línea Esencial}: módulos, mapas y recursos de uso común elaborados por la propia plataforma, que garantizan que cualquier DM disponga de materiales fundamentales listos para usar. En el último semestre de la etapa se prepara el \textit{marketplace} de contenido de la comunidad, de modo que pueda lanzarse al comienzo de la etapa siguiente. En el mismo período se evalúa, con base en las mediciones de uso, si la infraestructura propia alcanza para la cantidad de usuarios prevista o si conviene incorporar servicios en la nube.
+
+\subsubsection{Programa 3. Expansión (meses 25 a 36)}
+El tercer programa amplía el modelo de negocio y la escala de la operación.
+
+Se lanza el \textit{marketplace} para la publicación y comercialización de campañas, mapas y otros recursos creados por la comunidad, con un esquema transparente de reparto de ingresos para los creadores. Se extiende la cobertura al resto del territorio nacional y se amplía la plantilla hasta alcanzar la estructura prevista para esta etapa, con incorporaciones en tecnología, producto y experiencia de usuario, marketing y comercial, y gestión del \textit{marketplace} y los contenidos.
+
+Si la evaluación de capacidad de la etapa anterior lo indica, la infraestructura se escala de forma gradual hacia servicios en la nube, lo que permite acompañar el crecimiento de usuarios sin interrumpir el servicio.
+
+Se distingue entre la personalización de reglas, incluida en el MVP, y la incorporación de sistemas de juego diferentes. La integración de otros sistemas completos, como Pathfinder o Cyberpunk, y de manuales, servicios y contenidos de terceros se considera una línea de evolución posterior al horizonte de este plan.
+
+\subsection{Programas específicos de acción}
+Cada programa general se lleva adelante mediante las acciones que se describen a continuación. Los meses indicados corresponden al cronograma de la sección~\ref{sec:cronograma}.
+
+\subsubsection{Acciones del Programa 1: Lanzamiento}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Cód.} & \textbf{Acción} & \textbf{Meses}\\ \hline
+1.1 & Equipamiento, constitución legal y puesta en marcha del servidor propio & 0--3\\ \hline
+1.2 & Gestión de campañas, jugadores y personajes (web) & 1--2\\ \hline
+1.3 & Ciclo de vida de las sesiones e interacción en tiempo real & 1--3\\ \hline
+1.4 & Sistema de notas públicas y privadas & 2--3\\ \hline
+1.5 & RuleSets y personalización de reglas & 2--4\\ \hline
+1.6 & Integración del servicio externo de diálogos & 3--4\\ \hline
+1.7 & Pruebas técnicas y funcionales del MVP web & 4\\ \hline
+1.8 & Aplicación móvil para jugadores: diseño y desarrollo & 1--7\\ \hline
+1.9 & Aplicación móvil: pruebas y publicación en tiendas & 7--8\\ \hline
+1.10 & Despliegue, integración continua y versión de demostración & 3--5\\ \hline
+1.11 & Prestaciones gratuitas y premium, y pasarela de pagos & 4--5\\ \hline
+1.12 & Lanzamiento local en Rosario (web en el mes 6, móvil en el mes 9) & 6--12\\ \hline
+1.13 & Validación con usuarios y priorización de mejoras & 6--12\\ \hline
+\end{tabularx}
+\end{center}
+
+\paragraph{Equipamiento, constitución legal y puesta en marcha del servidor propio (acción 1.1)}
+En el mes 0 se concreta la inversión inicial: se adquiere el equipamiento informático y de infraestructura necesario y se realizan los registros legales de la empresa. Hasta el mes 3 se pone en marcha el servidor propio: configuración de la red, el dominio y los certificados de seguridad, y los mecanismos de respaldo de los datos.
+
+\paragraph{Gestión de campañas, jugadores y personajes (acción 1.2)}
+Se finalizan las funcionalidades necesarias para gestionar campañas, jugadores, personajes y sesiones. Se verifica que los jugadores puedan incorporarse mediante invitaciones y que los personajes queden correctamente asociados a su campaña.
+
+\paragraph{Ciclo de vida de las sesiones e interacción en tiempo real (acción 1.3)}
+Se completan las operaciones de creación, inicio, pausa y finalización de sesiones, que permiten al DM organizar la partida y establecer un contexto de trabajo para los jugadores. Se implementa y verifica el intercambio de eventos mediante WebSockets (experiencia, daño, objetos y datos de los personajes), de modo que los participantes autorizados accedan a la información actualizada durante la sesión.
+
+\paragraph{Sistema de notas (acción 1.4)}
+Se habilita la creación de notas públicas y privadas por parte del DM, asociadas a una sesión, y la posibilidad de conservar y trasladar las notas relevantes a sesiones posteriores, para favorecer la continuidad narrativa y organizativa de las campañas.
+
+\paragraph{RuleSets y personalización de reglas (acción 1.5)}
+Se implementa la configuración de reglas por campaña a partir del RuleSet base de \textit{Dungeons \& Dragons} 5.ª edición, con la arquitectura y los patrones de diseño previstos para facilitar futuras modificaciones y extensiones. La validación comprueba que las reglas configuradas se apliquen de forma consistente en las operaciones que dependen de ellas.
+
+\paragraph{Integración del servicio externo de diálogos (acción 1.6)}
+Se incorpora la generación básica de diálogos mediante un servicio externo de inteligencia artificial, que brinda ideas y alternativas narrativas al DM durante la preparación o el desarrollo de una partida, sin sustituir su criterio.
+
+\paragraph{Pruebas técnicas y funcionales del MVP web (acción 1.7)}
+Se prueban los principales flujos de uso: creación de campañas, incorporación de jugadores, gestión de personajes, administración de sesiones, actualización de eventos en tiempo real, notas y servicio de diálogos. Los errores se clasifican y priorizan según su impacto, con atención especial a los que impidan usar las funcionalidades centrales o comprometan la integridad de los datos.
+
+\paragraph{Aplicación móvil para jugadores (acciones 1.8 y 1.9)}
+Se diseña y desarrolla la aplicación móvil para consultar la información de los personajes y de la sesión en curso, y se la somete a pruebas en dispositivos reales antes de publicarla en las tiendas de aplicaciones. La aplicación se incorpora al lanzamiento en el mes 9.
+
+\paragraph{Despliegue, integración continua y versión de demostración (acción 1.10)}
+Se configuran los procesos de integración y despliegue continuo, se despliega la aplicación en el servidor propio, se verifica su funcionamiento y se documentan las limitaciones conocidas para facilitar su evaluación.
+
+\paragraph{Prestaciones gratuitas y premium, y pasarela de pagos (acción 1.11)}
+Se determina qué funcionalidades permanecen sin costo y cuáles se ofrecen en el plan premium, y se integra la pasarela de pagos digital. Se mantienen accesibles las funciones centrales necesarias para organizar campañas y participar en sesiones.
+
+\paragraph{Lanzamiento local en Rosario (acción 1.12)}
+A partir del mes 6 se presenta la aplicación web ante comunidades y eventos del sector, con demostraciones en vivo, y se capta a los primeros DMs y a sus mesas de juego. En el mes 9 se suma la aplicación móvil para los jugadores.
+
+\paragraph{Validación con usuarios y priorización de mejoras (acción 1.13)}
+Se recogen opiniones sobre la facilidad de uso, la utilidad de las funcionalidades y las necesidades no resueltas, complementadas con información sobre el uso efectivo de la plataforma. Los resultados se analizan para priorizar las correcciones y mejoras de mayor valor, en particular las que afectan la experiencia básica o responden a necesidades compartidas por los segmentos objetivo.
+
+\subsubsection{Acciones del Programa 2: Consolidación}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Cód.} & \textbf{Acción} & \textbf{Meses}\\ \hline
+2.1 & Incorporación del primer grupo de profesionales & 13--15\\ \hline
+2.2 & Refinamiento funcional según los resultados de la validación & 13--18\\ \hline
+2.3 & Desarrollo de la Línea Esencial & 15--24\\ \hline
+2.4 & Expansión provincial y regional & 13--24\\ \hline
+2.5 & Preparación del \textit{marketplace} & 19--24\\ \hline
+2.6 & Evaluación de capacidad de la infraestructura & 19--24\\ \hline
+\end{tabularx}
+\end{center}
+
+\paragraph{Incorporación del primer grupo de profesionales (acción 2.1)}
+Se incorporan un desarrollador, un profesional de marketing y comunicación y un profesional de administración y finanzas, lo que permite a los socios fundadores delegar actividades operativas y concentrarse en la dirección estratégica.
+
+\paragraph{Refinamiento funcional (acción 2.2)}
+Se implementan las mejoras derivadas de la validación: optimizaciones de usabilidad, ajustes en los flujos de trabajo y mejoras en la administración de campañas y sesiones.
+
+\paragraph{Desarrollo de la Línea Esencial (acción 2.3)}
+Se elabora el contenido propio de la plataforma (módulos, mapas y recursos de uso común), y se definen sus criterios de calidad y presentación.
+
+\paragraph{Expansión provincial y regional (acción 2.4)}
+Se extiende la presencia al resto de la provincia de Santa Fe y a las provincias vecinas, mediante la participación en eventos de otras ciudades y alianzas con tiendas especializadas de la región.
+
+\paragraph{Preparación del \textit{marketplace} (acción 2.5)}
+Se definen los requisitos técnicos y funcionales para que los creadores aporten recursos digitales: criterios de publicación, organización y acceso al contenido, esquema de reparto de ingresos y administración de las transacciones. Se realiza un piloto con un grupo reducido de creadores.
+
+\paragraph{Evaluación de capacidad de la infraestructura (acción 2.6)}
+Con las mediciones acumuladas (usuarios concurrentes, uso de procesador, memoria y almacenamiento), se evalúa si el servidor propio sostiene la cantidad de usuarios prevista para la etapa siguiente. El umbral de escalado se define a partir de esas mediciones reales, y la evaluación concluye si corresponde mantener la infraestructura o planificar el paso a servicios en la nube.
+
+\subsubsection{Acciones del Programa 3: Expansión}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Cód.} & \textbf{Acción} & \textbf{Meses}\\ \hline
+3.1 & Lanzamiento y operación del \textit{marketplace} & 25--36\\ \hline
+3.2 & Expansión nacional & 25--36\\ \hline
+3.3 & Ampliación del equipo & 25--30\\ \hline
+3.4 & Escalado de la infraestructura a la nube (condicional) & 25--36\\ \hline
+T.1 & Seguimiento de indicadores y mejora continua & 1--36\\ \hline
+T.2 & Monitoreo de la capacidad de la infraestructura & 1--36\\ \hline
+\end{tabularx}
+\end{center}
+
+\paragraph{Lanzamiento y operación del \textit{marketplace} (acción 3.1)}
+Se habilita la publicación, el descubrimiento y la adquisición de recursos creados por la comunidad, con las condiciones de participación de los creadores y el reparto de ingresos definidos en la etapa anterior.
+
+\paragraph{Expansión nacional (acción 3.2)}
+Se extiende la cobertura a los principales polos urbanos del país mediante campañas digitales focalizadas y la colaboración con creadores de contenido y transmisiones en vivo del sector.
+
+\paragraph{Ampliación del equipo (acción 3.3)}
+Se incorporan los profesionales previstos para esta etapa en tecnología, producto y experiencia de usuario, marketing y comercial, y gestión del \textit{marketplace} y los contenidos.
+
+\paragraph{Escalado de la infraestructura a la nube (acción 3.4)}
+Acción condicional: solo se ejecuta si la evaluación de la acción 2.6 o las mediciones posteriores indican que el servidor propio no alcanza. En ese caso se migran de forma gradual los componentes que lo requieran a servicios en la nube, sin interrumpir el servicio, y se actualizan los costos correspondientes.
+
+\paragraph{Seguimiento de indicadores y mejora continua (acción T.1)}
+Durante los 36 meses se monitorean indicadores como usuarios registrados y activos, campañas creadas, frecuencia de uso, participación, conversión a prestaciones pagas e ingresos generados. La evaluación periódica permite ajustar las prioridades de desarrollo y las decisiones comerciales con base en información observable.
+
+\paragraph{Monitoreo de la capacidad de la infraestructura (acción T.2)}
+Durante los 36 meses se miden la cantidad de usuarios concurrentes y el uso de los recursos del servidor. Estas mediciones alimentan la evaluación de la acción 2.6 y permiten decidir el escalado de forma anticipada.
+
+\subsubsection{Cronograma}\label{sec:cronograma}
+La figura~\ref{fig:gantt} presenta el cronograma operativo de las acciones, desde la concreción de la inversión (mes 0) hasta el final del horizonte de 36 meses. Los hitos principales del plan son los siguientes:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|l|X|c|}
+\hline
+\textbf{Hito} & \textbf{Descripción} & \textbf{Mes}\\ \hline
+H1 & MVP web completo y probado & 4\\ \hline
+H2 & Lanzamiento de la aplicación web en Rosario & 6\\ \hline
+H3 & Aplicación móvil disponible para los jugadores & 9\\ \hline
+H4 & Primer grupo de profesionales incorporado & 15\\ \hline
+H5 & Lanzamiento del \textit{marketplace} & 25\\ \hline
+\end{tabularx}
+\end{center}
+
+\begin{landscape}
+\begin{figure}[p]
+\centering
+\begin{ganttchart}[
+  x unit=0.43cm, y unit title=0.5cm, y unit chart=0.42cm,
+  title height=1, bar height=0.55, group height=0.4,
+  title label font=\tiny, bar label font=\scriptsize, milestone label font=\scriptsize, group label font=\scriptsize\bfseries,
+  bar label node/.append style={text width=8.2cm, align=right},
+  group label node/.append style={text width=8.2cm, align=right},
+  vgrid={*{12}{draw=gray!30, dotted},*{12}{draw=gray!30, dotted}},
+  hgrid={draw=gray!25}, bar/.append style={fill=blue!45!black!60},
+  group/.append style={fill=orange!70!black!70, draw=orange!70!black!70}
+]{0}{36}
+\gantttitle{M0}{1}
+\gantttitle{Etapa 1: Lanzamiento}{12}
+\gantttitle{Etapa 2: Consolidación}{12}
+\gantttitle{Etapa 3: Expansión}{12} \\
+\gantttitlelist{0,...,36}{1} \\
+\ganttgroup{Programa 1. Lanzamiento}{0}{12} \\
+\ganttbar{1.1 Equipamiento, constitución y servidor propio}{0}{3} \\
+\ganttbar{1.2 Campañas, jugadores y personajes (web)}{1}{2} \\
+\ganttbar{1.3 Sesiones y tiempo real}{1}{3} \\
+\ganttbar{1.4 Notas públicas y privadas}{2}{3} \\
+\ganttbar{1.5 RuleSets y personalización}{2}{4} \\
+\ganttbar{1.6 Servicio externo de diálogos}{3}{4} \\
+\ganttbar{1.7 Pruebas del MVP web}{4}{4} \\
+\ganttbar{1.8 App móvil: diseño y desarrollo}{1}{7} \\
+\ganttbar{1.9 App móvil: pruebas y publicación}{7}{8} \\
+\ganttbar{1.10 Despliegue, CI/CD y demo}{3}{5} \\
+\ganttbar{1.11 Plan premium y pasarela de pagos}{4}{5} \\
+\ganttbar{1.12 Lanzamiento local en Rosario}{6}{12} \\
+\ganttbar{1.13 Validación con usuarios}{6}{12} \\
+\ganttgroup{Programa 2. Consolidación}{13}{24} \\
+\ganttbar{2.1 Incorporación de profesionales}{13}{15} \\
+\ganttbar{2.2 Refinamiento funcional}{13}{18} \\
+\ganttbar{2.3 Línea Esencial}{15}{24} \\
+\ganttbar{2.4 Expansión provincial y regional}{13}{24} \\
+\ganttbar{2.5 Preparación del marketplace}{19}{24} \\
+\ganttbar{2.6 Evaluación de capacidad de infraestructura}{19}{24} \\
+\ganttgroup{Programa 3. Expansión}{25}{36} \\
+\ganttbar{3.1 Lanzamiento del marketplace}{25}{36} \\
+\ganttbar{3.2 Expansión nacional}{25}{36} \\
+\ganttbar{3.3 Ampliación del equipo}{25}{30} \\
+\ganttbar[bar/.append style={fill=gray!55}]{3.4 Escalado a la nube (condicional)}{25}{36} \\
+\ganttgroup{Transversal}{1}{36} \\
+\ganttbar{T.1 Seguimiento de indicadores}{1}{36} \\
+\ganttbar{T.2 Monitoreo de capacidad de infraestructura}{1}{36} \\
+\ganttmilestone{H1 MVP web completo y probado}{4} \\
+\ganttmilestone{H2 Lanzamiento web en Rosario}{6} \\
+\ganttmilestone{H3 App móvil disponible}{9} \\
+\ganttmilestone{H4 Primer grupo de profesionales}{15} \\
+\ganttmilestone{H5 Lanzamiento del marketplace}{25}
+\end{ganttchart}
+\caption{Cronograma operativo del Plan de Acción (meses 0 a 36). Elaboración propia.}
+\label{fig:gantt}
+\end{figure}
+\end{landscape}
