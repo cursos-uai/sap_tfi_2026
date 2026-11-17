@@ -1,0 +1,57 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{CU-007-001 -- Generar Diálogo de NPC}
+{\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash\bfseries}p{3.2cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+Objetivo & Permitir al DM obtener, durante una sesión en curso, un diálogo para un NPC no planificado a partir de pocos datos, sin frenar la partida y sin que una falla del servicio de IA afecte al resto de la aplicación. \\ \hline
+Identificación & CU-007-001 \\ \hline
+Nombre & Generar Diálogo de NPC \\ \hline
+Descripción & Durante una sesión en curso, el DM indica la raza y la clase del NPC que habla, algunos rasgos de su estado y una idea aproximada de lo que debe decir. El sistema envía esos datos, junto con el contexto de la campaña, a un servicio de generación de diálogo, que arma el contexto completo (mundo, emociones, rasgos de habla) y devuelve el texto. El DM lo lee y decide: regenerarlo, descartarlo o guardarlo como entrada general de la bitácora de la sesión. El diálogo no se guarda automáticamente. Si el servicio no responde, el sistema lo informa y el DM sigue usando la aplicación. \\ \hline
+Precondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El usuario está autenticado y es DM de la campaña.
+\item La sesión está en curso (\texttt{ongoing}).
+\end{itemize} \\ \hline
+Postcondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El DM tiene el diálogo generado en pantalla, o un aviso de que el servicio no está disponible.
+\item Si el DM lo guardó, existe una entrada general nueva en la bitácora de la sesión; en caso contrario, no se persiste nada.
+\end{itemize} \\ \hline
+Actores primarios & DM \\ \hline
+Actores secundarios & Servicio de Generación de Diálogo (IA), servicio externo propio. \\ \hline
+Eventos disparadores & El DM necesita diálogo para un NPC no planificado durante la sesión. \\ \hline
+Extensiones y condiciones & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{extend (de CU-004-001)}: Gestionar Sesiones de Campaña. Requiere sesión en curso
+\item \textbf{include}: CU-007-002 Definir Parámetros del NPC. Siempre, antes de generar
+\item \textbf{include}: CU-007-003 Construir Prompt (Blackboard). Lo realiza el servicio externo
+\item \textbf{include}: CU-007-004 Solicitar Generación al Servicio de IA. Siempre
+\item \textbf{extend}: CU-007-005 Guardar Diálogo en Bitácora General. Solo si el DM lo decide
+\item \textbf{extend}: CU-007-006 Regenerar Diálogo. Si el resultado no conforma al DM
+\item \textbf{extend}: CU-007-007 Consultar Historial de Diálogos. Lista los diálogos guardados
+\item \textbf{extend (de CU-007-004)}: CU-007-008 Manejar Falla del Servicio de IA. Si el servicio no responde o falla
+\end{itemize}
+Requisitos relacionados: RF-048 a RF-052, RD-015, RS-002, RS-008, RNF-006, RNF-001, RNF-002 (ver HU-12 a HU-14). \\ \hline
+Escenario principal & \begin{enumerate}[itemsep=2pt,topsep=2pt]
+\item \textbf{DM:} solicita generar un diálogo de NPC.
+\item \textbf{Sistema:} muestra el formulario de parámetros.
+\item \textbf{DM:} ingresa la raza y la clase del NPC, los rasgos de estado y una idea aproximada del diálogo.
+\item \textbf{Sistema:} valida los datos y que la sesión esté en curso, y muestra que la generación está en proceso.
+\item \textbf{Sistema:} muestra el diálogo generado.
+\item \textbf{DM:} lee el diálogo y elige guardarlo en la bitácora.
+\item \textbf{Sistema:} guarda el diálogo como entrada general de la bitácora de la sesión y lo confirma.
+\end{enumerate} \\ \hline
+Escenarios alternativos & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Paso 4 — datos incompletos:} el sistema indica los campos faltantes y no solicita la generación.
+\item \textbf{Paso 4 — sesión no en curso:} el sistema informa que la sesión debe estar en curso y no genera el diálogo.
+\item \textbf{Paso 5 — el servicio de IA no responde o falla:} el sistema informa que la generación no está disponible; el DM puede reintentar y el resto de la aplicación sigue funcionando.
+\item \textbf{Paso 6 — regenerar:} el DM pide otro diálogo; el sistema genera uno nuevo con los mismos parámetros y descarta el anterior.
+\item \textbf{Paso 6 — descartar:} el DM no guarda el diálogo; el sistema no persiste nada.
+\item \textbf{Paso 6 — cambiar parámetros:} el DM vuelve al formulario, modifica los datos y solicita una nueva generación.
+\item \textbf{Después del paso 7 — historial:} el DM abre el historial y el sistema lista los diálogos guardados en la bitácora general de la sesión.
+\item \textbf{Usuario sin permiso:} si el usuario no es DM de la campaña, el sistema rechaza la operación.
+\end{itemize} \\ \hline
+\end{longtable}}
+\subparagraph{Prototipo de la interfaz de usuario}
+Pantallas: Formulario de parámetros (raza, clase, rasgos de estado, idea); Resultado (texto generado y botones Guardar, Regenerar, Descartar); Historial de diálogos; mensaje de servicio no disponible.
+
+\figdiagh{\subparagraph{Diagrama de casos de uso}}{regiardo_manuel/uc-cu-007-001}{Diagrama de casos de uso de CU-007-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de robustez}}{regiardo_manuel/robustness-cu-007-001}{Diagrama de robustez de CU-007-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de secuencia}}{regiardo_manuel/sequence-cu-007-001}{Diagrama de secuencia de CU-007-001.}{0.9}

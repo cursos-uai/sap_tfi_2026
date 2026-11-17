@@ -1,0 +1,88 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{Strategy — Asignación de RuleSets}
+
+\subparagraph{Problema}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El sistema debe soportar múltiples sistemas de reglas de juego de mesa (D\&D 5e hoy, potencialmente Pathfinder u otros a futuro), sin que agregar un sistema nuevo requiera modificar el código existente.
+\end{itemize}
+\subparagraph{Solución}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Strategy} (\texttt{IRuleSetProvider}): cada sistema de reglas (D\&D 5e, Pathfinder, ...) implementa una interfaz común para resolver items, hechizos, armas y monstruos. Agregar un sistema nuevo implica únicamente escribir una nueva clase concreta (\texttt{DnD5eRuleSetProvider}, \texttt{PathfinderRuleSetProvider}), respetando el principio Open/Closed.
+\item Una \textbf{Factory} (\texttt{RuleSetProviderFactory}) resuelve qué Strategy concreta instanciar según el \texttt{RuleSystem} asignado a la campaña (\texttt{CampaignRuleSet.\allowbreak{}rule\_\allowbreak{}system\_\allowbreak{}id}).
+\end{itemize}
+\subparagraph{Por qué Strategy y no Template Method}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Template Method} no aplica: no hay un algoritmo con pasos fijos y "huecos" a redefinir por subclases; lo que varía es el \textit{origen de los datos} (sistema de reglas) y una \textit{capa opcional de reemplazo} (personalización), que es exactamente el par Strategy/Decorator.
+\end{itemize}
+\subparagraph{Comparación canónica}
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+\textbf{Título} & \textbf{Contenido} \\ \hline\endhead
+\textbf{Nombre de Implementación} & Asignación de RuleSets \\ \hline
+\textbf{Patrón} & Strategy \\ \hline
+\textbf{Cambios previstos} & Se sabe de antemano que se agregarán nuevos sistemas de reglas (Pathfinder, etc.) sin tocar código existente (Open/Closed). \\ \hline
+\textbf{Funcionalidad} & Cada sistema de reglas resuelve items/hechizos/armas/monstruos con lógica propia (p. ej. distinta API o catálogo fuente). \\ \hline
+\textbf{Restricciones de Diseño} & El llamador (\texttt{CampaignRuleSetDecorator}) debe poder tratar cualquier sistema de reglas de forma intercambiable y uniforme en tiempo de ejecución, seleccionado dinámicamente por campaña (\texttt{CampaignRuleSet.\allowbreak{}rule\_\allowbreak{}system\_\allowbreak{}id}). \\ \hline
+\textbf{Dónde} & \textit{\texttt{Strategy}} \textbf{es} \textit{\texttt{IRuleSetProvider}} \newline{} \textit{\texttt{ConcreteStrategyA}} \textbf{es} \textit{\texttt{DnD5eRuleSetProvider}} \newline{} \textit{\texttt{ConcreteStrategyB (futuro)}} \textbf{es} \textit{\texttt{PathfinderRuleSetProvider}} \newline{} \textit{\texttt{Context}} \textbf{es} \textit{\texttt{CampaignRuleSetDecorator}} (mantiene la referencia \texttt{wrapped: IRuleSetProvider}) \newline{} \textit{\texttt{Selección de Strategy}} \textbf{es} \textit{\texttt{RuleSetProviderFactory.\allowbreak{}createFor(ruleSystem)}} \\ \hline
+\textbf{Comentarios} & Clave: el Strategy resuelve el catálogo \textbf{base} (sin overrides); la personalización por campaña es responsabilidad exclusiva del Decorator (tabla siguiente), nunca del Strategy. \\ \hline
+\end{longtable}}
+\figdiagh{}{regiardo_manuel/class-ruleset-patterns}{Patrones Strategy, Decorator y Factory para los RuleSets.}{0.9}
+\paragraph{Decorator — Personalización de RuleSet por Campaña}
+
+\subparagraph{Problema}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item Dentro de una campaña puntual, el DM debe poder personalizar ese sistema base: banear armas/hechizos o modificar estadísticas de un item, sin alterar el catálogo compartido por el resto de las campañas.
+\end{itemize}
+\subparagraph{Solución}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Decorator} (\texttt{CampaignRuleSetDecorator}): envuelve al Strategy base seleccionado por la campaña. Ante cada consulta, revisa primero si existe un \texttt{RuleOverride} aplicable (ban / modify\_stat); si lo hay, lo aplica (o corta la respuesta indicando que el ítem está baneado); si no, delega transparentemente en el proveedor base envuelto.
+\end{itemize}
+\subparagraph{Por qué Decorator y no Chain of Responsibility}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Chain of Responsibility} para los overrides fue considerado, pero un ítem solo tiene, como máximo, un override relevante por campaña (ban \textit{o} modify\_stat) — no hay una cadena de handlers que se pasen la solicitud entre sí, sino una única consulta indexada por \texttt{target\_\allowbreak{}key}. Decorator expresa mejor la idea de "capa que envuelve y opcionalmente reemplaza el comportamiento base".
+\end{itemize}
+\subparagraph{Comparación canónica}
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+\textbf{Título} & \textbf{Contenido} \\ \hline\endhead
+\textbf{Nombre de Implementación} & Personalización de RuleSet por Campaña \\ \hline
+\textbf{Patrón} & Decorator \\ \hline
+\textbf{Cambios previstos} & El conjunto de tipos de override (\texttt{ban}, \texttt{modify\_\allowbreak{}stat}, y otros a futuro como \texttt{modify\_\allowbreak{}cost}) puede crecer sin alterar los proveedores base ni el resto del sistema. \\ \hline
+\textbf{Funcionalidad} & Un DM puede banear o modificar estadísticas de items/hechizos solo dentro de su campaña, sin afectar el catálogo compartido por otras campañas que usan el mismo \texttt{RuleSystem}. \\ \hline
+\textbf{Restricciones de Diseño} & La personalización debe ser \textbf{opcional y componible} sobre cualquier Strategy base, sin que el Strategy sepa que está siendo envuelto (principio de responsabilidad única). \\ \hline
+\textbf{Dónde} & \textit{\texttt{Component}} \textbf{es} \textit{\texttt{IRuleSetProvider}} (misma interfaz común que Strategy) \newline{} \textit{\texttt{ConcreteComponent}} \textbf{es} \textit{\texttt{DnD5eRuleSetProvider}} / \textit{\texttt{PathfinderRuleSetProvider}} \newline{} \textit{\texttt{Decorator}} \textbf{es} \textit{\texttt{CampaignRuleSetDecorator}} (atributo \texttt{wrapped: IRuleSetProvider}, agrega \texttt{overrides: RuleOverride[]}) \\ \hline
+\textbf{Comentarios} & Clave: se descartó \textbf{Chain of Responsibility} porque no hay una cadena de handlers — cada consulta tiene, como máximo, \textbf{un} override aplicable (búsqueda indexada por \texttt{target\_\allowbreak{}key}), lo cual encaja mejor con "envolver y opcionalmente reemplazar" (Decorator) que con "pasar la solicitud por una cadena". \\ \hline
+\end{longtable}}
+\paragraph{Facade — Selección de Proveedor de IA}
+
+\subparagraph{Problema}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El filtro "Invocar Modelo de IA" del pipeline del servicio de diálogo (ver la sección de arquitectura) necesita comunicarse con un proveedor de IA concreto (OpenAI, un modelo auto-hospedado, u otro a futuro), cada uno con su propio esquema de autenticación, formato de request/response, límites de tokens y manejo de errores.
+\item No queremos que el resto del pipeline (ni el backend principal) conozca esos detalles, ni que cambiar de proveedor implique tocar código disperso por varios puntos del sistema.
+\end{itemize}
+\subparagraph{Solución}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Facade} (\texttt{AiProviderFacade}): expone una única operación simple (\texttt{generateCompletion(prompt, options)}) al filtro que la consume, ocultando toda la complejidad de los subsistemas concretos (\texttt{OpenAiClient}, \texttt{LocalLlmClient}, ...).
+\item El Facade resuelve internamente, a partir de una configuración externa (\texttt{AiProviderConfig.\allowbreak{}activeProvider}), a cuál cliente concreto delegar la llamada. Agregar un nuevo proveedor implica escribir un nuevo cliente que implemente \texttt{ILlmClient}, sin modificar el Facade ni el filtro que lo invoca.
+\item A diferencia del par Strategy + Decorator (secciones 1 y 2), aquí \textbf{no} hay necesidad de una interfaz de estrategia expuesta al llamador ni de una capa de "override": el objetivo es únicamente \textbf{simplificar y desacoplar} el acceso a un subsistema externo complejo y cambiante, que es exactamente el propósito de Facade.
+\end{itemize}
+\subparagraph{Por qué Facade y no Strategy}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item Se consideró reutilizar Strategy (como en RuleSet) para el proveedor de IA, ya que ambos casos "seleccionan una implementación concreta según configuración". La diferencia clave es que en RuleSet el llamador (\texttt{CampaignRuleSetDecorator}) necesita tratar a la Strategy como \textbf{intercambiable en tiempo de ejecución por campaña} y además envolverla con una capa de personalización (Decorator) — hay variabilidad de negocio real que el llamador debe modelar. En cambio, el llamador del proveedor de IA (el filtro "Invocar Modelo de IA") no necesita saber que existen múltiples proveedores ni razonar sobre cuál usar: solo quiere "un texto a partir de un prompt". Facade es más simple y ajustado quirúrgicamente a ese caso: \textbf{una interfaz mínima que oculta subsistemas heterogéneos}, sin exponer la variabilidad como parte del contrato.
+\end{itemize}
+\subparagraph{Comparación canónica}
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+\textbf{Título} & \textbf{Contenido} \\ \hline\endhead
+\textbf{Nombre de Implementación} & Selección de Proveedor de IA \\ \hline
+\textbf{Patrón} & Facade \\ \hline
+\textbf{Cambios previstos} & El proveedor de IA (OpenAI, modelo local auto-hospedado, u otro) puede cambiarse por configuración o evolucionar sin que el pipeline que lo invoca se entere. \\ \hline
+\textbf{Funcionalidad} & Cada proveedor tiene su propio esquema de autenticación, formato de request/response y manejo de límites/errores — el llamador solo necesita "generar texto a partir de un prompt". \\ \hline
+\textbf{Restricciones de Diseño} & El filtro "Invocar Modelo de IA" del pipeline (Pipes \& Filters) no debe conocer subsistemas externos heterogéneos; a diferencia de RuleSet, aquí el llamador \textbf{no necesita razonar sobre cuál proveedor está activo}, solo consumir una interfaz mínima y estable. \\ \hline
+\textbf{Dónde} & \textit{\texttt{Facade}} \textbf{es} \textit{\texttt{AiProviderFacade}} (método \texttt{generateCompletion(prompt, options)}) \newline{} \textit{\texttt{Subsistemas complejos}} \textbf{son} \textit{\texttt{OpenAiClient}}, \textit{\texttt{LocalLlmClient}} (futuro), ambos detrás de \texttt{ILlmClient} \newline{} \textit{\texttt{Configuración de selección}} \textbf{es} \textit{\texttt{AiProviderConfig.\allowbreak{}activeProvider}} \\ \hline
+\textbf{Comentarios} & Clave: \textbf{no se usó Strategy} aquí porque el llamador no necesita tratar la variabilidad como parte de su contrato — solo desea ocultar la complejidad de un subsistema externo, que es el propósito específico de Facade. \\ \hline
+\end{longtable}}
+\figdiagh{}{regiardo_manuel/class-ai-provider-facade}{Patrón Facade para la selección del proveedor de IA.}{0.9}

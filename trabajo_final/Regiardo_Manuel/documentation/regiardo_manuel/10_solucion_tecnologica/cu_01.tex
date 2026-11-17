@@ -1,0 +1,68 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{CU-004-001 -- Gestionar Sesiones de Campaña}
+{\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash\bfseries}p{3.2cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+Objetivo & Permitir al DM planificar la fecha de una sesión de su campaña junto con el grupo y conducirla (iniciar, pausar, reanudar, finalizar), manteniendo a los jugadores informados de su estado y fecha. \\ \hline
+Identificación & CU-004-001 \\ \hline
+Nombre & Gestionar Sesiones de Campaña \\ \hline
+Descripción & El DM crea una sesión dentro de su campaña, propone fechas candidatas y los jugadores votan sí, no o tal vez en cada una. El sistema muestra los votos de todos y sugiere una fecha, pero el DM decide y confirma. Llegado el momento, el DM inicia la sesión, puede pausarla y reanudarla en un encuentro posterior, y finalmente la finaliza. Si el grupo no puede reunirse, el DM reprograma la sesión fijando una nueva fecha. Al crear una sesión nueva, el sistema ofrece trasladar las notas de la sesión anterior. \\ \hline
+Precondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El usuario está autenticado y es DM de la campaña.
+\item La campaña tiene al menos un jugador para que la votación tenga sentido (no es obligatorio para crear la sesión).
+\end{itemize} \\ \hline
+Postcondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item La sesión existe con su fecha de inicio confirmada (o sin fecha, si el DM aún no confirmó una) y en el estado que corresponde a la última acción del DM (\texttt{planned}, \texttt{ongoing}, \texttt{paused} o \texttt{completed}).
+\end{itemize} \\ \hline
+Actores primarios & DM \\ \hline
+Actores secundarios & Jugador (vota fechas, consulta la sesión y sus propuestas). \\ \hline
+Eventos disparadores & El DM decide crear una nueva sesión o gestionar una existente de su campaña. \\ \hline
+Extensiones y condiciones & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{include}: CU-004-002 Crear Sesión. Siempre al planificar una sesión nueva
+\item \textbf{include}: CU-004-003 Consultar Sesiones y Detalle. Siempre que se revisa el estado
+\item \textbf{include}: CU-004-005 Proponer Fechas. Al planificar la fecha
+\item \textbf{include}: CU-004-006 Consultar Propuestas y Resultados. Antes de confirmar
+\item \textbf{include}: CU-004-007 Confirmar Fecha. Para fijar la fecha
+\item \textbf{extend}: CU-004-004 Gestionar Ciclo de Vida. Al comenzar, pausar, reanudar o finalizar
+\item \textbf{extend}: CU-004-008 Reprogramar Sesión. Sesión \texttt{planned} o \texttt{paused}
+\item \textbf{extend}: CU-004-009 Votar Fechas. Lo realiza el Jugador
+\item \textbf{extend}: CU-004-010 Unirse / Abandonar Sesión. Lo realiza el Jugador
+\item \textbf{extend}: CU-008-001 Gestionar Notas de Sesión. Notas privadas y públicas; traslado entre sesiones
+\end{itemize}
+Requisitos relacionados: RF-022 a RF-034, RD-004 a RD-010, RNF-001, RNF-002, RNF-004, RNF-012 (ver HU-05 a HU-09). \\ \hline
+Escenario principal & \begin{enumerate}[itemsep=2pt,topsep=2pt]
+\item \textbf{DM:} solicita crear una sesión e ingresa título, descripción y número de sesión.
+\item \textbf{Sistema:} crea la sesión en estado "planificada" sin fecha de inicio y ofrece trasladar las notas de la sesión anterior.
+\item \textbf{DM:} acepta o rechaza el traslado de notas.
+\item \textbf{DM:} propone una o más fechas candidatas.
+\item \textbf{Sistema:} registra las propuestas y las muestra a los jugadores.
+\item \textbf{Jugador:} responde sí, no o tal vez para cada fecha.
+\item \textbf{Sistema:} registra los votos y muestra a todos los miembros los votos individuales y los totales por fecha.
+\item \textbf{DM:} consulta los resultados; el sistema indica la fecha sugerida (más "sí"; ante empate, menos "no").
+\item \textbf{DM:} confirma una fecha.
+\item \textbf{Sistema:} fija la fecha de inicio de la sesión y cierra la votación.
+\item \textbf{DM:} inicia la sesión el día acordado.
+\item \textbf{Sistema:} marca la sesión como "en curso" y conserva la fecha de inicio.
+\item \textbf{DM:} finaliza la sesión.
+\item \textbf{Sistema:} marca la sesión como "completada".
+\end{enumerate} \\ \hline
+Escenarios alternativos & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Paso 1 — sin fecha prevista:} el DM no propone fechas; la sesión queda planificada sin fecha hasta que confirme o reprograme una.
+\item \textbf{Paso 2 — es la primera sesión:} no hay sesión anterior; el sistema no ofrece traslado de notas.
+\item \textbf{Paso 3 — traslado de notas:} el DM elige qué trasladar (privadas, públicas o ambas); el sistema agrega ese texto al final de las notas de la nueva sesión, sin vínculo posterior.
+\item \textbf{Paso 4 — quitar propuesta:} el DM elimina una propuesta; el sistema elimina también sus votos.
+\item \textbf{Paso 6 — cambio de voto:} el jugador cambia su respuesta mientras no haya fecha confirmada.
+\item \textbf{Paso 6 — votar con fecha confirmada:} el sistema rechaza el voto e informa que la votación está cerrada.
+\item \textbf{Paso 8 — empate persistente:} el sistema no sugiere una fecha y el DM decide libremente.
+\item \textbf{Paso 11 — día distinto al acordado:} el sistema registra como fecha de inicio el momento real en que se inició la sesión.
+\item \textbf{Después del paso 11 — pausar:} el DM pausa la sesión; el sistema la marca como "pausada" y el DM la reanuda en un encuentro posterior.
+\item \textbf{Reprogramar:} con la sesión planificada o pausada, el DM fija una nueva fecha; el sistema la actualiza sin reabrir la votación ni cambiar el estado (una sesión pausada sigue pausada).
+\item \textbf{Usuario sin permiso:} si el usuario no es DM de la campaña, el sistema rechaza la operación.
+\end{itemize} \\ \hline
+\end{longtable}}
+\subparagraph{Prototipo de la interfaz de usuario}
+Pantallas: Crear Sesión; Planificar Fechas (propuestas, votos por jugador, fecha sugerida, botón Confirmar); Detalle de Sesión (estado, fecha, notas, botones Iniciar / Pausar / Finalizar / Reprogramar).
+
+\figdiagh{\subparagraph{Diagrama de casos de uso}}{regiardo_manuel/uc-cu-004-001}{Diagrama de casos de uso de CU-004-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de robustez}}{regiardo_manuel/robustness-cu-004-001}{Diagrama de robustez de CU-004-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de secuencia}}{regiardo_manuel/sequence-cu-004-001}{Diagrama de secuencia de CU-004-001.}{0.9}

@@ -1,0 +1,72 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{Vista General — 3 Capas Cliente-Servidor}
+\begin{verbatim}
+Cliente (Frontend)  ->  Servidor (Backend)  ->  Base de Datos (SQL Server)
+\end{verbatim}
+Además del backend principal, existe un \textbf{servicio externo independiente} para la generación de diálogo de NPC (ver sección 4), contactado por el backend pero desplegado y evolucionado por separado.
+
+\paragraph{Frontend — Arquitectura MVC}
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{5.0cm}|>{\raggedright\arraybackslash}p{5.0cm}|>{\raggedright\arraybackslash}p{5.0cm}|}
+\hline
+\textbf{Capa} & \textbf{Responsabilidad} & \textbf{Implementación} \\ \hline\endhead
+\textbf{View} & Presentación pura; renderiza el estado recibido. & \texttt{pages/\allowbreak{}}, \texttt{components/\allowbreak{}} (React) \\ \hline
+\textbf{Controller} & Procesa eventos de entrada del usuario (submits, clicks, navegación) y los traduce en acciones sobre el Model. & Hooks y manejadores de eventos dentro de páginas/componentes \\ \hline
+\textbf{Model} & Estado de la aplicación y acceso a datos remotos. & \texttt{redux/\allowbreak{}} (store, slices) + \texttt{api/\allowbreak{}} (cliente HTTP hacia el backend) \\ \hline
+\end{longtable}}
+El flujo es unidireccional: \textbf{View $\rightarrow$ Controller $\rightarrow$ Model $\rightarrow$ View} (el Model notifica cambios de estado que la View vuelve a renderizar), consistente con el diagrama general de arquitectura.
+
+\paragraph{Backend — Sistema Estratificado Modularizado}
+El backend sigue una \textbf{arquitectura estratificada (Stratified Systems)}, organizada en \textbf{módulos por dominio} (\texttt{auth}, \texttt{campaign}, \texttt{character}, \texttt{session}, \texttt{enemy}, \texttt{ruleset}, \texttt{npc-dialogue}, \texttt{event} y \texttt{session-log}). Cada módulo replica las mismas 4 capas:
+
+\begin{verbatim}
+Routes -> Controller -> Service -> Repository
+\end{verbatim}
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{7.7cm}|>{\raggedright\arraybackslash}p{7.7cm}|}
+\hline
+\textbf{Capa} & \textbf{Responsabilidad} \\ \hline\endhead
+\textbf{Routes} & Define los endpoints HTTP del módulo y aplica middleware (autenticación, autorización por rol de campaña, validación de esquema). \\ \hline
+\textbf{Controller} & Adapta la request/response HTTP; delega la lógica al Service. Sin lógica de negocio. \\ \hline
+\textbf{Service} & Lógica de negocio y de dominio (p. ej. generación de \texttt{inviteCode}, aplicación de \texttt{RuleOverride} vía Strategy + Decorator, orquestación de llamadas a servicios externos). \\ \hline
+\textbf{Repository} & Encapsula el acceso a la persistencia (SQL Server). Desacopla la lógica de negocio del motor y la tecnología de persistencia concretos, y facilita testear los \texttt{Service} con un Repository simulado (mock/stub). \\ \hline
+\end{longtable}}
+Middleware transversal (\texttt{auth}, \texttt{userContext}, \texttt{campaignRole}, \texttt{validation}) se aplica a nivel de \texttt{Routes} antes de llegar al \texttt{Controller}.
+
+\subparagraph{Entrega en tiempo real — WebSocket Gateway (módulo `session`)}
+El módulo \texttt{session} incorpora, junto a las 4 capas estándar, un \textbf{WebSocket Gateway} (canal \texttt{session:\{id\}}). No es una capa adicional del stack Routes$\rightarrow$Controller$\rightarrow$Service$\rightarrow$Repository, sino un mecanismo de \textbf{entrega} paralelo al ciclo HTTP request/response:
+
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El \texttt{Service} de sesión, tras persistir un \texttt{SessionEvent} (y su reflejo automático en \texttt{SessionLog}, ver CU-005-001), emite el evento por WebSocket a los clientes conectados al canal de esa sesión.
+\item Los jugadores afectados ven su ficha de personaje actualizarse sin recargar la página.
+\item \textbf{SQL Server sigue siendo la única fuente de verdad.} El WebSocket es puramente de entrega en tiempo real: si un cliente se desconecta y reconecta, reconstruye el estado consultando la bitácora (CU-005-011) y la ficha del personaje vía REST, no depende de haber recibido el mensaje de socket.
+\end{itemize}
+\paragraph{Servicio de Generación de Diálogo de NPC — Pipes \& Filters + Blackboard}
+Decisión de \textbf{arquitectura}: el servicio se implementa como un \textbf{servicio externo independiente}, no como un módulo más del backend estratificado.
+
+\subparagraph{Problema}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El DM necesita, en medio de una sesión, generar diálogo genérico para un NPC no planificado, sin bloquear el resto del sistema ante la latencia o eventuales fallos del proveedor de IA.
+\item Armar un buen prompt requiere combinar información heterogénea y de distintas fuentes (tono/ambientación de la campaña, ficha del NPC, contexto de la escena, reglas activas) antes de poder invocar al modelo de lenguaje.
+\item El servicio tiene un ciclo de evolución y de escalado propio (agregar/quitar filtros, cambiar de proveedor de IA) y no debe acoplar la disponibilidad del backend principal a la latencia de un proveedor externo.
+\end{itemize}
+\subparagraph{Solución}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El servicio se estructura como \textbf{Pipes \& Filters}: una secuencia de filtros independientes conectados por "pipes", donde la salida de un filtro es la entrada del siguiente (recibir solicitud y contexto, construir el prompt, invocar el modelo de IA, formatear y validar la respuesta).
+\item El filtro de construcción del prompt se resuelve internamente con una arquitectura \textbf{Blackboard}: múltiples "fuentes de conocimiento" (contexto de campaña, perfil del NPC, tono narrativo, reglas activas de la campaña) escriben sus aportes sobre una pizarra compartida; un controlador decide cuándo la información acumulada es suficiente para ensamblar el prompt final.
+\item El filtro que invoca al modelo oculta al proveedor de IA concreto detrás de una \textbf{Facade} (patrón de diseño; ver \texttt{design-patterns.\allowbreak{}md}, sección 2).
+\item El backend lo consume desde el módulo \texttt{npc-dialogue} (capa \texttt{Service}) como un cliente HTTP, análogo a la integración con la API DnD5e: le envía el contexto necesario y recibe el texto generado, sin conocer los detalles internos del pipeline.
+\item La persistencia del resultado es \textbf{opcional y manual}: el DM decide si el diálogo amerita guardarse como una entrada de \texttt{SessionLog} (\texttt{type = general}); no ocurre automáticamente.
+\end{itemize}
+\subparagraph{Por qué esta arquitectura}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Pipes \& Filters} permite evolucionar el pipeline (agregar un filtro de moderación, cachear resultados, cambiar de proveedor de IA) sin afectar al resto de los filtros, y facilita el despliegue y escalado independientes respecto del backend principal.
+\item \textbf{Blackboard} es apropiado porque construir el prompt no es un pipeline lineal simple: distintas fuentes de contexto (campaña, NPC, reglas, escena) contribuyen de forma no necesariamente secuencial y con prioridades variables; el Blackboard modela ese ensamblado colaborativo antes de "cerrar" el prompt.
+\end{itemize}
+\paragraph{Decisiones Tomadas}
+\begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Autenticación}: propia, basada en \textbf{JWT} (registro y login con email + password persistidos en SQL Server). No se depende de un proveedor de identidad externo.
+\item \textbf{Persistencia}: \textbf{SQL Server} con \textbf{Prisma} como ORM y sistema de migraciones; el acceso a datos queda encapsulado en la capa \texttt{Repository} de cada módulo.
+\item \textbf{Servicio de diálogo de NPC}: servicio externo contactado por \textbf{HTTP/JSON} desde el módulo \texttt{npc-dialogue}.
+\item \textbf{Tiempo real}: \textbf{WebSocket} (canal \texttt{session:\{id\}}) como mecanismo de entrega.
+\end{itemize}

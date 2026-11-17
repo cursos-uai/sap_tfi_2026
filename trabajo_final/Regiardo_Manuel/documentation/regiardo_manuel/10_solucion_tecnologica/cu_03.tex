@@ -1,0 +1,56 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{CU-006-001 -- Personalizar RuleSet de Campaña}
+{\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\raggedright\arraybackslash\bfseries}p{3.2cm}|>{\raggedright\arraybackslash}p{11.9cm}|}
+\hline
+Objetivo & Permitir al DM adaptar las reglas de su campaña (por ejemplo, prohibir la magia o cambiar los valores de un arma) sin alterar el catálogo base ni las demás campañas. \\ \hline
+Identificación & CU-006-001 \\ \hline
+Nombre & Personalizar RuleSet de Campaña \\ \hline
+Descripción & Cada campaña usa un sistema de reglas base (por ejemplo, D\&D 5e), elegido al crearla. Sobre esa base, el DM puede consultar las reglas que rigen en su campaña, modificar las estadísticas de un ítem o hechizo, banear un arma, un hechizo o una categoría entera (por ejemplo, la magia) y quitar una personalización cuando ya no la quiera. Las personalizaciones rigen solo en esa campaña y se aplican al crear personajes y repartir botín. El sistema está preparado para incorporar otros sistemas de reglas sin modificar los existentes. \\ \hline
+Precondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El usuario está autenticado y es DM de la campaña.
+\item La campaña tiene un sistema de reglas base asignado.
+\end{itemize} \\ \hline
+Postcondición & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item El RuleSet de la campaña refleja los overrides vigentes: las reglas base con las personalizaciones aplicadas.
+\item El catálogo base y las demás campañas no se modificaron.
+\end{itemize} \\ \hline
+Actores primarios & DM \\ \hline
+Actores secundarios & API DnD5e (sistema de reglas externo que provee el catálogo base). \\ \hline
+Eventos disparadores & El DM quiere ver o cambiar las reglas que rigen en su campaña. \\ \hline
+Extensiones y condiciones & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{include}: CU-006-002 Asignar Sistema de Reglas Base. Al crear la campaña (incluido también por CU-002-002)
+\item \textbf{include}: CU-006-003 Consultar RuleSet Efectivo. Siempre que se revisan las reglas
+\item \textbf{extend}: CU-006-004 Modificar Estadística de Ítem / Hechizo. El DM define nuevos valores para un ítem
+\item \textbf{extend}: CU-006-005 Banear Arma / Hechizo / Categoría. El DM marca algo como no disponible
+\item \textbf{extend}: CU-006-006 Quitar Override. El DM revierte una personalización
+\end{itemize}
+Reglas: existe un único override por objetivo en cada campaña; el ítem a personalizar debe existir en el catálogo base.
+
+Requisitos relacionados: RF-016, RF-043 a RF-047, RD-013, RD-014, RNF-010, RS-001, RS-007, RNF-001, RNF-002 (ver HU-02, HU-03). \\ \hline
+Escenario principal & \begin{enumerate}[itemsep=2pt,topsep=2pt]
+\item \textbf{DM:} abre el RuleSet de su campaña.
+\item \textbf{Sistema:} muestra las reglas vigentes: el catálogo base con los overrides ya aplicados.
+\item \textbf{DM:} elige un ítem del catálogo y define nuevos valores para sus estadísticas.
+\item \textbf{Sistema:} confirma que el ítem existe y registra la modificación.
+\item \textbf{DM:} marca un arma, un hechizo o una categoría como no disponible.
+\item \textbf{Sistema:} registra el baneo.
+\item \textbf{DM:} consulta nuevamente el RuleSet.
+\item \textbf{Sistema:} muestra las reglas con las modificaciones y los baneos vigentes.
+\end{enumerate} \\ \hline
+Escenarios alternativos & \begin{itemize}[itemsep=2pt,topsep=2pt]
+\item \textbf{Paso 3 — ítem inexistente:} el sistema informa que el ítem no existe en el catálogo y no registra la modificación.
+\item \textbf{Paso 3 — ya existe un override para ese ítem:} el sistema reemplaza el anterior por el nuevo.
+\item \textbf{Paso 5 — banear una categoría:} el DM elige una categoría (por ejemplo, magia); el sistema la marca como no disponible para toda la campaña.
+\item \textbf{Quitar un override:} el DM elige un override y lo quita; el sistema devuelve la regla base.
+\item \textbf{Catálogo externo no disponible:} el sistema informa el problema y muestra solo los overrides de la campaña; no se pueden validar ítems nuevos hasta que el catálogo responda.
+\item \textbf{Efecto sobre personajes:} un ítem baneado se rechaza al crear o editar personajes y al repartir botín.
+\item \textbf{Usuario sin permiso:} si el usuario no es DM de la campaña, el sistema rechaza la operación.
+\end{itemize} \\ \hline
+\end{longtable}}
+\subparagraph{Prototipo de la interfaz de usuario}
+Pantallas: RuleSet de la campaña (lista de reglas con marca de override, filtro por tipo); buscador del catálogo; formulario de modificación de estadísticas; acciones Banear y Quitar override.
+
+\figdiagh{\subparagraph{Diagrama de casos de uso}}{regiardo_manuel/uc-cu-006-001}{Diagrama de casos de uso de CU-006-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de robustez}}{regiardo_manuel/robustness-cu-006-001}{Diagrama de robustez de CU-006-001.}{0.9}
+\figdiagh{\subparagraph{Diagrama de secuencia}}{regiardo_manuel/sequence-cu-006-001}{Diagrama de secuencia de CU-006-001.}{0.9}

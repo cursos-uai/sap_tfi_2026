@@ -1,0 +1,210 @@
+% Generado por scripts/cap10_gen.py desde documentation/legacy. No editar a mano.
+\paragraph{Componente 001 -- Cuenta}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-001-001 & Gestionar Cuenta de Usuario & Núcleo & Usuario & RF-001, RF-002 \\ \hline
+CU-001-002 & Registrar Usuario & Incluido & Usuario no autenticado & RF-001, RNF-005 \\ \hline
+CU-001-003 & Iniciar Sesión & Incluido & Usuario no autenticado & RF-002, RS-005, RNF-005 \\ \hline
+CU-001-004 & Cerrar Sesión & Extiende & Usuario & RF-004 \\ \hline
+CU-001-005 & Recuperar Contraseña & Extiende & Usuario & RF-005 \\ \hline
+\end{longtable}}
+\paragraph{Componente 002 -- Campañas}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-002-001 & Administrar Campañas & Núcleo & DM & RF-006, RF-012, RF-013 \\ \hline
+CU-002-002 & Crear Campaña & Incluido & DM & RF-006, RF-007, RF-016, RD-002, RD-003 \\ \hline
+CU-002-003 & Consultar Campañas y Detalle & Incluido & DM / Jugador & RF-012, RF-013, RNF-004 \\ \hline
+CU-002-004 & Editar Campaña & Extiende & DM & RF-010 \\ \hline
+CU-002-005 & Eliminar Campaña & Extiende & DM & RF-011 \\ \hline
+CU-002-006 & Gestionar Código de Invitación & Extiende & DM & RF-014, RD-003 \\ \hline
+CU-002-007 & Remover Jugador de la Campaña & Extiende & DM & RF-015 \\ \hline
+CU-002-008 & Unirse a una Campaña & Extiende & Jugador & RF-008 \\ \hline
+CU-002-009 & Abandonar una Campaña & Extiende & Jugador & RF-009 \\ \hline
+\end{longtable}}
+\paragraph{Componente 003 -- Personajes}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-003-001 & Gestionar Personajes de Usuario & Núcleo & Jugador & RF-017, RF-018 \\ \hline
+CU-003-002 & Crear Personaje & Incluido & Jugador & RF-017, RF-021, RD-016, RS-001 \\ \hline
+CU-003-003 & Editar Personaje & Extiende & Jugador & RF-019 \\ \hline
+CU-003-004 & Eliminar Personaje & Extiende & Jugador & RF-019 \\ \hline
+CU-003-005 & Consultar Personajes & Incluido & Jugador / DM & RF-018, RF-020 \\ \hline
+CU-003-006 & Consultar Catálogo D\&D5e & Incluido & Sistema & RF-021, RS-001 \\ \hline
+\end{longtable}}
+\paragraph{Componente 004 -- Sesiones (con Planificación)}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-004-001 & Gestionar Sesiones de Campaña & Núcleo & DM & RF-022, RF-029 \\ \hline
+CU-004-002 & Crear Sesión & Incluido & DM & RF-022, RF-027 \\ \hline
+CU-004-003 & Consultar Sesiones y Detalle & Incluido & DM / Jugador & RF-029, RF-028, RNF-004 \\ \hline
+CU-004-004 & Gestionar Ciclo de Vida de la Sesión & Extiende & DM & RF-024, RF-025, RD-004, RNF-012 \\ \hline
+CU-004-005 & Proponer Fechas & Incluido & DM & RF-030 \\ \hline
+CU-004-006 & Consultar Propuestas y Resultados & Incluido & DM / Jugador & RF-032, RD-007 \\ \hline
+CU-004-007 & Confirmar Fecha & Incluido & DM & RF-033, RD-005 \\ \hline
+CU-004-008 & Reprogramar Sesión & Extiende & DM & RF-034, RD-008 \\ \hline
+CU-004-009 & Votar Fechas & Extiende & Jugador & RF-031, RD-006 \\ \hline
+CU-004-010 & Unirse / Abandonar Sesión & Extiende & Jugador & RF-023 \\ \hline
+\end{longtable}}
+\paragraph{Componente 005 -- Eventos y Bitácora}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-005-001 & Gestionar Eventos de Sesión & Núcleo & DM & RF-035, RD-011, RD-017 \\ \hline
+CU-005-002 & Difundir Evento en Tiempo Real & Incluido & Sistema & RF-036, RNF-007, RS-004 \\ \hline
+CU-005-003 & Registrar Entrada de Acción en Bitácora & Incluido & Sistema & RF-039, RD-012 \\ \hline
+CU-005-004 & Registrar Evento de Daño & Extiende & DM & RF-035, RD-011, RD-017, RD-018 \\ \hline
+CU-005-005 & Registrar Evento de Curación & Extiende & DM & RF-035, RD-011, RD-017, RD-018 \\ \hline
+CU-005-006 & Registrar Evento de XP & Extiende & DM & RF-035, RD-011, RD-017 \\ \hline
+CU-005-007 & Registrar Evento de Loot & Extiende & DM & RF-035, RD-011, RD-017, RD-019 \\ \hline
+CU-005-008 & Registrar Evento Personalizado & Extiende & DM & RF-035, RD-011, RD-017 \\ \hline
+CU-005-009 & Consultar Historial de Eventos & Extiende & DM / Jugador & RF-040, RD-020 \\ \hline
+CU-005-010 & Reconstruir Estado tras Reconexión & Extiende & Jugador / DM & RF-041, RNF-007 \\ \hline
+CU-005-011 & Gestionar Bitácora de Sesión & Extiende & DM & RF-037, RF-038, RD-012 \\ \hline
+CU-005-012 & Registrar Entrada de Combate & Incluido & DM & RF-037 \\ \hline
+CU-005-013 & Registrar Entrada General & Incluido & DM & RF-037 \\ \hline
+CU-005-014 & Consultar Bitácora & Incluido & DM / Jugador & RF-038 \\ \hline
+\end{longtable}}
+\paragraph{Componente 006 -- RuleSets}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-006-001 & Personalizar RuleSet de Campaña & Núcleo & DM & RF-043, RF-044, RF-047, RD-013, RD-014, RNF-010, RS-007 \\ \hline
+CU-006-002 & Asignar Sistema de Reglas Base & Incluido & DM & RF-016, RD-013 \\ \hline
+CU-006-003 & Consultar RuleSet Efectivo & Incluido & DM & RF-045 \\ \hline
+CU-006-004 & Modificar Estadística de Ítem / Hechizo & Extiende & DM & RF-043, RD-014 \\ \hline
+CU-006-005 & Banear Arma / Hechizo & Extiende & DM & RF-044, RD-014 \\ \hline
+CU-006-006 & Quitar Override & Extiende & DM & RF-046 \\ \hline
+\end{longtable}}
+\paragraph{Componente 007 -- Diálogo de NPC}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-007-001 & Generar Diálogo de NPC & Núcleo & DM & RF-048, RD-015, RS-002, RNF-006 \\ \hline
+CU-007-002 & Definir Parámetros del NPC & Incluido & DM & RF-048 \\ \hline
+CU-007-003 & Construir Prompt (Blackboard) & Incluido & Servicio de IA & RS-008 \\ \hline
+CU-007-004 & Solicitar Generación al Servicio de IA & Incluido & Servicio de IA & RS-002, RS-008 \\ \hline
+CU-007-005 & Guardar Diálogo en Bitácora General & Extiende & DM & RF-050 \\ \hline
+CU-007-006 & Regenerar Diálogo & Extiende & DM & RF-049 \\ \hline
+CU-007-007 & Consultar Historial de Diálogos & Extiende & DM & RF-051 \\ \hline
+CU-007-008 & Manejar Falla del Servicio de IA & Extiende & Sistema & RF-052, RNF-006 \\ \hline
+\end{longtable}}
+\paragraph{Componente 008 -- Notas}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-008-001 & Gestionar Notas de Sesión & Apoyo & DM & RF-026, RD-009 \\ \hline
+CU-008-002 & Editar Notas de Sesión & Incluido & DM & RF-026 \\ \hline
+CU-008-003 & Transferir Notas a Otra Sesión & Extiende & DM & RF-027, RD-010 \\ \hline
+CU-008-004 & Consultar Notas de Sesión & Incluido & DM / Jugador & RF-028, RNF-004 \\ \hline
+\end{longtable}}
+\paragraph{Componente 009 -- Enemigos}
+{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.9cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Tipo} & \textbf{Actor primario} & \textbf{Requisitos} \\ \hline\endhead
+CU-009-001 & Gestionar Enemigos de Campaña & Núcleo & DM & RF-042 \\ \hline
+CU-009-002 a CU-009-005 & Crear, Editar, Eliminar y Consultar Enemigos & Incluido / Extiende & DM & RF-042 \\ \hline
+\end{longtable}}
+\paragraph{Trazabilidad de requisitos}
+Los requisitos \textbf{globales} se aplican a todos los casos de uso y no se repiten fila por fila: RNF-001 (autenticación; no aplica a registro e inicio de sesión), RNF-002 (autorización por rol de campaña), RNF-003 (validación de datos), RNF-008, RNF-009, RNF-011, RF-053, RF-054, RD-001, RS-003, RS-006, RS-009, RS-010 y RE-001 a RE-005.
+
+{\small\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.4cm}|>{\raggedright\arraybackslash}p{12.9cm}|}
+\hline
+\textbf{Requisito} & \textbf{Casos de uso que lo cubren} \\ \hline\endhead
+RF-001 & CU-001-001, CU-001-002 \\ \hline
+RF-002 & CU-001-001, CU-001-003 \\ \hline
+RF-003 & — \\ \hline
+RF-004 & CU-001-004 \\ \hline
+RF-005 & CU-001-005 \\ \hline
+RF-006 & CU-002-001, CU-002-002 \\ \hline
+RF-007 & CU-002-002 \\ \hline
+RF-008 & CU-002-008 \\ \hline
+RF-009 & CU-002-009 \\ \hline
+RF-010 & CU-002-004 \\ \hline
+RF-011 & CU-002-005 \\ \hline
+RF-012 & CU-002-001, CU-002-003 \\ \hline
+RF-013 & CU-002-001, CU-002-003 \\ \hline
+RF-014 & CU-002-006 \\ \hline
+RF-015 & CU-002-007 \\ \hline
+RF-016 & CU-002-002, CU-006-002 \\ \hline
+RF-017 & CU-003-001, CU-003-002 \\ \hline
+RF-018 & CU-003-001, CU-003-005 \\ \hline
+RF-019 & CU-003-003, CU-003-004 \\ \hline
+RF-020 & CU-003-005 \\ \hline
+RF-021 & CU-003-002, CU-003-006 \\ \hline
+RF-022 & CU-004-001, CU-004-002 \\ \hline
+RF-023 & CU-004-010 \\ \hline
+RF-024 & CU-004-004 \\ \hline
+RF-025 & CU-004-004 \\ \hline
+RF-026 & CU-008-001, CU-008-002 \\ \hline
+RF-027 & CU-004-002, CU-008-003 \\ \hline
+RF-028 & CU-004-003, CU-008-004 \\ \hline
+RF-029 & CU-004-001, CU-004-003 \\ \hline
+RF-030 & CU-004-005 \\ \hline
+RF-031 & CU-004-009 \\ \hline
+RF-032 & CU-004-006 \\ \hline
+RF-033 & CU-004-007 \\ \hline
+RF-034 & CU-004-008 \\ \hline
+RF-035 & CU-005-001, CU-005-004, CU-005-005, CU-005-006, CU-005-007, CU-005-008 \\ \hline
+RF-036 & CU-005-002 \\ \hline
+RF-037 & CU-005-011, CU-005-012, CU-005-013 \\ \hline
+RF-038 & CU-005-011, CU-005-014 \\ \hline
+RF-039 & CU-005-003 \\ \hline
+RF-040 & CU-005-009 \\ \hline
+RF-041 & CU-005-010 \\ \hline
+RF-042 & CU-009-001, CU-009-002 a 009-005 \\ \hline
+RF-043 & CU-006-001, CU-006-004 \\ \hline
+RF-044 & CU-006-001, CU-006-005 \\ \hline
+RF-045 & CU-006-003 \\ \hline
+RF-046 & CU-006-006 \\ \hline
+RF-047 & CU-006-001 \\ \hline
+RF-048 & CU-007-001, CU-007-002 \\ \hline
+RF-049 & CU-007-006 \\ \hline
+RF-050 & CU-007-005 \\ \hline
+RF-051 & CU-007-007 \\ \hline
+RF-052 & CU-007-008 \\ \hline
+RNF-004 & CU-002-003, CU-004-003, CU-008-004 \\ \hline
+RNF-005 & CU-001-002, CU-001-003 \\ \hline
+RNF-006 & CU-007-001, CU-007-008 \\ \hline
+RNF-007 & CU-005-002, CU-005-010 \\ \hline
+RNF-010 & CU-006-001 \\ \hline
+RNF-012 & CU-004-004 \\ \hline
+RD-002 & CU-002-002 \\ \hline
+RD-003 & CU-002-002, CU-002-006 \\ \hline
+RD-004 & CU-004-004 \\ \hline
+RD-005 & CU-004-007 \\ \hline
+RD-006 & CU-004-009 \\ \hline
+RD-007 & CU-004-006 \\ \hline
+RD-008 & CU-004-008 \\ \hline
+RD-009 & CU-008-001 \\ \hline
+RD-010 & CU-008-003 \\ \hline
+RD-011 & CU-005-001, CU-005-004, CU-005-005, CU-005-006, CU-005-007, CU-005-008 \\ \hline
+RD-012 & CU-005-003, CU-005-011 \\ \hline
+RD-013 & CU-006-001, CU-006-002 \\ \hline
+RD-014 & CU-006-001, CU-006-004, CU-006-005 \\ \hline
+RD-015 & CU-007-001 \\ \hline
+RD-016 & CU-003-002 \\ \hline
+RD-017 & CU-005-001, CU-005-004, CU-005-005, CU-005-006, CU-005-007, CU-005-008 \\ \hline
+RD-018 & CU-005-004, CU-005-005 \\ \hline
+RD-019 & CU-005-007 \\ \hline
+RD-020 & CU-005-009 \\ \hline
+RS-001 & CU-003-002, CU-003-006 \\ \hline
+RS-002 & CU-007-001, CU-007-004 \\ \hline
+RS-004 & CU-005-002 \\ \hline
+RS-005 & CU-001-003 \\ \hline
+RS-007 & CU-006-001 \\ \hline
+RS-008 & CU-007-003, CU-007-004 \\ \hline
+\end{longtable}}

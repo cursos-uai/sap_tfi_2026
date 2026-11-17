@@ -1,0 +1,119 @@
+\capredactadotrue
+\section{Factibilidades}
+
+Este capítulo evalúa la viabilidad del proyecto desde cuatro dimensiones. La calificación de cada una resume el análisis desarrollado en los apartados siguientes.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|X|c|}
+\hline
+\textbf{Factibilidad} & \textbf{Calificación}\\ \hline
+Técnica & Alta\\ \hline
+Comercial y económica & Media-Alta\\ \hline
+Administrativa & Alta\\ \hline
+Legal & Media-Alta\\ \hline
+\end{tabularx}
+\end{center}
+
+\subsection{Factibilidad técnica}
+La factibilidad técnica del proyecto se califica como \textbf{alta}.
+
+\subsubsection{Arquitectura y tecnología}
+El desarrollo se apoya en tecnologías maduras, estables y probadas en el mercado: una aplicación web para DMs y una aplicación móvil para jugadores, una interfaz de programación (API) que atiende a ambas, una base de datos relacional y sincronización en tiempo real mediante WebSockets.
+
+La arquitectura se basa en una infraestructura propia (\textit{on-premise}), lo que garantiza un control absoluto sobre el hardware, los datos y los costos operativos fijos, y exige una planificación escalonada de los recursos de red y almacenamiento para acompañar el crecimiento de la base de usuarios. El escalado a servicios en la nube queda como consideración futura, según la cantidad de usuarios.
+
+Complementariamente, el proyecto integra un proveedor externo de inteligencia artificial, que se utiliza tanto para optimizar el ciclo de desarrollo como para potenciar las herramientas de IA integradas en el software. Esto delega el procesamiento complejo en servicios especializados y evita saturar la infraestructura física local.
+
+\subsubsection{Hardware, software y telecomunicaciones}
+\begin{itemize}
+  \item \textbf{Hardware:} un servidor propio y \textit{notebooks} de segunda mano, adquiridos con la inversión inicial (USD 3.360).
+  \item \textbf{Software:} aplicaciones web y móvil, API y base de datos desarrolladas por el equipo, junto con herramientas de integración y despliegue continuo.
+  \item \textbf{Telecomunicaciones:} enlace a Internet en el lugar del servidor, dominio propio, certificados de seguridad y configuración de red que permita exponer el servicio de forma segura.
+\end{itemize}
+Por tratarse de un servidor propio, la disponibilidad depende de un único enlace de Internet y del suministro eléctrico, lo que es un riesgo asumido en la etapa inicial. Se prevén las siguientes medidas de continuidad:
+\begin{itemize}
+  \item un equipo de energía ininterrumpida (UPS) para el servidor;
+  \item copias de respaldo periódicas, almacenadas fuera del servidor;
+  \item monitoreo básico de disponibilidad y de uso de recursos;
+  \item migración parcial o total a servicios en la nube si las mediciones de capacidad o de disponibilidad así lo indican (acciones de evaluación y escalado del plan de acción).
+\end{itemize}
+
+\subsubsection{Personal y capacitación}
+Los dos socios fundadores cubren las capacidades técnicas necesarias: arquitectura de soluciones, infraestructura, integración y despliegue continuo, desarrollo de software y conocimiento del dominio del producto. En la etapa de consolidación se suma un desarrollador, y en la de expansión se amplía el equipo técnico (véase el capítulo de operaciones).
+
+La capacitación requerida para los usuarios es baja: el producto está pensado para que directores de juego novatos puedan usarlo sin curva de aprendizaje elevada. El equipo mantiene la capacitación continua en las tecnologías que utiliza.
+
+\subsubsection{Desafíos técnicos}
+La integración con la API de \textit{Dungeons \& Dragons} 5.ª edición y la incorporación de servicios de asistencia por inteligencia artificial son desafíos de complejidad moderada, viables con personal especializado en ingeniería de software. El principal desafío es el desarrollo simultáneo de las aplicaciones web y móvil durante el primer año por un equipo de dos personas, que se mitiga con el lanzamiento escalonado previsto: la aplicación web primero y la móvil después. El horizonte de 36 meses no altera la estabilidad ni la viabilidad de la infraestructura elegida.
+
+\subsection{Factibilidad comercial}
+La factibilidad comercial y económica se califica como \textbf{media-alta}.
+
+\subsubsection{Mercado y competencia}
+El mercado inicial es el de los grupos de juego presencial de Argentina, que comienza en Rosario. Su demanda se apoya en el crecimiento del pasatiempo y se segmenta en directores de juego (usuario principal), jugadores y creadores de contenido. El dimensionamiento cuantitativo se completará con los resultados del estudio de mercado en curso; por ahora, el plan fija metas de cobertura y participación por etapa.
+
+La competencia está formada por plataformas consolidadas (Roll20, Foundry VTT, D\&D Beyond y World Anvil), que no se especializan en la gestión de campañas presenciales. Es previsible que alguna de ellas incorpore herramientas gratuitas para ese segmento, lo que se considera en los escenarios de riesgo.
+
+\subsubsection{Estrategia de comercialización}
+El producto se comercializa mediante un modelo \textit{freemium} B2C, complementado a partir de la tercera etapa por un \textit{marketplace} C2C. La distribución es digital y directa, con presencia en eventos y comunidades para captar a los primeros usuarios. El plan de marketing detalla la mezcla comercial (producto, precio, distribución y comunicación).
+
+\subsubsection{Inversión e indicadores financieros}
+La inversión inicial es baja (USD 27.610) y se destina a infraestructura de segunda mano, registros legales y un capital de trabajo que actúa como reserva. Con el modelo financiero a tres años, y antes de impuestos, los indicadores son:
+\begin{itemize}
+  \item valor actual neto (VAN) de USD 15.394,02, con una tasa de corte del 9\,\%;
+  \item tasa interna de retorno (TIR) del 31,41\,\%;
+  \item recupero de la inversión alrededor del mes 26.
+\end{itemize}
+El punto de equilibrio operativo exige 763, 1.370 y 2.151 suscriptores en los años 1, 2 y 3, con un margen de seguridad del 22 al 27\,\% respecto de lo planificado.
+
+\subsubsection{Sensibilidad del modelo}
+La rentabilidad depende de alcanzar la cantidad de suscriptores prevista: una desviación del 10\,\% por debajo del escenario base ya vuelve levemente negativo el VAN, y en los escenarios pesimistas la inversión no se recupera dentro del horizonte. Además, los impuestos a las ganancias y a los ingresos brutos aún no están incluidos en los flujos y reducirán los indicadores. Por estos motivos, la factibilidad comercial se califica como media-alta y no como alta.
+
+\subsection{Factibilidad administrativa}
+La factibilidad administrativa se califica como \textbf{alta}.
+
+\subsubsection{Metodología y gestión}
+La organización y el seguimiento de las tareas se estructuran con metodologías ágiles (Scrum y Kanban, con herramientas de gestión de proyectos como JIRA), complementadas con flujos de integración y despliegue continuo.
+
+\subsubsection{Estructura y procesos}
+Durante el lanzamiento, los socios fundadores asumen la gestión del producto y del negocio, con apoyo de un contador y un asesor legal externos. En la etapa de consolidación se incorpora un profesional de administración y finanzas, que fortalece la planificación económica y el control presupuestario. Los procesos administrativos principales son:
+\begin{itemize}
+  \item el cobro de las suscripciones mediante pasarelas de pago digitales, al contado;
+  \item la liquidación de impuestos y las registraciones contables, a cargo del equipo contable externo;
+  \item el seguimiento presupuestario periódico de ingresos, egresos y capital de trabajo;
+  \item la atención de consultas de usuarios, a cargo inicialmente de los socios fundadores.
+\end{itemize}
+
+\subsubsection{Control operativo}
+El presupuesto de egresos muestra que los costos fijos administrativos son altamente previsibles (cargas sociales, licencias, mantenimiento de la infraestructura propia y seguros). El control estricto del capital de trabajo anual de USD 14.400 y la reserva inicial de USD 22.750 aseguran la liquidez durante los años críticos del lanzamiento y evitan desvíos administrativos.
+
+\subsection{Factibilidad legal}
+La factibilidad legal se califica como \textbf{media-alta}. Los aspectos de este apartado están sujetos a la validación del asesor legal y del contador de la empresa.
+
+\subsubsection{Forma societaria}
+La empresa se constituirá como Sociedad por Acciones Simplificada (S.A.S.), regulada por la Ley 27.349, que limita la responsabilidad de los socios al capital aportado y ofrece una constitución ágil. Si el crecimiento o una eventual ronda de inversión lo requieren, la sociedad podrá incorporar nuevos socios mediante aumentos de capital o transformarse en otro tipo societario.
+
+\subsubsection{Marco normativo}
+La plataforma debe cumplir las normas nacionales aplicables a los servicios digitales, entre ellas:
+\begin{itemize}
+  \item Ley 25.326, de protección de los datos personales;
+  \item Ley 11.723, de propiedad intelectual;
+  \item Ley 22.362, de marcas y designaciones;
+  \item Ley 24.240, de defensa del consumidor, y la normativa complementaria sobre comercio electrónico;
+  \item en materia tributaria, la Ley de Impuesto a las Ganancias, la Ley de Impuesto al Valor Agregado y el Código Fiscal de la Provincia de Santa Fe para el impuesto a los ingresos brutos.
+\end{itemize}
+Las copias de las normas se incluyen como anexo.
+
+\subsubsection{Propiedad intelectual y reglas de juego}
+El aspecto legal más sensible es el uso de las mecánicas de \textit{Dungeons \& Dragons}. Se resuelve utilizando exclusivamente el \textit{Systems Reference Document} 5.1 (SRD 5.1) de Wizards of the Coast, publicado bajo la licencia Creative Commons Atribución 4.0 (CC-BY-4.0), con la mención de atribución que exige la licencia. La \textit{Open Gaming License} 1.0a permanece disponible como alternativa. La licencia permite indicar que el producto es compatible con la quinta edición.
+
+Estas licencias no otorgan derechos sobre las marcas de Wizards of the Coast. Por eso se revisará con el asesor legal el uso de la sigla \enquote{DnD} en el nombre del producto, y se contempla la posibilidad de modificarlo si fuera necesario.
+
+\subsubsection{Datos personales}
+La plataforma trata datos personales de los usuarios y contenido generado por ellos. Se contará con una política de privacidad y con el consentimiento de los usuarios, e incluirá la información sobre el uso de un proveedor externo de inteligencia artificial, al que se envía contenido de las campañas para generar diálogos. Los datos se almacenan en infraestructura propia, con medidas de seguridad y de respaldo.
+
+\subsubsection{Aspectos contractuales y tributarios}
+Se contemplan términos y condiciones claros para los usuarios finales (B2C) y, a partir del lanzamiento del \textit{marketplace}, acuerdos de comisiones y políticas de publicación para los creadores de contenido independientes (C2C), que conservan la propiedad de sus obras.
+
+En el plano tributario, se evaluará con el contador la posibilidad de acceder al Régimen de Promoción de la Economía del Conocimiento (Ley 27.506 y su modificatoria), que alcanza al desarrollo de software y prevé beneficios sobre el impuesto a las ganancias y las contribuciones patronales. Su aplicación depende del cumplimiento de requisitos y no está incluida en los flujos del plan financiero.

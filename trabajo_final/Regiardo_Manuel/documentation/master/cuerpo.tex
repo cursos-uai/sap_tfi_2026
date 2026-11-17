@@ -1,0 +1,35 @@
+% Cuerpo compartido. Rutas relativas a la carpeta desde la que se compila
+% (master/ o la carpeta de cada alumno, ambas a un nivel de documentation/).
+% Cap. 1-5: Seminario y TFI. Cap. 6-9: solo TFI (\tfitrue).
+% Cap. 10 y Anexos: propios de cada carpeta (casos de uso distintos por alumno).
+
+\newcommand{\capitulo}[1]{\capredactadofalse\input{#1}}
+
+\part*{Plan de Negocios}
+\addcontentsline{toc}{part}{Plan de Negocios}
+\capitulo{../master/01_descripcion_general/texto}
+\capitulo{../master/02_analisis_estrategico/texto}
+\capitulo{../master/03_analisis_foda/texto}
+\capitulo{../master/04_segmentacion/texto}
+\capitulo{../master/05_plan_de_accion/texto}
+\iftfi
+\capitulo{../master/06_plan_de_marketing/texto}
+\capitulo{../master/07_operaciones/texto}
+\capitulo{../master/08_plan_financiero_economico/texto}
+\capitulo{../master/09_factibilidades/texto}
+\fi
+
+\ifparcial\else
+% La guía indica que la carpeta técnica debe presentarse como cuerpo separado.
+\part*{Carpeta Técnica}
+\addcontentsline{toc}{part}{Carpeta Técnica}
+% El Seminario omite los Cap. 6-9, pero la carpeta técnica es siempre el Cap. 10.
+\iftfi\else\setcounter{section}{9}\fi
+% El Cap. 10 es individual: cada carpeta (y master/, como plantilla) tiene su propio texto.tex.
+\capitulo{10_solucion_tecnologica/texto}
+\capitulo{../master/11_contenido/texto}
+
+\input{anexos}
+\fi
+
+\printbibliography[title={Referencias}]
