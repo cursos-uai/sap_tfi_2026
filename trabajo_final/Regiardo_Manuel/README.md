@@ -12,6 +12,7 @@
 ## Contenido
 
 - `Regiardo_Manuel_TFI_1.0.pdf`: documento compilado de la versión 1.0.
+- `Regiardo_Manuel_Seminario_1.0.pdf`: documento del Seminario compilado (`main.tex`), para consulta rápida.
 - `documentation/regiardo_manuel/`: fuentes LaTeX propias (`main_tfi.tex` es el documento del TFI).
 - `documentation/master/`: preámbulo y capítulos compartidos (necesarios para compilar).
 - `documentation/assets/`: logos, imágenes y diagramas (PDF) usados por el documento.
