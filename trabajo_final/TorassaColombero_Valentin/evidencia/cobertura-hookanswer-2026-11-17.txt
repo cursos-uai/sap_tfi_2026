@@ -1,0 +1,40 @@
+Cobertura de HookAnswer.parse(_:truncated:) -- blackice 1.1.1 (commit d94ef85)
+Fecha: 2026-11-17 19:50 -03
+Equipo: Mac16,12, macOS 27.0.1 (26A434)
+Compilador: swift-driver version: 1.168.6 Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+Comando: macos/test.sh --enable-code-coverage --filter HookAnswerTests --no-parallel
+Resultado: Test run with 9 tests in 1 suite passed after 0.003 seconds.
+
+Lineas 51-66 de macos/Sources/BlackiceCore/HookAnswer.swift con el numero de ejecuciones (llvm-cov show):
+   51|     64|    public static func parse(_ output: Data, truncated: Bool) -> Result<HookAnswer, Missing> {
+   52|     64|        guard !truncated else { return .failure(.outputTooLong) }
+   53|     62|        let lines = nonEmptyLines(output)
+   54|     62|        guard let line = lines.last else { return .failure(.noLine) }
+   55|     59|        if line == "deny" { return .success(.deny) }
+   56|     55|        let words = line.split(separator: " ", omittingEmptySubsequences: false)
+   57|     55|        if words.count == 2, words[0] == "approve",
+   58|     55|           let seconds = ApprovalDuration.seconds(String(words[1]), units: ["m", "h"]) {
+   59|      8|            return .success(.approve(seconds: seconds))
+   60|     47|        }
+   61|     47|        if lines.count >= 2, lines[lines.count - 2] == "approve",
+   62|     47|           let seconds = ApprovalDuration.seconds(line, units: ["m", "h"]) {
+   63|      5|            return .success(.approve(seconds: seconds))
+   64|     42|        }
+   65|     42|        return .failure(.unrecognized(prefix: shown(line)))
+   66|     64|    }
+
+Regiones de la funcion (llvm-cov export): 14 de 14 ejecutadas.
+   region [51, 94, 66, 6, 64] kind 0
+   region [52, 31, 52, 66, 2] kind 0
+   region [52, 66, 65, 60, 62] kind 0
+   region [54, 42, 54, 70, 3] kind 0
+   region [54, 70, 65, 60, 59] kind 0
+   region [55, 12, 55, 26, 59] kind 0
+   region [55, 27, 55, 53, 4] kind 0
+   region [55, 53, 65, 60, 55] kind 0
+   region [57, 12, 57, 28, 55] kind 0
+   region [58, 88, 60, 10, 8] kind 0
+   region [60, 10, 65, 60, 47] kind 0
+   region [61, 12, 61, 28, 47] kind 0
+   region [62, 76, 64, 10, 5] kind 0
+   region [64, 10, 65, 60, 42] kind 0
