@@ -7,7 +7,7 @@
 - **Solución tecnológica:** `blackice`, el software propio de la línea. El punto 10 se escribió de nuevo sobre `blackice`; la especificación anterior, del marco y del kit, sale del documento.
 - **Avance referenciado:** documento completo, puntos 1 a 11. De los 59 criterios de la checklist tecnológica, 58 están documentados y 1 no se incluye por criterio de la cátedra en clase. Los puntos 7, 8 y 9 se verificaron aparte contra la guía.
 - **Criterio de la cátedra en clase:** no van los diagramas de paquetes, de componentes, de despliegue ni entidad-relación. La checklist se sigue con ese criterio.
-- **Ubicaciones:** por sección, tabla y figura, con la numeración del PDF de la versión 1.12. Las páginas están en el índice del PDF. Las tablas y las figuras de los puntos 1 a 9 conservan el número de la versión 1.11. En el punto 10, la arquitectura es el primer apartado de la Sección 10.5 y no lleva número propio.
+- **Ubicaciones:** por sección, tabla y figura, con la numeración del PDF de las versiones 1.12 y 1.13, que es la misma. Las páginas están en el índice del PDF. Las tablas y las figuras de los puntos 1 a 9 conservan el número de la versión 1.11. En el punto 10, la arquitectura es el primer apartado de la Sección 10.5 y no lleva número propio.
 
 ## Punto 7 — Operaciones (guía del Plan de Desarrollo Tecnológico)
 

@@ -4,7 +4,7 @@
 - **Comisión:** T1-23-47 — Seminario de Trabajo Final de Ingeniería
 - **Carrera:** Ingeniería en Sistemas Informáticos — Facultad de Tecnología Informática, UAI Rosario
 - **Dirección:** María Eugenia Casco y Santiago Enrique Roatta
-- **Versión:** 8 (Tercera Entrega, 2.º cuatrimestre 2026). Actualiza la versión 7 (PR #20).
+- **Versión:** 9 (Tercera Entrega, 2.º cuatrimestre 2026), documento 1.13. Actualiza la versión 8 en este mismo PR (#23).
 
 ## De qué se trata el trabajo
 
@@ -21,15 +21,15 @@ especifica con ICONIX.
 
 | Archivo | Descripción |
 |---|---|
-| [Torassa_Valentin_E3-2C_v5.pdf](Torassa_Valentin_E3-2C_v5.pdf) | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 102 páginas (versión 1.12 del documento). |
-| [seguimiento-checklist.md](seguimiento-checklist.md) | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de los 59 criterios de la checklist tecnológica y de los enlaces de la solución, con la numeración de la versión 1.12. |
+| [Torassa_Valentin_E3-2C_v6.pdf](Torassa_Valentin_E3-2C_v6.pdf) | Plan de Desarrollo Tecnológico completo, puntos 1 a 11, 104 páginas (versión 1.13 del documento). |
+| [seguimiento-checklist.md](seguimiento-checklist.md) | Informe de seguimiento: ubicación de los puntos 7, 8 y 9, de los 59 criterios de la checklist tecnológica y de los enlaces de la solución, con la numeración de las versiones 1.12 y 1.13, que es la misma. |
 | [registro-revision-prototipo.md](registro-revision-prototipo.md) | Quiénes usaron `blackice` y qué cambios de la interfaz salieron de ese uso (Sección 10.6). Reemplaza al registro del prototipo anterior. |
 | [evidencia/cobertura-hookanswer-2026-11-17.txt](evidencia/cobertura-hookanswer-2026-11-17.txt) | Salida de la medición de cobertura de la prueba estructural (Sección 10.11.2). |
 | [modelo/modelo_financiero.py](modelo/modelo_financiero.py) | Modelo mensual reproducible del punto 8, sin cambios desde la versión 4. Genera las tablas y las cifras que cita el texto. |
 
 ## Dónde está la solución tecnológica
 
-El punto 10 del documento (págs. 58 a 91) especifica `blackice`. La Sección 10.1 (pág. 58)
+El punto 10 del documento (págs. 59 a 91) especifica `blackice`. La Sección 10.1 (pág. 59)
 reúne sus datos:
 
 | Qué | Dónde |
@@ -38,7 +38,7 @@ reúne sus datos:
 | Sitio y documentación | https://blackice-macos.vercel.app |
 | Versión especificada | 1.1.1, del 16 de noviembre de 2026 (*commit* `d94ef85`) |
 
-Los demás enlaces de la línea están en el punto 5.3 y en los Anexos 11.3 a 11.5:
+Los demás enlaces de la línea están en el punto 5.3 y en los Anexos 11.3 a 11.5 y 11.7:
 
 | Qué | Enlace |
 |---|---|
@@ -48,6 +48,24 @@ Los demás enlaces de la línea están en el punto 5.3 y en los Anexos 11.3 a 11
 | Contribución a Podman | https://github.com/containers/podman/pull/28637 |
 | Contribuciones a Debian | https://bugs.debian.org/1152837 y https://bugs.debian.org/1153126 |
 | Aportes a Vercel Labs, sin integrar | https://github.com/vercel-labs/deepsec/pull/137 y https://github.com/vercel-labs/fx/pull/1659 |
+
+## Qué incorpora la versión 9
+
+- **Clases de diseño (Figuras 30 a 33), simplificadas.** Muestran sólo los atributos y las
+  operaciones necesarios para leerlas, con letra más grande, y no copian el código uno a uno.
+  Usan la notación de la cátedra, con una leyenda en la Sección 10.9: asociación con línea
+  continua, dependencia punteada, agregación con rombo vacío y composición con rombo negro.
+- **Anexo 11.6: Business Model Canvas actualizado (Figura 36).** Reemplaza al de mayo de
+  2026, anterior a `blackice` y a los aportes a Debian.
+- **Anexo 11.7: enlaces del proyecto y videos (Tabla 70).** Repositorio, sitio, entrega
+  técnica y la página del proyecto con los cuatro videos: el pitch de 74 segundos, la
+  publicidad sustentable, el aviso y el video del prototipo. La página es privada: el autor
+  la comparte con la cátedra.
+- **Sección 10.5.** Sale «Es el patrón de capas»: en el catálogo de Cristiá, los estratos no
+  son las capas del cliente-servidor.
+- **Ficha de seguimiento.** Fila de la versión 1.13.
+- Las figuras y las tablas conservan su número. Desde el punto 10.4 las páginas quedan una
+  más adelante. El documento pasa de 102 a 104 páginas. El resto del texto no cambia.
 
 ## Qué incorpora la versión 8
 
@@ -87,6 +105,7 @@ en público.
 
 | Versión | PR | Qué incorporó |
 |---|---|---|
+| 8 | [#23](https://github.com/cursos-uai/sap_tfi_2026/pull/23) | El punto 10 sobre `blackice` con ICONIX completo (documento 1.12). Se presentó el 17 de noviembre. |
 | 7 | [#20](https://github.com/cursos-uai/sap_tfi_2026/pull/20) | `blackice` (Sección 5.3.5), la colaboración con Vercel (Sección 5.3.6) y su evidencia (Anexo 11.5). |
 | 6 | [#19](https://github.com/cursos-uai/sap_tfi_2026/pull/19) | Estado de los aportes a Debian después de presentar `invesalius` y `pydicom`. |
 | 5 | [#18](https://github.com/cursos-uai/sap_tfi_2026/pull/18) | Enlaces y repositorios de la solución (Sección 10.1) y contribuciones de seguridad a Debian (Sección 5.3.3 y Anexo 11.4). |
