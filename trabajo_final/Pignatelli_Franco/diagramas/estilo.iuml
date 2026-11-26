@@ -1,0 +1,25 @@
+' Estilo común de los diagramas de AeroMentor (fase 04.5, D-13).
+' Uso: !include estilo.iuml   (el .puml debe estar en la misma carpeta, diagramas/)
+' Sin colores de marca: fondos neutros y trazo oscuro, legibles al imprimir.
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam maxMessageSize 160
+skinparam ArrowColor #333333
+skinparam ActivityBackgroundColor #F5F5F5
+skinparam ActivityBorderColor #333333
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ActivityDiamondBorderColor #333333
+skinparam NoteBackgroundColor #FFFFFF
+skinparam NoteBorderColor #333333
+skinparam ParticipantBackgroundColor #F5F5F5
+skinparam ParticipantBorderColor #333333
+skinparam SequenceLifeLineBorderColor #333333
+skinparam ClassBackgroundColor #F5F5F5
+skinparam ClassBorderColor #333333
+skinparam ComponentBackgroundColor #F5F5F5
+skinparam ComponentBorderColor #333333
+skinparam RectangleBackgroundColor #F5F5F5
+skinparam RectangleBorderColor #333333
+skinparam DatabaseBackgroundColor #F5F5F5
+skinparam DatabaseBorderColor #333333

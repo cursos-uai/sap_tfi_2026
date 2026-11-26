@@ -1,0 +1,141 @@
+@startuml arquitectura-datos
+!include estilo.iuml
+' Vista de datos: DER reducido de 14 de las 20 tablas, agrupadas por paquete. Solo PK y FK (fuente: backend/db/schema.rb).
+' Las tablas con aerial_entity_id (aislamiento por aeroclub, RNF-01) lo muestran como columna, sin dibujar cada flecha.
+' Este diagrama no es el modelo de dominio (ver el apartado Modelo de dominio). Linea punteada: vinculo logico sin clave foranea.
+top to bottom direction
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam wrapWidth 220
+skinparam nodesep 20
+skinparam ranksep 40
+skinparam defaultFontSize 14
+skinparam ClassAttributeFontSize 13
+skinparam EntityFontSize 14
+skinparam PackageBorderThickness 1.5
+skinparam PackageBackgroundColor #FFFFFF
+
+package "Organización" as ORG {
+  entity "aerial_entities" as aerial_entities {
+    * id <<PK>>
+  }
+  entity "users" as users {
+    * id <<PK>>
+    --
+    aerial_entity_id <<FK>>
+  }
+  entity "aircraft" as aircraft {
+    * id <<PK>>
+    --
+    aerial_entity_id <<FK>>
+  }
+  entity "certifications" as certifications {
+    * id <<PK>>
+    --
+    user_id <<FK>>
+  }
+  entity "notifications" as notifications {
+    * id <<PK>>
+    --
+    user_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+}
+
+package "Operación y CU-001" as OPE {
+  entity "reservations" as reservations {
+    * id <<PK>>
+    --
+    user_id <<FK>>
+    aircraft_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+  entity "pre_flight_evaluations" as pre_flight_evaluations {
+    * id <<PK>>
+    --
+    reservation_id <<FK>>
+    user_id <<FK>>
+  }
+}
+
+package "CU-002 navegación" as C2 {
+  entity "navigation_plans" as navigation_plans {
+    * id <<PK>>
+    --
+    user_id <<FK>>
+    aircraft_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+  entity "route_suggestions" as route_suggestions {
+    * id <<PK>>
+    --
+    navigation_plan_id <<FK>>
+    reservation_id
+  }
+}
+
+package "CU-003 monitoreo" as C3 {
+  entity "monitoring_runs" as monitoring_runs {
+    * id <<PK>>
+    --
+    aerial_entity_id <<FK>>
+  }
+  entity "symptoms" as symptoms {
+    * id <<PK>>
+    --
+    monitoring_run_id <<FK>>
+    user_id <<FK>>
+    aircraft_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+  entity "reservation_holds" as reservation_holds {
+    * id <<PK>>
+    --
+    reservation_id <<FK>>
+    symptom_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+  entity "action_plans" as action_plans {
+    * id <<PK>>
+    --
+    monitoring_run_id <<FK>>
+    aerial_entity_id <<FK>>
+  }
+  entity "plan_actions" as plan_actions {
+    * id <<PK>>
+    --
+    action_plan_id <<FK>>
+    symptom_id <<FK>>
+  }
+}
+
+users -[hidden]right- aircraft
+navigation_plans -[hidden]right- reservations
+reservations -[hidden]right- reservation_holds
+aerial_entities ||--o{ users
+aerial_entities ||--o{ aircraft
+users ||--o{ certifications
+users ||--o{ notifications
+users ||--o{ reservations
+aircraft ||--o{ reservations
+reservations ||--o{ pre_flight_evaluations
+reservations ||--o{ reservation_holds
+users ||--o{ navigation_plans
+aircraft ||--o{ navigation_plans
+users ||--o{ pre_flight_evaluations
+users |o--o{ symptoms
+aircraft |o--o{ symptoms
+navigation_plans ||--o{ route_suggestions
+reservations |o..o{ route_suggestions
+monitoring_runs ||--o{ symptoms
+monitoring_runs ||--o{ action_plans
+symptoms ||--o{ reservation_holds
+action_plans ||--o{ plan_actions
+symptoms ||--o{ plan_actions
+
+legend bottom
+  Este diagrama no es el modelo de dominio (ver el apartado Modelo de dominio): solo muestra clave primaria y claves foráneas de 14 de las 20 tablas.
+  Las columnas aerial_entity_id aíslan los datos por aeroclub; no se dibuja cada una de sus flechas.
+endlegend
+@enduml

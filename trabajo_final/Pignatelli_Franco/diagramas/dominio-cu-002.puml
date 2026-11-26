@@ -1,0 +1,33 @@
+@startuml dominio-cu-002
+!include estilo.iuml
+top to bottom direction
+skinparam defaultFontSize 14
+skinparam nodesep 50
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+hide circle
+show empty members
+skinparam ClassFontStyle bold
+skinparam ClassBorderThickness 1.5
+
+class "Piloto" as PI
+class "Plan de navegación" as PN
+class "Ruta sugerida" as RS
+class "Aeródromo" as AD
+class "Punto propio" as PP
+class "Reserva" as RE
+class "Tramo" as TR
+
+PI -right-> PN : solicita
+PN -right-> "hasta 3" RS : propone
+RS -down-> AD : llega a
+RS -down-> PP : llega a
+RS -down-> RE : se confirma como
+RE -down-> TR : se divide en
+AD -[hidden]right- PP
+PP -[hidden]right- RE
+
+legend bottom
+Modelo conceptual: sin atributos (ver 10.4.4.2); flechas de un solo sentido.
+endlegend
+@enduml

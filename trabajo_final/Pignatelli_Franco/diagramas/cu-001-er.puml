@@ -1,0 +1,165 @@
+@startuml cu-001-er
+!include estilo.iuml
+left to right direction
+skinparam nodesep 5
+skinparam ranksep 15
+skinparam wrapWidth 120
+' CU-001 — modelo entidad-relación conceptual (notación IE).
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, sólo las relevantes a CU-001).
+' "Snapshot meteorológico" y "Respuesta de IA" no son tablas: viajan dentro de las columnas jsonb
+' data_snapshot y ai_raw_response de pre_flight_evaluations (estereotipo "no persistido").
+' notifications se vincula a la evaluación por reference_type / reference_id, sin clave foránea.
+' reservation_holds y symptoms son del monitoreo (CU-003): la recopilación de CU-001.002 consulta los bloqueos y
+' advertencias vigentes de la reserva; se dibujan solo con las columnas que ese paso lee.
+
+hide circle
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+  --
+  name : string
+  cuit : string
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  email : string
+  role : string
+  first_name : string
+  last_name : string
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  registration : string
+  model : string
+  status : string
+  engine_hours : decimal
+  fuel_capacity : decimal
+  last_inspection_at : date
+  next_inspection_at : date
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  origin_code : string
+  destination_code : string
+  scheduled_at : datetime
+  duration_hours : decimal
+  category : string
+  status : string
+}
+
+entity "certifications" as certifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  type : string
+  certification_type : string
+  issued_at : date
+  expires_at : date
+  status : string
+}
+
+entity "consumable_loads" as consumable_loads {
+  * id : bigint <<PK>>
+  --
+  * aircraft_id : bigint <<FK>>
+  fuel_liters : decimal
+  oil_liters : decimal
+  loaded_at : datetime
+}
+
+entity "maintenance_records" as maintenance_records {
+  * id : bigint <<PK>>
+  --
+  * aircraft_id : bigint <<FK>>
+  record_type : string
+  performed_at : date
+  next_due_at : date
+  performed_by : string
+}
+
+entity "pre_flight_evaluations" as pre_flight_evaluations {
+  * id : bigint <<PK>>
+  --
+  * reservation_id : bigint <<FK>>
+  * user_id : bigint <<FK>>
+  risk_level : string
+  technical_status : string
+  medical_days_remaining : integer
+  weather_status : string
+  fuel_available : decimal
+  autonomy_hours : decimal
+  ai_recommendation : text
+  flight_recommended : boolean
+  ia_available : boolean
+  critical_factors : jsonb
+  positive_factors : jsonb
+  ai_raw_response : jsonb
+  data_snapshot : jsonb
+  status : string
+  generated_at : datetime
+}
+
+entity "notifications" as notifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  notification_type : string
+  title : string
+  message : text
+  reference_type : string
+  reference_id : integer
+  read : boolean
+}
+
+entity "reservation_holds" as reservation_holds {
+  * id : bigint <<PK>>
+  --
+  * reservation_id : bigint <<FK>>
+  * symptom_id : bigint <<FK>>
+  kind : string
+  status : string
+  reason : text
+}
+
+entity "symptoms" as symptoms {
+  * id : bigint <<PK>>
+}
+
+entity "Snapshot meteorológico\n<<no persistido>>" as snapshot {
+  METAR y TAF del origen, METAR del destino
+  (viaja en data_snapshot)
+}
+
+entity "Respuesta de IA\n<<no persistido>>" as respuesta {
+  respuesta de Gemini (viaja en ai_raw_response)
+}
+
+aerial_entities ||--o{ users
+aerial_entities ||--o{ aircraft
+aerial_entities ||--o{ reservations
+aerial_entities ||--o{ notifications
+users ||--o{ reservations
+aircraft ||--o{ reservations
+users ||--o{ certifications
+aircraft ||--o{ consumable_loads
+aircraft ||--o{ maintenance_records
+reservations ||--o{ pre_flight_evaluations
+users ||--o{ pre_flight_evaluations
+users ||--o{ notifications
+reservations ||--o{ reservation_holds
+symptoms ||--o{ reservation_holds
+pre_flight_evaluations |o..o{ notifications
+pre_flight_evaluations ||..o| snapshot
+pre_flight_evaluations ||..o| respuesta
+@enduml

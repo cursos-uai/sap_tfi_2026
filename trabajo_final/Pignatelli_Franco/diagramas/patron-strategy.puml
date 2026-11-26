@@ -1,0 +1,56 @@
+@startuml patron-strategy
+!include estilo.iuml
+top to bottom direction
+skinparam linetype polyline
+skinparam wrapWidth 220
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam ArrowFontSize 11
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+' Patrón Strategy — planificación de acciones del lazo de monitoreo (CU-003).
+' Fuente de verdad: backend/app/services/monitoring/planner.rb (contexto), planning/gemini_planner.rb y
+' planning/rule_based_planner.rb (estrategias concretas) y control_loop.rb (cliente). Coincide con iconix/where.json (Strategy).
+' El contrato plan(symptoms) es duck typing: no hay clase abstracta. El contexto no guarda la estrategia: la elige en cada llamada.
+
+class "Monitoring::ControlLoop" as ControlLoop <<Cliente>> {
+  - build_plan(symptoms, knowledge)
+}
+
+class "Monitoring::Planner" as Planner <<Contexto>> {
+  + plan(symptoms)
+}
+
+interface "Contrato plan(symptoms)" as Contrato <<Estrategia>> {
+  + plan(symptoms)
+}
+
+class "Monitoring::Planning::GeminiPlanner" as Gemini <<EstrategiaConcreta>> {
+  + plan(symptoms)
+}
+
+class "Monitoring::Planning::RuleBasedPlanner" as Reglas <<EstrategiaConcreta>> {
+  + plan(symptoms)
+}
+
+ControlLoop --> Planner : <U+00A0><U+00A0><U+00A0>plan(symptoms)
+Planner -right-> Contrato : invoca plan(symptoms)
+Contrato <|.. Gemini
+Contrato <|.. Reglas
+
+Gemini -[hidden]right- Reglas
+
+note bottom of Planner
+  No guarda la estrategia: la elige en
+  cada llamada según la disponibilidad
+  de la IA. Prueba primero GeminiPlanner;
+  si no devuelve un plan con IA, usa
+  RuleBasedPlanner.
+end note
+
+note right of Contrato
+  Sin clase abstracta: contrato
+  de duck typing.
+end note
+@enduml

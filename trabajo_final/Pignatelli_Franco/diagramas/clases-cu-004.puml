@@ -1,0 +1,171 @@
+@startuml clases-cu-004
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 85
+skinparam ranksep 70
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-004 (lectura automática de certificaciones)
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  together {
+    class "CertificationScansController" as Api__V1__CertificationScansController <<controller>> {
+      + create(): void
+    }
+    class "CertificationScanPolicy" as CertificationScanPolicy <<policy>> {
+      + create?(): Boolean
+    }
+  }
+  together {
+    class "CertificationsController" as Api__V1__CertificationsController <<controller>> {
+      + index(): void
+      + create(): void
+      + update(): void
+    }
+    class "CertificationPolicy" as CertificationPolicy <<policy>> {
+      + index?(): Boolean
+      + create?(): Boolean
+      + update?(): Boolean
+      + change_status?(): Boolean
+    }
+  }
+}
+package "Services" {
+  class "CertificationScan::DataCollector" as CertificationScan__DataCollector <<service>> {
+    + initialize(user: User, subtype: String,
+    {method}       extracted_certification_type: String)
+    + collect(): Hash
+  }
+  class "IaService" as IaService <<service>> {
+    + initialize(timeout: Integer = 25)
+    + generate(prompt: String, response_schema: Hash = nil,
+    {method}       inline_data: Hash = nil, temperature: Float = 0.2,
+    {method}       max_output_tokens: Integer = 1024): Hash
+  }
+  class "CertificationScan::IaProcessor" as CertificationScan__IaProcessor <<service>> {
+    + initialize(subtype: String, mime_type: String,
+    {method}       base64_data: String)
+    + process(): Hash
+  }
+  class "CertificationScan::ResponseSchemas" as CertificationScan__ResponseSchemas <<service>> <<module>> {
+    + {static} SUBTYPES: Array<String>
+    --
+    + allowed_types(subtype: String): Array<String>
+    + subtype_for_type(certification_type: String): String
+    + label(subtype: String): String
+    + for(subtype: String): Hash
+  }
+}
+package "Models" {
+  class "Certification" as Certification <<model>> {
+    - certification_type: String
+    - expires_at: Date
+    - status: String
+    --
+    + valid_certification?(): Boolean
+    + expired?(): Boolean
+    + days_to_expiration(): Integer
+    {static} + expiring_soon(): Relation
+    - emit_certification_changed(): void
+  }
+  class "License" as License <<model>> {
+    {static} TYPES: Array<String>
+  }
+  class "Qualification" as Qualification <<model>> {
+    {static} TYPES: Array<String>
+  }
+  class "MedicalCertificate" as MedicalCertificate <<model>> {
+    {static} TYPES: Array<String>
+  }
+  class "User" as User <<model>> {
+    - email: String
+    - role: String
+    - first_name: String
+    - last_name: String
+    - active: Boolean
+    --
+    + full_name(): String
+    + admin_or_manager?(): Boolean
+    + pilot?(): Boolean
+    + student?(): Boolean
+  }
+}
+CertificationScan__DataCollector -[hidden]right- IaService
+License -[hidden]right- Qualification
+Qualification -[hidden]right- MedicalCertificate
+Api__V1__CertificationScansController -[hidden]right- CertificationScanPolicy
+CertificationScanPolicy -[hidden]right- Api__V1__CertificationsController
+Api__V1__CertificationsController -[hidden]right- CertificationPolicy
+MedicalCertificate -[hidden]right- User
+MedicalCertificate -[hidden]right- User
+MedicalCertificate -[hidden]right- User
+Api__V1__CertificationScansController .right.> CertificationScanPolicy : autoriza
+Api__V1__CertificationsController .right.> CertificationPolicy : autoriza
+Api__V1__CertificationScansController .down.> CertificationScan__DataCollector
+Api__V1__CertificationScansController .down.> CertificationScan__IaProcessor
+Api__V1__CertificationsController .down.> CertificationScan__ResponseSchemas
+Api__V1__CertificationsController .down.> Certification
+CertificationScan__IaProcessor .left.> IaService
+CertificationScan__IaProcessor .right.> CertificationScan__ResponseSchemas
+CertificationScan__DataCollector .down.> Certification
+CertificationScan__ResponseSchemas .down.> Certification : TYPES de cada subtipo
+User "1" *-up- "0..*" Certification
+Certification <|-down- License
+Certification <|-down- Qualification
+Certification <|-down- MedicalCertificate
+legend bottom
+Capas: Controllers y Policies → Services → Models. Punteada = usa; rombo = has_many dependent: :destroy; triángulo = STI.
+endlegend
+@enduml
+@startuml clases-cu-004-observadores
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 50
+skinparam ranksep 45
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-004 (registro de certificaciones), parte 2: aviso de cambios a los observadores
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Services" {
+  class "Observers::AlertadorDeVencimientos" as Observers__AlertadorDeVencimientos <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+  class "Observers::Notificador" as Observers__Notificador <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash): void
+  }
+  class "Observers::MonitoringTrigger" as Observers__MonitoringTrigger <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+}
+package "Models" {
+  class "Observable" as Observable <<model>> <<module>> {
+    {static} + add_observer(observer: Class): void
+    + notify_observers(event: Symbol, data: Hash = {}): void
+  }
+  class "Certification" as Certification <<model>> {
+    - certification_type: String
+    - expires_at: Date
+    - status: String
+    --
+    + valid_certification?(): Boolean
+    + expired?(): Boolean
+    + days_to_expiration(): Integer
+    {static} + expiring_soon(): Relation
+    - emit_certification_changed(): void
+  }
+}
+Certification .down.|> Observable : include
+Observable .down.> Observers__AlertadorDeVencimientos : notifica
+Observable .down.> Observers__Notificador : notifica
+Observable .down.> Observers__MonitoringTrigger : notifica
+legend bottom
+Punteada = usa; punteada con triángulo = include.
+endlegend
+@enduml

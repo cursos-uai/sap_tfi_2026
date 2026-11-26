@@ -1,0 +1,37 @@
+@startsalt boceto-10-autorizar-igual
+!include estilo.iuml
+' Boceto 10 (CU-003): diálogo «Autorizar igual» sobre una advertencia (hoja inferior en el teléfono).
+' El aviso «Advertencia autorizada» llega al confirmar, con el diálogo ya cerrado; se dibuja arriba como en el boceto 7.
+' Fuente de los rótulos: monitoring/OverrideDialog.tsx, common/ConfirmDialog.tsx y SymptomDetail.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  {+
+    <&check> Advertencia autorizada
+  }
+  <b>Reservas afectadas
+  {+
+    <b>17 dic 2026, 09:00
+    <size:11>LV-DEF · Piloto B
+    <&warning> Advertencia | Vigente
+    [ Autorizar igual ]
+  }
+  {+
+    <size:16><b>Autorizar igual
+    <size:11>La advertencia se levanta para esta reserva y el
+    <size:11>motivo queda registrado en la auditoría.
+    Motivo
+    "                                    "
+    <size:10>Mínimo 10 caracteres | 0/500
+    [ Volver ] | [ Autorizar igual ]
+  }
+  {+ Inicio | Reservas | Vuelo | <b>Monitoreo | Más }
+}
+legend
+  Boceto 10 · CU-003
+  Actor: Gestor
+  Pantalla: Autorizar igual
+  Estados: confirmacion
+  Escala: teléfono
+end legend
+@endsalt

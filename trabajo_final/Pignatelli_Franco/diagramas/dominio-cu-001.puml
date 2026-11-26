@@ -1,0 +1,35 @@
+@startuml dominio-cu-001
+!include estilo.iuml
+top to bottom direction
+skinparam defaultFontSize 14
+skinparam nodesep 50
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+hide circle
+show empty members
+skinparam ClassFontStyle bold
+skinparam ClassBorderThickness 1.5
+
+class "Piloto" as PI
+class "Reserva" as RE
+class "Evaluación pre-vuelo" as EV
+class "Certificación" as CE
+class "Aeronave" as AN
+class "Informe meteorológico" as IM
+class "Notificación" as NO
+
+PI -right-> RE : hace
+RE -right-> EV : se evalúa en
+PI -down-> CE : posee
+EV -down-> CE : revisa
+EV -down-> AN : revisa
+EV -down-> IM : considera
+EV -down-> NO : genera
+CE -[hidden]right- AN
+AN -[hidden]right- IM
+IM -[hidden]right- NO
+
+legend bottom
+Modelo conceptual: sin atributos (ver 10.4.4.2); flechas de un solo sentido.
+endlegend
+@enduml

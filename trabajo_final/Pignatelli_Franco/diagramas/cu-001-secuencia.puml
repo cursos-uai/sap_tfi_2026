@@ -1,0 +1,130 @@
+@startuml cu-001-secuencia-1
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-001: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-001), parte 1 de 2: solicitud, autorización y recopilación de datos.
+actor "Piloto" as piloto
+boundary "Evaluación\npre-vuelo" as pantalla
+control "PreFlight\nEvaluations\nController" as ctrl
+control "Reservation\nPolicy" as rp
+control "Preflight::\nDataCollector" as dc
+control "Certifications::\nComposite" as comp
+control "Monitoring::\nReservationGuard" as rg
+control "Aviation::\nWeatherService" as ws
+participant "aviationweather.gov" as awx #FFFFFF
+
+piloto -> pantalla : Presiona «Evaluar\nReserva Seleccionada»
+activate pantalla
+  pantalla -> ctrl : create(reservation_id)
+  activate ctrl
+    ctrl -> ctrl : authorize create? (rol)
+    alt rol sin permiso
+      ctrl --> pantalla : 403 No autorizado
+    else rol habilitado
+      ctrl -> ctrl : Reservation.find
+      alt reserva inexistente
+        ctrl --> pantalla : 404 Not Found
+      else reserva encontrada
+        ctrl -> rp : show?(reserva)
+        alt reserva ajena o sin acceso
+          ctrl --> pantalla : 403 No autorizado
+        else acceso permitido
+          ctrl -> dc : collect()
+          activate dc
+            dc -> comp : to_summary(piloto)
+            comp --> dc : resumen
+            dc -> ws : fetch_metar(oaci)
+            activate ws
+              ws -> awx : GET metar
+              awx --> ws : METAR
+              opt sin reporte
+                ws -> ws : available: false
+              end
+            ws --> dc : {available, data}
+            deactivate ws
+            dc -> ws : fetch_taf(oaci)
+            activate ws
+              ws -> awx : GET taf
+              awx --> ws : TAF
+            ws --> dc : {available, data}
+            deactivate ws
+            dc -> rg : summary()
+            rg --> dc : bloqueos activos
+          dc --> ctrl : datos del vuelo
+          deactivate dc
+        end
+      end
+    end
+  deactivate ctrl
+deactivate pantalla
+@enduml
+@startuml cu-001-secuencia-2
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-001: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-001), parte 2 de 2: análisis con IA, persistencia e informe.
+boundary "Evaluación\npre-vuelo" as pantalla
+control "PreFlight\nEvaluations\nController" as ctrl
+control "Preflight::\nIaProcessor" as ip
+control "IaService" as ia
+participant "Gemini\n(modelo de IA)" as gem #FFFFFF
+control "Preflight::\nReportBuilder" as rb
+entity "PreFlight\nEvaluation" as pfe
+control "Observers::\nAlertadorDe\nVencimientos" as alert
+control "Observers::\nMonitoring\nTrigger" as mon
+
+note over ctrl : Continúa de la parte 1
+ctrl -> ip : process(datos del vuelo)
+activate ip
+  ip -> ia : generate(prompt)
+  activate ia
+    ia -> gem : generateContent
+    gem --> ia : respuesta JSON
+  ia --> ip : {success, text}
+  deactivate ia
+  alt la IA respondió
+    ip -> ip : parse_response()
+    opt sin METAR
+      ip -> ip : apply_missing_metar_rule()
+    end
+    opt hay bloqueo
+      ip -> ip : apply_active_hold_rule()
+    end
+  else sin IA (respaldo)
+    ip -> ip : fallback_evaluation()
+  end
+ip --> ctrl : resultado
+deactivate ip
+ctrl -> rb : build()
+activate rb
+  rb -> pfe : create!(resultado)
+  activate pfe
+    pfe -> pfe : notify_on_high_risk()\nafter_create_commit
+    opt nivel de riesgo ALTO
+      pfe -> pfe : notify_observers(\n:high_risk_evaluation)
+      loop por cada observador
+        pfe -> alert : update(event)\ncrea Notificación
+        pfe -> mon : update(event)\nencola RunJob
+      end
+    end
+  deactivate pfe
+rb --> ctrl : evaluación
+deactivate rb
+alt evaluación creada
+  ctrl --> pantalla : 201 informe
+else RecordInvalid
+  ctrl --> pantalla : 422 errores
+else error inesperado
+  ctrl --> pantalla : 500 error
+end
+@enduml

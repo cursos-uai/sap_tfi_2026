@@ -1,0 +1,300 @@
+@startuml clases-cu-002
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 40
+skinparam ranksep 45
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-002 (planificación de navegación con IA): pedido, ranking, plan y confirmación
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  together {
+    class "NavigationPlansController" as Api__V1__NavigationPlansController <<controller>> {
+      + create(): void
+      + show(): void
+    }
+    class "NavigationPlanPolicy" as NavigationPlanPolicy <<policy>> {
+      + index?(): Boolean
+      + create?(): Boolean
+      + show?(): Boolean
+    }
+  }
+  together {
+    class "RouteSuggestionsController" as Api__V1__RouteSuggestionsController <<controller>> {
+      + confirm(): void
+    }
+    class "RouteSuggestionPolicy" as RouteSuggestionPolicy <<policy>> {
+      + show?(): Boolean
+      + confirm?(): Boolean
+    }
+  }
+}
+package "Services" {
+  class "Navigation::RequestValidator" as Navigation__RequestValidator <<service>> {
+    + initialize(params: Hash)
+    + errors(): Array<String>
+  }
+  class "Navigation::IaProcessor" as Navigation__IaProcessor <<service>> {
+    + initialize(data: Hash)
+    + process(): Hash
+    - parse_response(text: String, raw: Hash): Hash
+    - fallback(): Hash
+  }
+  class "Navigation::DataCollector" as Navigation__DataCollector <<service>> {
+    + initialize(user: User, params: Hash,
+    {method}       waypoint_scope: Relation)
+    + collect(): Hash
+  }
+  class "Navigation::PlanBuilder" as Navigation__PlanBuilder <<service>> {
+    + initialize(user: User, data: Hash, ranking: Hash)
+    + build(): NavigationPlan
+  }
+  class "Navigation::LegNormalizer" as Navigation__LegNormalizer <<service>> {
+    + initialize(raw_legs: Array<Hash>,
+    {method}       waypoint_scope: Relation)
+    + call(): Array<Hash>
+  }
+  class "IaService" as IaService <<service>> {
+    + initialize(timeout: Integer = 25)
+    + generate(prompt: String, response_schema: Hash = nil,
+    {method}       inline_data: Hash = nil, temperature: Float = 0.2,
+    {method}       max_output_tokens: Integer = 1024): Hash
+  }
+  class "Navigation::Ranker" as Navigation__Ranker <<service>> {
+    + initialize(data: Hash)
+    + call(): Hash
+  }
+  class "Observers::MonitoringTrigger" as Observers__MonitoringTrigger <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+}
+package "Models" {
+  class "Aircraft" as Aircraft <<model>> {
+    - registration: String
+    - status: String
+    - engine_hours: BigDecimal
+    - fuel_capacity: BigDecimal
+    --
+    {static} + active(): Relation
+    + to_s(): String
+  }
+  class "NavigationPlan" as NavigationPlan <<model>> {
+    - origin_code: String
+    - destination_hint_code: String
+    - autonomy_hours: BigDecimal
+    - scheduled_at: Time
+    - status: String
+    - ia_available: Boolean
+  }
+  class "RouteSuggestion" as RouteSuggestion <<model>> {
+    - aerodrome_code: String
+    - rank: Integer
+    - viable: Boolean
+    - distance_km: BigDecimal
+    --
+    + confirmed?(): Boolean
+    {static} + ranked(): Relation
+  }
+  class "Reservation" as Reservation <<model>> {
+    - origin_code: String
+    - destination_code: String
+    - scheduled_at: Time
+    - status: String
+    --
+    + latest_evaluation(): PreFlightEvaluation
+    + cancel!(): Boolean
+    + complete!(): Boolean
+    - emit_reservation_created(): void
+  }
+  class "Observable" as Observable <<model>> <<module>> {
+    {static} + add_observer(observer: Class): void
+    + notify_observers(event: Symbol, data: Hash = {}): void
+  }
+}
+Navigation__RequestValidator -[hidden]right- Navigation__IaProcessor
+Navigation__IaProcessor -[hidden]right- Navigation__DataCollector
+Navigation__DataCollector -[hidden]down- Navigation__PlanBuilder
+Navigation__RequestValidator -[hidden]down- Navigation__LegNormalizer
+IaService -[hidden]right- Navigation__Ranker
+Navigation__Ranker -[hidden]right- Navigation__PlanBuilder
+Navigation__PlanBuilder -[hidden]right- Navigation__LegNormalizer
+Api__V1__NavigationPlansController -[hidden]right- NavigationPlanPolicy
+NavigationPlanPolicy -[hidden]right- Api__V1__RouteSuggestionsController
+Api__V1__RouteSuggestionsController -[hidden]right- RouteSuggestionPolicy
+Aircraft -[hidden]right- NavigationPlan
+NavigationPlan -[hidden]right- RouteSuggestion
+RouteSuggestion -[hidden]right- Reservation
+Api__V1__NavigationPlansController .right.> NavigationPlanPolicy : autoriza
+Api__V1__RouteSuggestionsController .right.> RouteSuggestionPolicy : autoriza
+Api__V1__NavigationPlansController .down.> Navigation__RequestValidator
+Api__V1__NavigationPlansController .down.> Navigation__IaProcessor
+Api__V1__NavigationPlansController .down.> Navigation__DataCollector
+Api__V1__NavigationPlansController .down.> Navigation__PlanBuilder
+Api__V1__RouteSuggestionsController .down.> Navigation__LegNormalizer
+Navigation__IaProcessor .down.> IaService
+Navigation__IaProcessor .down.> Navigation__Ranker
+Navigation__PlanBuilder .down.> NavigationPlan
+NavigationPlan "1" *-right- "0..*" RouteSuggestion
+RouteSuggestion "*" -right-> "0..1" Reservation
+NavigationPlan "*" -left-> "1" Aircraft
+Reservation .down.|> Observable : include
+Observable .down.> Observers__MonitoringTrigger : notifica
+legend bottom
+Capas: Controllers y Policies → Services → Models. Punteada = usa; rombo = has_many dependent: :destroy. DataCollector delega en la figura siguiente.
+endlegend
+@enduml
+@startuml clases-cu-002-recopilacion
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 40
+skinparam ranksep 45
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-002: recopilación de candidatos y clima, puntos propios, espacio aéreo y METAR
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  together {
+    class "CustomWaypointsController" as Api__V1__CustomWaypointsController <<controller>> {
+      + index(): void
+      + create(): void
+      + update(): void
+      + destroy(): void
+    }
+    class "CustomWaypointPolicy" as CustomWaypointPolicy <<policy>> {
+      + index?(): Boolean
+      + create?(): Boolean
+      + update?(): Boolean
+      + destroy?(): Boolean
+    }
+  }
+  together {
+    class "AirspacesController" as Api__V1__AirspacesController <<controller>> {
+      + index(): void
+    }
+    class "AirspacePolicy" as AirspacePolicy <<policy>> {
+      + index?(): Boolean
+    }
+  }
+  together {
+    class "WeatherController" as Api__V1__WeatherController <<controller>> {
+      + metar(): void
+    }
+    class "WeatherPolicy" as WeatherPolicy <<policy>> {
+      + metar?(): Boolean
+    }
+  }
+}
+package "Services" {
+  class "Navigation::DataCollector" as Navigation__DataCollector <<service>> {
+    + initialize(user: User, params: Hash,
+    {method}       waypoint_scope: Relation)
+    + collect(): Hash
+  }
+  class "Aviation::AirspaceService" as Aviation__AirspaceService <<service>> {
+    + initialize()
+    + fetch(bounds: Hash): Hash
+  }
+  class "Aviation::WeatherService" as Aviation__WeatherService <<service>> {
+    + initialize()
+    + fetch_metar(oaci_code: String): Hash
+    + fetch_taf(oaci_code: String): Hash
+  }
+  class "Navigation::AerodromeFilter" as Navigation__AerodromeFilter <<service>> {
+    + initialize(origin: Object, radius_km: Float,
+    {method}       waypoint_scope: Relation = nil)
+    + call(): Array<Hash>
+  }
+  class "Navigation::NearestAerodromeFinder" as Navigation__NearestAerodromeFinder <<service>> {
+    + initialize(lat: Float, lng: Float)
+    + call(): Aerodrome
+  }
+  class "Navigation::PointResolver" as Navigation__PointResolver <<service>> {
+    {static} + resolve!(type: String,
+    {method}       waypoint_scope: Relation, aerodrome_code: String = nil,
+    {method}       custom_waypoint_id: Integer = nil): Result
+  }
+  class "Navigation::TwilightCalculator" as Navigation__TwilightCalculator <<service>> {
+    {static} + civil_twilight_end(lat: Float, lng: Float,
+    {method}       date: Date): Time
+    + civil_twilight_end(): Time
+  }
+  class "Navigation::RouteWeatherAggregator" as Navigation__RouteWeatherAggregator <<service>> {
+    + initialize(origin: Object, candidates: Array<Hash>,
+    {method}       scheduled_at: Time, cruise_speed_kmh: Float,
+    {method}       origin_weather_source: Aerodrome = nil)
+    + call(): Array<Hash>
+  }
+  class "Navigation::WeatherAggregator" as Navigation__WeatherAggregator <<service>> {
+    + initialize(candidates: Array<Hash>)
+    + call(): Array<Hash>
+  }
+  class "Navigation::Geo" as Navigation__Geo <<service>> <<module>> {
+    {static} + midpoint(lat1: Float, lng1: Float,
+    {method}       lat2: Float, lng2: Float): Array<Float>
+    {static} + distance_km(lat1: Float, lng1: Float,
+    {method}       lat2: Float, lng2: Float): Float
+  }
+  class "OpenMeteoService" as OpenMeteoService <<service>> {
+    + initialize()
+    + fetch_hourly(lat: Float, lng: Float, date: Date): Hash
+  }
+}
+package "Models" {
+  class "CustomWaypoint" as CustomWaypoint <<model>> {
+    - name: String
+    - latitude: BigDecimal
+    - longitude: BigDecimal
+    - scope: String
+    --
+    {static} + global_scope(): Relation
+  }
+  class "Aerodrome" as Aerodrome <<model>> {
+    - code_oaci: String
+    - name: String
+    - latitude: BigDecimal
+    - longitude: BigDecimal
+    --
+    {static} + active(): Relation
+    {static} + with_coordinates(): Relation
+  }
+}
+Api__V1__CustomWaypointsController -[hidden]right- CustomWaypointPolicy
+CustomWaypointPolicy -[hidden]right- Api__V1__AirspacesController
+Api__V1__AirspacesController -[hidden]right- AirspacePolicy
+AirspacePolicy -[hidden]right- Api__V1__WeatherController
+Api__V1__WeatherController -[hidden]right- WeatherPolicy
+Aviation__AirspaceService -[hidden]right- Aviation__WeatherService
+Aviation__WeatherService -[hidden]right- Navigation__DataCollector
+Navigation__AerodromeFilter -[hidden]right- Navigation__NearestAerodromeFinder
+Navigation__NearestAerodromeFinder -[hidden]right- Navigation__PointResolver
+Navigation__PointResolver -[hidden]right- Navigation__TwilightCalculator
+Navigation__NearestAerodromeFinder -[hidden]down- Navigation__RouteWeatherAggregator
+Navigation__PointResolver -[hidden]down- Navigation__WeatherAggregator
+Navigation__RouteWeatherAggregator -[hidden]right- Navigation__WeatherAggregator
+CustomWaypoint -[hidden]down- Aerodrome
+Api__V1__CustomWaypointsController .right.> CustomWaypointPolicy : autoriza
+Api__V1__AirspacesController .right.> AirspacePolicy : autoriza
+Api__V1__WeatherController .right.> WeatherPolicy : autoriza
+Api__V1__CustomWaypointsController .down.> CustomWaypoint
+Api__V1__AirspacesController .down.> Aviation__AirspaceService
+Api__V1__WeatherController .down.> Aviation__WeatherService
+Navigation__DataCollector .down.> Navigation__AerodromeFilter
+Navigation__DataCollector .down.> Navigation__NearestAerodromeFinder
+Navigation__DataCollector .down.> Navigation__PointResolver
+Navigation__DataCollector .down.> Navigation__TwilightCalculator
+Navigation__DataCollector .down.> Navigation__RouteWeatherAggregator
+Navigation__DataCollector .down.> Navigation__WeatherAggregator
+Navigation__WeatherAggregator .up.> Aviation__WeatherService
+Navigation__RouteWeatherAggregator .down.> OpenMeteoService
+Navigation__RouteWeatherAggregator .down.> Navigation__Geo
+Navigation__AerodromeFilter .down.> CustomWaypoint
+Navigation__AerodromeFilter .down.> Aerodrome
+legend bottom
+Capas: Controllers y Policies → Services → Models. Línea punteada = usa. El DataCollector es el mismo de la figura anterior.
+endlegend
+@enduml

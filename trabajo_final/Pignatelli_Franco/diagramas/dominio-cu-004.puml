@@ -1,0 +1,30 @@
+@startuml dominio-cu-004
+!include estilo.iuml
+skinparam defaultFontSize 14
+skinparam nodesep 60
+skinparam ranksep 60
+skinparam classAttributeIconSize 0
+hide circle
+show empty members
+skinparam ClassFontStyle bold
+skinparam ClassBorderThickness 1.5
+
+top to bottom direction
+
+class "Piloto" as PI
+class "Documento de certificación" as DC
+class "Certificación" as CE
+class "Licencia" as LI
+class "Habilitación" as HB
+class "Certificado médico" as CM
+
+PI -right-> DC : carga
+DC -right-> CE : da lugar a
+CE <|-down- LI
+CE <|-down- HB
+CE <|-down- CM
+
+legend bottom
+Modelo conceptual: sin atributos (ver 10.4.4.2); flechas de un solo sentido.
+endlegend
+@enduml

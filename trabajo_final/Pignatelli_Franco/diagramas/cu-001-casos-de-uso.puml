@@ -1,0 +1,80 @@
+@startuml cu-001-casos-de-uso
+!include estilo.iuml
+left to right direction
+skinparam defaultFontSize 14
+skinparam nodesep 22
+skinparam ranksep 55
+skinparam linetype polyline
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam actor {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #333333
+
+actor "Piloto" as Piloto
+actor "Instructor" as Instructor
+actor "Gestor\n(administrador o gestor)" as Gestor
+actor "Modelo de IA\n(Gemini)" as IA
+actor "aviationweather.gov" as Wx
+
+rectangle "Generar Recomendación Operativa Automatizada\nPre-vuelo" {
+  usecase "CU-001.001\nSolicitar la\nevaluación pre-vuelo" as S1
+  usecase "CU-001.002\nRecopilar los datos\ndel vuelo" as S2
+  usecase "CU-001.003\nProcesar los datos\ncon IA y respaldo" as S3
+  usecase "CU-001.004\nPresentar el informe\ny gestionar el\nhistorial" as S4
+  usecase "Autorizar el acceso a\nla reserva" as c1i1
+  usecase "Verificar las\ncertificaciones\nrequeridas" as c1i2
+  usecase "Verificar el METAR de\norigen" as c1i3
+  usecase "Verificar los bloqueos\nactivos del monitoreo" as c1i4
+  usecase "Validar la respuesta\ndel modelo" as c1i5
+  usecase "Consultar el historial\nde evaluaciones" as c1x1
+  usecase "Borrar una evaluación" as c1x2
+  usecase "Usar el algoritmo de\nrespaldo" as c1x3
+  usecase "Notificar el riesgo\nalto" as c1x4
+  usecase "Mostrar las\nadvertencias del\nmonitoreo" as c1x5
+  usecase " " as J_S2_Wx #transparent;line:transparent
+  usecase " " as J_S3_IA #transparent;line:transparent
+}
+
+S1 -[hidden]left-> S2
+S2 -[hidden]left-> S3
+S3 -[hidden]left-> S4
+c1i2 -[hidden]left-> c1i3
+c1i3 -[hidden]left-> c1i4
+c1i4 -[hidden]left-> c1i5
+c1i5 -[hidden]left-> c1x3
+c1x1 -[hidden]left-> c1x2
+c1x2 -[hidden]left-> c1x4
+c1x4 -[hidden]left-> c1x5
+
+Instructor -[hidden]right-> Gestor
+Instructor -down--|> Piloto
+Gestor -down--|> Piloto
+Piloto -- S1
+Piloto -- S4
+
+S1 ..> c1i1 : <<include>>
+S3 ..> c1i2 : <<include>>
+S3 ..> c1i3 : <<include>>
+S3 ..> c1i4 : <<include>>
+S3 ..> c1i5 : <<include>>
+c1x1 .up.> S4 : <<extend>>
+c1x2 .up.> S4 : <<extend>>
+c1x3 .up.> S3 : <<extend>>
+c1x4 .up.> S4 : <<extend>>
+c1x5 .up.> S4 : <<extend>>
+
+S2 -- J_S2_Wx
+J_S2_Wx -- Wx
+S3 -- J_S3_IA
+J_S3_IA -- IA
+
+legend right
+include = validador u obligatorio reutilizado · extend = menú, flujo u opcional
+endlegend
+@enduml

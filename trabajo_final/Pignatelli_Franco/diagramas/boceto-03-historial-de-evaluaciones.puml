@@ -1,0 +1,40 @@
+@startsalt boceto-03-historial-de-evaluaciones
+!include estilo.iuml
+' Boceto 3 (CU-001): pantalla «Historial de evaluaciones» con el diálogo de borrado (hoja inferior en el teléfono).
+' Fuente de los rótulos: PreFlightEvaluation.tsx, preflight/EvaluationHistoryList.tsx y common/ConfirmDialog.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b>Historial de evaluaciones
+  {+
+    {
+      15 dic 2026, 09:12
+      <b>ALTO
+      <size:11>Algoritmo de respaldo
+    } | <&trash>
+  }
+  {+
+    {
+      14 dic 2026, 18:40
+      <b>BAJO
+      <size:11>Gemini AI
+    } | <&trash>
+  }
+  [ Volver a evaluar ]
+  [ Volver a la lista de reservas ]
+  {+
+    <size:16><b>¿Borrar la evaluación?
+    <size:11>La evaluación se va a borrar de forma
+    <size:11>permanente. Esta acción no se puede deshacer.
+    [ Volver ] | [ Borrar evaluación ]
+  }
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 03 · CU-001
+  Actor: Piloto
+  Pantalla: Historial de evaluaciones
+  Estados: principal, confirmacion
+  Escala: teléfono
+end legend
+@endsalt

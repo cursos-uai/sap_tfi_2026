@@ -1,0 +1,56 @@
+@startsalt boceto-07-monitoreo
+!include estilo.iuml
+' Boceto 7 (CU-003): pantalla «Monitoreo», vista de gestión, a escala de teléfono.
+' Fuente de los rótulos: frontend/src/pages/Monitoring.tsx y components/monitoring/SubjectCard.tsx.
+' Símbolos: <&ban> bloqueo, <&warning> advertencia, <&question-mark> desconocido (holdStatusTheme.ts).
+{+
+  {* <b>AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  {+
+    <&check> Monitoreo terminado: 3 síntomas nuevos, 2 resueltos
+  }
+  <size:20><b>Monitoreo
+  Cumplimiento del aeroclub
+  [ <&reload> Correr monitoreo ahora ]
+  {
+    {+
+      <size:20><b>6
+      <&ban> Bloqueos
+    } | {+
+      <size:20><b>12
+      <&warning> Advertencias
+    } | {+
+      <size:20><b>34
+      <&question-mark> Desconocidos
+    }
+  }
+  <size:11>Síntomas abiertos detectados por el monitoreo
+  {/ <b>Pilotos (8) | Aeronaves (6) }
+  {+
+    {
+      <b>Piloto A
+      5 síntomas abiertos
+    } | <&ban> Bloqueo | <&chevron-bottom>
+  }
+  {+
+    {
+      <b>Piloto B
+      4 síntomas abiertos
+    } | <&warning> Advertencia | <&chevron-bottom>
+  }
+  {+
+    {
+      <b>Piloto C
+      2 síntomas abiertos
+    } | <&ban> Bloqueo | <&chevron-bottom>
+  }
+  {+ Inicio | Reservas | Vuelo | <b>Monitoreo | Más }
+}
+legend
+  Boceto 07 · CU-003
+  Actor: Gestor
+  Pantalla: Monitoreo
+  Estados: principal, confirmacion
+  Escala: teléfono
+end legend
+@endsalt

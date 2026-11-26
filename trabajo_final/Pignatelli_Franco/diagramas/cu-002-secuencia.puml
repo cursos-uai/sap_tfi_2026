@@ -1,0 +1,174 @@
+@startuml cu-002-secuencia-1
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-002: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-002), parte 1 de 3: pedido, validación, candidatos y clima de los aeródromos.
+actor "Piloto" as piloto
+boundary "Datos del\nvuelo" as pantalla
+control "NavigationPlans\nController" as ctrl
+control "Navigation::\nRequestValidator" as rv
+control "Navigation::\nDataCollector" as dc
+control "Navigation::\nAerodromeFilter" as af
+control "Navigation::\nWeather\nAggregator" as wa
+control "Aviation::\nWeather\nService" as ws
+participant "aviationweather.gov" as awx #FFFFFF
+
+piloto -> pantalla : Presiona\n«Buscar rutas»
+activate pantalla
+  pantalla -> ctrl : create(params)
+  activate ctrl
+    ctrl -> ctrl : authorize create? (rol)
+    alt rol sin permiso
+      ctrl --> pantalla : 403 No autorizado
+    else rol habilitado
+      alt origen sin coordenadas
+        ctrl --> pantalla : 422 sin coordenadas
+      else origen con coordenadas
+        ctrl -> rv : errors(pedido)
+        rv --> ctrl : errores
+        alt pedido inválido
+          ctrl --> pantalla : 422 errores
+        else pedido válido
+          ctrl -> dc : collect()
+          activate dc
+            dc -> af : call()
+            activate af
+              note over af : Lee la tabla local de aeródromos\n(Aerodrome.with_coordinates, no es una API)
+            af --> dc : candidatos
+            deactivate af
+            dc -> wa : call(candidatos)
+            activate wa
+              loop por cada candidato
+                wa -> ws : fetch_metar(oaci)
+                activate ws
+                  ws -> awx : GET metar
+                  awx --> ws : METAR
+                  opt sin reporte
+                    ws -> ws : available: false
+                  end
+                ws --> wa : {available, data}
+                deactivate ws
+                wa -> ws : fetch_taf(oaci)
+                activate ws
+                  ws -> awx : GET taf
+                  awx --> ws : TAF
+                ws --> wa : {available, data}
+                deactivate ws
+              end
+            wa --> dc : clima
+            deactivate wa
+            note over dc : El clima del tramo sigue en la parte 2
+          deactivate dc
+        end
+      end
+    end
+  deactivate ctrl
+deactivate pantalla
+@enduml
+@startuml cu-002-secuencia-2
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-002: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-002), parte 2 de 3: clima del tramo y ranking con IA.
+control "NavigationPlans\nController" as ctrl
+control "Navigation::\nDataCollector" as dc
+control "Navigation::\nRouteWeather\nAggregator" as rwa
+participant "Open-Meteo" as om #FFFFFF
+control "Navigation::\nIaProcessor" as ip
+control "IaService" as ia
+participant "Gemini\n(modelo de IA)" as gem #FFFFFF
+control "Navigation::\nRanker" as rk
+
+note over dc : Continúa de la parte 1
+dc -> rwa : call(candidatos)
+activate rwa
+  loop por cada candidato
+    rwa -> om : GET pronóstico
+    om --> rwa : horario
+  end
+rwa --> dc : tormenta y viento
+deactivate rwa
+dc --> ctrl : candidatos con clima
+ctrl -> ip : process(candidatos)
+activate ip
+  ip -> ia : generate(prompt)
+  activate ia
+    ia -> gem : generateContent
+    gem --> ia : JSON
+  ia --> ip : {success, text}
+  deactivate ia
+  alt la IA respondió
+    ip -> ip : parse_response(text, raw)
+  else sin IA (respaldo)
+    ip -> rk : call()
+    rk --> ip : rutas rankeadas
+  end
+ip --> ctrl : ranking
+deactivate ip
+@enduml
+@startuml cu-002-secuencia-3
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-002: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-002), parte 3 de 3: plan, rutas sugeridas y confirmación con reserva.
+actor "Piloto" as piloto
+boundary "Elegí una\nruta" as pantalla
+boundary "Tramos y\nconfirmación" as tramos
+control "NavigationPlans\nController" as ctrl
+control "Navigation::\nPlanBuilder" as pb
+control "RouteSuggestions\nController" as rctrl
+control "Navigation::\nLegNormalizer" as ln
+entity "Reservation" as res
+control "Observers::\nMonitoring\nTrigger" as mt
+
+note over ctrl : Continúa de la parte 2
+ctrl -> pb : build()
+activate pb
+  pb -> pb : crea el plan y\nsus rutas sugeridas
+pb --> ctrl : plan
+deactivate pb
+ctrl --> pantalla : 201 plan con rutas
+piloto -> pantalla : Elige una ruta
+piloto -> tramos : Presiona «Confirmar ruta»
+activate tramos
+  tramos -> rctrl : confirm(id, tramos)
+  activate rctrl
+    alt ruta ya confirmada
+      rctrl --> tramos : 200 reserva existente
+    else ruta pendiente
+      alt aeronave inactiva
+        rctrl --> tramos : 422 aeronave inactiva
+      else aeronave activa
+        rctrl -> ln : call(tramos)
+        ln --> rctrl : tramos normalizados
+        alt tramo inválido
+          rctrl --> tramos : 422 tramo inválido
+        else tramos válidos
+          rctrl -> res : create!(datos de la ruta)
+          activate res
+            res -> res : emit_reservation_created()\nafter_create_commit
+            res -> res : notify_observers(\n:reservation_created)
+            res -> mt : update(event)\nencola RunJob
+          deactivate res
+          rctrl --> tramos : 201 reserva creada
+        end
+      end
+    end
+  deactivate rctrl
+deactivate tramos
+@enduml

@@ -1,0 +1,75 @@
+@startuml cu-004-casos-de-uso
+!include estilo.iuml
+left to right direction
+skinparam defaultFontSize 14
+skinparam nodesep 22
+skinparam ranksep 55
+skinparam linetype polyline
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam actor {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #333333
+
+actor "Piloto" as Piloto
+actor "Gestor\n(administrador o gestor)" as Gestor
+actor "Modelo de IA\n(Gemini)" as IA
+
+rectangle "Registrar Certificación por Lectura\nAutomática de Documento (IA)" {
+  usecase "CU-004.001\nCargar el documento" as S1
+  usecase "CU-004.002\nExtraer los campos y\ndetectar la\ncertificación\nexistente" as S2
+  usecase "CU-004.003\nRevisar y confirmar" as S3
+  usecase "CU-004.004\nGuardar o actualizar\nla certificación" as S4
+  usecase "Autorizar el escaneo" as c4i1
+  usecase "Validar el subtipo" as c4i2
+  usecase "Validar el tamaño\n(10 MB)" as c4i3
+  usecase "Validar el formato\n(JPG, PNG, PDF)" as c4i4
+  usecase "Detectar la\ncertificación\nexistente" as c4i5
+  usecase "Actualizar la\ncertificación\nexistente" as c4x1
+  usecase "Crear una\ncertificación nueva" as c4x2
+  usecase "Cargar a mano si la IA\nno extrae" as c4x3
+  usecase "Corregir el subtipo\ndetectado" as c4x4
+  usecase "Cancelar sin guardar" as c4x5
+  usecase "Disparar el monitoreo\nal guardar" as c4x6
+  usecase " " as J_S2_IA #transparent;line:transparent
+}
+
+S1 -[hidden]left-> S2
+S2 -[hidden]left-> S3
+S3 -[hidden]left-> S4
+c4i1 -[hidden]left-> c4i2
+c4i2 -[hidden]left-> c4i3
+c4i3 -[hidden]left-> c4i4
+c4x3 -[hidden]left-> c4x4
+c4x4 -[hidden]left-> c4x5
+c4x1 -[hidden]left-> c4x2
+c4x2 -[hidden]left-> c4x6
+
+Gestor -down--|> Piloto
+Piloto -- S1
+Piloto -- S3
+
+S1 ..> c4i1 : <<include>>
+S1 ..> c4i2 : <<include>>
+S1 ..> c4i3 : <<include>>
+S1 ..> c4i4 : <<include>>
+S2 ..> c4i5 : <<include>>
+c4x1 .up.> S4 : <<extend>>
+c4x2 .up.> S4 : <<extend>>
+c4x3 .up.> S3 : <<extend>>
+c4x4 .up.> S3 : <<extend>>
+c4x5 .up.> S3 : <<extend>>
+c4x6 .up.> S4 : <<extend>>
+
+S2 -- J_S2_IA
+J_S2_IA -- IA
+
+legend right
+include = validador u obligatorio reutilizado · extend = menú, flujo u opcional
+endlegend
+@enduml

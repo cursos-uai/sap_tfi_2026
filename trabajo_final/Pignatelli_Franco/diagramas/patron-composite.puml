@@ -1,0 +1,57 @@
+@startuml patron-composite
+!include estilo.iuml
+top to bottom direction
+skinparam linetype polyline
+skinparam wrapWidth 220
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam ArrowFontSize 11
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+' Patrón Composite — certificaciones del piloto (sección "Documentación de la aplicación de Patrones de Diseño").
+' Fuente de verdad: backend/app/models/concerns/certifiable.rb (interfaz común), backend/app/models/certification.rb,
+' license.rb, qualification.rb y medical_certificate.rb (hojas) y backend/app/services/certifications/composite.rb
+' (compuesto). Lo consume Preflight::DataCollector (to_summary). Coincide con iconix/where.json (Composite).
+' Sin añadir, eliminar ni obtenerHijo: los hijos se arman en el constructor. Árbol de un solo nivel.
+
+class "Preflight::DataCollector" as DataCollector <<Cliente>> {
+  - certification_data()
+}
+
+class "Certifications::Composite" as Composite <<Compuesto>> {
+  - components
+  + valid_certification?()
+  + expired?()
+  + days_to_expiration()
+  + expiration_date()
+  + to_summary()
+}
+
+interface "Certifiable" as Certifiable <<Componente>> {
+  + valid_certification?()
+  + expired?()
+  + days_to_expiration()
+  + expiration_date()
+}
+
+class "Certification" as Certification <<base de las hojas>>
+
+class "License" as License <<Hoja>>
+class "Qualification" as Qualification <<Hoja>>
+class "MedicalCertificate" as MedicalCertificate <<Hoja>>
+
+DataCollector -right-> Composite : to_summary
+Composite o-right-> Certification : components\n0..*
+Composite -up..|> Certifiable
+Certification -up..|> Certifiable
+Certification <|-down- License
+Certification <|-down- Qualification
+Certification <|-down- MedicalCertificate
+
+note bottom of Composite
+  Sin añadir, eliminar ni obtenerHijo:
+  los hijos se arman en el constructor
+  a partir de las asociaciones del usuario.
+end note
+@enduml

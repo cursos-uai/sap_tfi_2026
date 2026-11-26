@@ -1,0 +1,51 @@
+@startuml patron-mape-k
+!include estilo.iuml
+top to bottom direction
+skinparam linetype polyline
+skinparam wrapWidth 300
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam defaultFontSize 13
+skinparam ArrowFontSize 12
+skinparam RectangleBorderThickness 1.2
+' Patrón MAPE-K (por analogía) — lazo de monitoreo de CU-003 (sección "Documentación de la aplicación de Patrones de Diseño").
+' Fuente de verdad: backend/app/services/monitoring (control_loop, sources, analyzer, planner, executor, effectors,
+' knowledge, scope), app/jobs/monitoring (scheduled_run_job), run_requester y observers/monitoring_trigger.
+' Coincide con iconix/where.json (MAPE-K). Cada rol lleva su clase real entre paréntesis.
+
+rectangle "**Disparadores**\nMonitoring::ScheduledRunJob (diario)\nMonitoring::RunRequester (manual)\nObservers::MonitoringTrigger (eventos)" as DIS
+
+rectangle "**Controlador del lazo** (Monitoring::ControlLoop)" as CTL {
+  rectangle "**Monitor**\n(Sources::Registry\n+ CompositeSource)" as MON
+  rectangle "**Analizador**\n(Monitoring::Analyzer\n+ 14 reglas Rules::*)" as ANA
+  rectangle "**Planificador**\n(Monitoring::Planner)" as PLA
+  rectangle "**Ejecutor**\n(Monitoring::Executor)" as EJE
+  rectangle "**Conocimiento**\n(Monitoring::Knowledge)\nreglas con cita normativa,\nsíntomas, planes y bloqueos" as KNO
+}
+
+rectangle "**Sensores**\nCertificationSource\nAirworthinessSource\nRiskTrendSource\nRecentExperienceSource" as SEN
+
+rectangle "**Efectores**\nEffectors::ReservationHolder\nEffectors::Notifier" as EFE
+
+rectangle "**Elemento gestionado**\nOperación del aeroclub:\nreservas, pilotos y aeronaves\n(se lee por Monitoring::Scope)" as GES
+
+DIS -down-> CTL : <U+00A0><U+00A0><U+00A0><U+00A0>dispara una corrida
+
+SEN -right-> MON
+MON -right-> ANA : observaciones
+ANA -down-> PLA : <U+00A0><U+00A0><U+00A0><U+00A0>síntomas
+PLA -left-> EJE : plan
+EJE -left-> EFE
+
+MON -down- KNO
+ANA -down- KNO
+PLA -up- KNO
+EJE -up- KNO
+
+EFE -up-> GES : <U+00A0><U+00A0><U+00A0><U+00A0>actúan
+GES -up-> SEN : <U+00A0><U+00A0><U+00A0><U+00A0>se observa
+
+SEN -[hidden]down- EFE
+MON -[hidden]down- EJE
+
+@enduml

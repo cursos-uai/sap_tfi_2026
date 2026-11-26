@@ -1,0 +1,46 @@
+@startuml arquitectura-funcional
+!include estilo.iuml
+' Vista funcional (1 de 2): Cliente-Servidor de Tres Capas. Una caja por capa con la tecnologia
+' adentro; el protocolo va arriba de cada conector y el mensaje representativo (vista dinamica) abajo.
+' El subestilo de Invocacion Implicita y el lazo MAPE-K estan en el bloque siguiente (arquitectura-funcional-lazo).
+' Sin hosts, puertos ni secretos. OpenAIP: (c) OpenAIP, licencia CC BY-NC 4.0.
+top to bottom direction
+skinparam wrapWidth 300
+skinparam nodesep 70
+skinparam ranksep 70
+skinparam linetype polyline
+skinparam defaultFontSize 15
+skinparam ArrowFontSize 13
+skinparam RectangleBorderThickness 1.5
+skinparam DatabaseBorderThickness 1.5
+
+rectangle "**Lógica de presentación**\nSPA React 19 · TypeScript\nTanStack Query · Zustand · Axios\n(navegador o teléfono)" as SPA
+rectangle "**Lógica de negocio · proceso web**\nAPI Rails 7.2 (rol web)\ncontrollers delgados · Pundit\nservices por caso de uso" as API
+rectangle "**Lógica de negocio · proceso job**\nSidekiq 7.3 (rol job)\nsidekiq-cron\nlazo MAPE-K (figura siguiente)" as JOB
+database "**Almacén auxiliar**\nRedis 7\ncola y debounce" as REDIS
+rectangle "**Lógica de procesamiento de datos**\nActiveRecord (ORM) sobre el adaptador pg" as AR
+database "**DBMS**\nPostgreSQL 16" as PG
+
+rectangle "OpenStreetMap\nmosaicos del mapa" as OSM
+rectangle "Servicios externos" as EXT {
+  rectangle "Gemini API" as GEM
+  rectangle "aviationweather.gov\nMETAR y TAF" as AWC
+  rectangle "Open-Meteo\nviento y CAPE" as OME
+  rectangle "OpenAIP\nespacio aéreo\n© OpenAIP, CC BY-NC 4.0" as OAI
+}
+
+GEM -[hidden]right- AWC
+OME -[hidden]right- OAI
+GEM -[hidden]down- OME
+AR -[hidden]down- PG
+EXT -[hidden]right- AR
+
+SPA -down-> API : **HTTPS · JSON · JWT**\nPOST /api/v1/pre_flight_evaluations
+SPA -left-> OSM : **HTTPS**\nGET mosaico {z}/{x}/{y}
+API -down-> EXT : **HTTPS · REST**\nGET METAR del aeródromo
+API -right-> REDIS : **protocolo Redis**\nevento :certification_changed\nRunJob.perform_in(10 s)
+JOB -up-> REDIS : **protocolo Redis**\ncron 06:00 · toma RunJob
+API -down-> AR : **llamada en proceso**\nPreFlightEvaluation.create!
+JOB -left-> AR : **llamada en proceso**\nMonitoringRun.create!
+AR -down-> PG : **SQL/TCP**\nINSERT INTO pre_flight_evaluations
+@enduml

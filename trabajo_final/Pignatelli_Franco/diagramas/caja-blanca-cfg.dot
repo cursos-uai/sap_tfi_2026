@@ -1,0 +1,41 @@
+// Grafo de flujo de control de Monitoring::Rules::CertificationExpiry#evaluate
+// (con status_invalid? y tier_for). Nodos numerados contra líneas reales de
+// backend/app/services/monitoring/rules/certification_expiry.rb.
+digraph cfg {
+  graph [fontname="Arial", rankdir=TB, nodesep=0.3, ranksep=0.22, dpi=200, pad=0.1];
+  node  [fontname="Arial", fontsize=11, shape=box, style="rounded,filled", fillcolor="#F5F5F5", color="#333333", margin="0.08,0.04"];
+  edge  [fontname="Arial", fontsize=10, color="#333333"];
+  n1  [label="1  expires_at = observation.value (L37)"];
+  n2  [label="2\nstatus ∈ INVALID_STATUSES? (L53)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n3  [label="3\nblock_allowed? (L53)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n4  [label="4  status_finding: tier 'vencido' (L38)"];
+  n5  [label="5\nexpires_at.nil? (L39)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n6  [label="6  return nil (L39)"];
+  n7  [label="7\nexpires_at < as_of? (L61)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n8  [label="8  tier = 'vencido' (L61)"];
+  n9  [label="9  days = (expires_at - as_of).to_i (L63)"];
+  n10 [label="10\n¿quedan umbrales? (L64)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n11 [label="11\ndays <= threshold? (L65)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n12 [label="12  tier = threshold.to_s (L65)"];
+  n13 [label="13  tier = nil (L67)"];
+  n14 [label="14\ntier presente? (L42)", shape=diamond, style=filled, fillcolor="#FFFFFF"];
+  n15 [label="15  return nil (L42)"];
+  n16 [label="16  return { tier, details } (L44)"];
+  x   [label="fin", shape=circle, fillcolor="#FFFFFF"];
+  n1 -> n2;
+  n2 -> n3 [label="sí"];  n2 -> n5 [label="no"];
+  n3 -> n4 [label="sí"];  n3 -> n5 [label="no"];
+  n4 -> x;
+  n5 -> n6 [label="sí"];  n5 -> n7 [label="no"];
+  n6 -> x;
+  n7 -> n8 [label="sí"];  n7 -> n9 [label="no"];
+  n8 -> n14;
+  n9 -> n10;
+  n10 -> n11 [label="sí"]; n10 -> n13 [label="no"];
+  n11 -> n12 [label="sí"]; n11 -> n10 [label="no", constraint=false];
+  n12 -> n14;
+  n13 -> n14;
+  n14 -> n16 [label="sí"]; n14 -> n15 [label="no"];
+  n15 -> x;
+  n16 -> x;
+}

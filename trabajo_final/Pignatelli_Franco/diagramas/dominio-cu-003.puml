@@ -1,0 +1,45 @@
+@startuml dominio-cu-003
+!include estilo.iuml
+top to bottom direction
+skinparam defaultFontSize 14
+skinparam nodesep 50
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+hide circle
+show empty members
+skinparam ClassFontStyle bold
+skinparam ClassBorderThickness 1.5
+
+class "Regla normativa" as RN
+class "Corrida del monitoreo" as CM
+class "Hallazgo" as HA
+class "Plan de acción" as PA
+class "Bloqueo o advertencia" as BA
+class "Notificación" as NO
+class "Piloto" as PI
+class "Aeronave" as AN
+class "Reserva" as RE
+class "Bitácora de vuelo" as BI
+class "Registro de mantenimiento" as RM
+
+RN -down-> HA : origina
+CM -down-> HA : detecta
+HA -down-> PA : se atiende en
+HA -down-> BA : genera
+HA -down-> NO : genera
+HA -down-> PI : afecta a
+HA -down-> AN : afecta a
+BA -down-> RE : marca a
+BI -up-> AN : se anota en
+RM -up-> AN : se anota en
+RN -[hidden]right- CM
+PA -[hidden]right- BA
+BA -[hidden]right- NO
+NO -[hidden]right- PI
+PI -[hidden]right- AN
+BI -[hidden]right- RM
+
+legend bottom
+Modelo conceptual: sin atributos (ver 10.4.4.2); flechas de un solo sentido.
+endlegend
+@enduml

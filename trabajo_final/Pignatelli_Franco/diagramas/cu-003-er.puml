@@ -1,0 +1,282 @@
+@startuml cu-003-er
+!include estilo.iuml
+left to right direction
+skinparam nodesep 6
+skinparam ranksep 30
+skinparam wrapWidth 160
+skinparam linetype ortho
+' CU-003 — modelo entidad-relación, figura 1 de 2: el lazo de monitoreo (corridas, síntomas, planes, bloqueos y reglas).
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, solo las relevantes a CU-003).
+' Claves únicas parciales (en la nota): index_symptoms_unique_open_fingerprint e index_reservation_holds_unique_live_per_symptom.
+' La figura 2 muestra los datos que el lazo observa y los avisos; reservations, users y aircraft se repiten solo con su clave.
+
+hide circle
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "monitoring_rules" as monitoring_rules {
+  * id : bigint <<PK>>
+  --
+  aerial_entity_id : bigint <<FK>>
+  rule_key : string
+  source : string
+  reference : text
+  verified : boolean
+  params : jsonb
+  severity_by_tier : jsonb
+  hold_policy : jsonb
+  enabled : boolean
+  version : integer
+}
+
+entity "monitoring_runs" as monitoring_runs {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  trigger : string
+  trigger_ref : string
+  status : string
+  dry_run : boolean
+  started_at : datetime
+  finished_at : datetime
+  symptoms_opened : integer
+  symptoms_resolved : integer
+  holds_created : integer
+  holds_released : integer
+  ia_available : boolean
+}
+
+entity "symptoms" as symptoms {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  monitoring_run_id : bigint <<FK>>
+  user_id : bigint <<FK>>
+  aircraft_id : bigint <<FK>>
+  rule_key : string
+  subject_type : string
+  subject_id : bigint
+  severity : string
+  effect : string
+  tier : string
+  status : string
+  details : jsonb
+  first_detected_at : datetime
+  resolved_at : datetime
+}
+
+entity "action_plans" as action_plans {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * monitoring_run_id : bigint <<FK>>
+  summary : text
+  ia_available : boolean
+  ai_raw_response : jsonb
+  generated_at : datetime
+}
+
+entity "plan_actions" as plan_actions {
+  * id : bigint <<PK>>
+  --
+  * action_plan_id : bigint <<FK>>
+  * symptom_id : bigint <<FK>>
+  action_type : string
+  priority : integer
+  status : string
+  applied_at : datetime
+}
+
+entity "reservation_holds" as reservation_holds {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * reservation_id : bigint <<FK>>
+  * symptom_id : bigint <<FK>>
+  overridden_by_id : bigint <<FK>>
+  kind : string
+  status : string
+  reason : text
+  released_at : datetime
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+}
+
+note bottom of symptoms
+  Único síntoma abierto por huella:
+  index_symptoms_unique_open_fingerprint
+  (aerial_entity_id, rule_key, subject_type,
+  subject_id) cuando status = open.
+end note
+
+note bottom of reservation_holds
+  Una marca vigente por reserva y síntoma:
+  index_reservation_holds_unique_live_per_symptom
+  (reservation_id, symptom_id) cuando status
+  es active u overridden.
+end note
+
+aerial_entities ||--o{ monitoring_runs
+aerial_entities ||--o{ symptoms
+aerial_entities ||--o{ action_plans
+aerial_entities ||--o{ reservation_holds
+aerial_entities |o--o{ monitoring_rules
+monitoring_runs |o--o{ symptoms
+monitoring_runs ||--o{ action_plans
+action_plans ||--o{ plan_actions
+symptoms ||--o{ plan_actions
+symptoms ||--o{ reservation_holds
+reservations ||--o{ reservation_holds
+users |o--o{ reservation_holds : autoriza
+users |o--o{ symptoms
+aircraft |o--o{ symptoms
+@enduml
+
+@startuml cu-003-er-parte-2
+!include estilo.iuml
+left to right direction
+skinparam nodesep 6
+skinparam ranksep 30
+skinparam wrapWidth 160
+skinparam linetype ortho
+' CU-003 — modelo entidad-relación, figura 2 de 2: los datos que el lazo observa (certificaciones, aeronaves, reservas,
+' bitácora y mantenimiento) y los avisos.
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, solo las relevantes a CU-003).
+' symptoms se vincula con su sujeto por subject_type / subject_id, sin clave foránea (vínculo lógico, línea punteada):
+' el sujeto es una certificación, una aeronave o un usuario. notifications se vincula con su origen por
+' reference_type / reference_id, también sin clave foránea. Las advertencias y los bloqueos están en la figura 1.
+
+hide circle
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  role : string
+  first_name : string
+  last_name : string
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  registration : string
+  status : string
+  engine_hours : decimal
+  ca_expires_on : date
+  tbo_hours : decimal
+  last_inspection_at : date
+  next_inspection_at : date
+}
+
+entity "certifications" as certifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  type : string
+  certification_type : string
+  expires_at : date
+  status : string
+  last_threshold_notified : string
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  scheduled_at : datetime
+  status : string
+}
+
+entity "flight_log_entries" as flight_log_entries {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * reservation_id : bigint <<FK>>
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * closed_by_id : bigint <<FK>>
+  flown_on : date
+  hours : decimal
+  day_takeoffs : integer
+  day_landings : integer
+  night_takeoffs : integer
+  night_landings : integer
+}
+
+entity "maintenance_records" as maintenance_records {
+  * id : bigint <<PK>>
+  --
+  * aircraft_id : bigint <<FK>>
+  record_type : string
+  performed_at : date
+  next_due_at : date
+  engine_hours_at_service : decimal
+}
+
+entity "symptoms" as symptoms {
+  * id : bigint <<PK>>
+  --
+  subject_type : string
+  subject_id : bigint
+  severity : string
+  status : string
+}
+
+entity "notifications" as notifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  notification_type : string
+  severity : string
+  title : string
+  reference_type : string
+  reference_id : integer
+  read : boolean
+}
+
+note bottom of symptoms
+  Líneas punteadas, sin clave foránea:
+  certifications - symptoms por subject_type
+  y subject_id (el sujeto también puede
+  ser un usuario o una aeronave) y
+  symptoms - notifications por reference_type
+  y reference_id.
+end note
+
+aerial_entities ||--o{ users
+aerial_entities ||--o{ aircraft
+aerial_entities ||--o{ reservations
+aerial_entities ||--o{ flight_log_entries
+aerial_entities ||--o{ notifications
+users ||--o{ certifications
+users ||--o{ reservations
+users ||--o{ flight_log_entries
+users ||--o{ notifications
+aircraft ||--o{ reservations
+aircraft ||--o{ maintenance_records
+aircraft ||--o{ flight_log_entries
+reservations ||--o| flight_log_entries
+certifications |o..o{ symptoms
+symptoms |o..o{ notifications
+@enduml

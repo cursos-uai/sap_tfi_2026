@@ -1,0 +1,551 @@
+@startuml clases-cu-003-lazo
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 30
+skinparam ranksep 30
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-003: núcleo del lazo MAPE-K (disparo, monitor y análisis)
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Jobs" {
+  class "ScheduledRunJob" as Monitoring__ScheduledRunJob <<job>> {
+    + perform(): void
+  }
+  class "RunJob" as Monitoring__RunJob <<job>> {
+    + perform(entity_id: Integer, trigger: String,
+    {method}       options: Hash = {}): void
+    - requeue_busy(entity_id: Integer, trigger: String,
+    {method}       options: Hash): void
+  }
+}
+package "Services" {
+  class "Observers::MonitoringTrigger" as Observers__MonitoringTrigger <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+  class "ControlLoop" as Monitoring__ControlLoop <<service>> {
+    + initialize(entity: AerialEntity, trigger: String,
+    {method}       trigger_ref: String = nil, run: MonitoringRun = nil)
+    + run(): MonitoringRun
+  }
+  class "Knowledge" as Monitoring__Knowledge <<service>> {
+    + initialize()
+    + rule(rule_key: String): Rule
+    + param(rule_key: String, name: String): Object
+    + escalation_days(effect: String): Integer
+    {static} + ensure_defaults!(): void
+  }
+  class "Analyzer" as Monitoring__Analyzer <<service>> {
+    + initialize(scope: Scope, knowledge: Knowledge,
+    {method}       run: MonitoringRun)
+    + analyze(observations: Array<Observation>): Delta
+  }
+  class "Observation" as Monitoring__Observation <<service>> {
+    - source: String
+    - rule_key: String
+    - subject_type: String
+    - subject_id: Integer
+    - value: Object
+    - as_of: Time
+    - evidence: Hash
+  }
+  class "Delta" as Monitoring__Delta <<service>> {
+    - opened: Array<Symptom>
+    - escalated: Array<Symptom>
+    - resolved: Array<Symptom>
+    - unchanged: Array<Symptom>
+    --
+    + actionable(): Array<Symptom>
+  }
+  class "Rules::* (14 clases, una por regla)" as Monitoring__Rules___ <<service>> {
+    + initialize(rule: Rule)
+    + evaluate(observation: Observation): Hash
+  }
+  class "Sources::Registry" as Monitoring__Sources__Registry <<service>> <<module>> {
+    + {static} SOURCES: Array<Class>
+    --
+    {static} + composite(scope: Scope): CompositeSource
+  }
+  class "Sources::CompositeSource" as Monitoring__Sources__CompositeSource <<service>> {
+    + initialize(sources: Array)
+    + observe(): Array<Observation>
+  }
+  class "Sources::CertificationSource" as Monitoring__Sources__CertificationSource <<service>> {
+    + observe(): Array<Observation>
+  }
+  class "Sources::AirworthinessSource" as Monitoring__Sources__AirworthinessSource <<service>> {
+    + observe(): Array<Observation>
+  }
+  class "Sources::RecentExperienceSource" as Monitoring__Sources__RecentExperienceSource <<service>> {
+    + observe(): Array<Observation>
+  }
+  class "Sources::RiskTrendSource" as Monitoring__Sources__RiskTrendSource <<service>> {
+    + observe(): Array<Observation>
+  }
+  class "Scope" as Monitoring__Scope <<service>> {
+    + initialize(entity: AerialEntity)
+    + symptoms(): Relation
+    + reservations(): Relation
+    + certifications(): Relation
+  }
+  class "Certifications::Composite" as Certifications__Composite <<service>> {
+    + initialize(user: User)
+    + missing_required(): Array<String>
+  }
+}
+package "Models" {
+  class "MonitoringRun" as MonitoringRun <<model>> {
+    - trigger: String
+    - status: String
+    - dry_run: Boolean
+    - ia_available: Boolean
+  }
+  class "MonitoringRule" as MonitoringRule <<model>> {
+    - rule_key: String
+    - source: String
+    - reference: String
+    - verified: Boolean
+    - params: JSONB
+    - version: Integer
+  }
+  class "Symptom" as Symptom <<model>> {
+    - rule_key: String
+    - severity: String
+    - effect: String
+    - status: String
+    --
+    {static} + open(): Relation
+    {static} + resolved(): Relation
+    + resolve!(at: Time = Time.current): Boolean
+  }
+}
+MonitoringRun -[hidden]down- MonitoringRule
+MonitoringRule -[hidden]down- Symptom
+Observers__MonitoringTrigger .down.> Monitoring__RunJob
+Monitoring__ScheduledRunJob .down.> Monitoring__RunJob
+Monitoring__RunJob .down.> Monitoring__ControlLoop
+Monitoring__ControlLoop .down.> MonitoringRun
+Monitoring__ControlLoop .down.> Monitoring__Knowledge
+Monitoring__ControlLoop .down.> Monitoring__Analyzer
+Monitoring__ControlLoop .down.> Monitoring__Sources__Registry
+Monitoring__ControlLoop .down.> Monitoring__Scope
+Monitoring__Knowledge .down.> MonitoringRule
+Monitoring__Analyzer .down.> Symptom
+Monitoring__Analyzer .down.> Monitoring__Rules___
+Monitoring__Analyzer .down.> Monitoring__Observation
+Monitoring__Analyzer .down.> Monitoring__Delta
+Monitoring__Sources__Registry .down.> Monitoring__Sources__CompositeSource
+Monitoring__Sources__CompositeSource -down-> "1" Monitoring__Sources__CertificationSource : fuentes
+Monitoring__Sources__CompositeSource -down-> "1" Monitoring__Sources__AirworthinessSource
+Monitoring__Sources__CompositeSource -down-> "1" Monitoring__Sources__RecentExperienceSource
+Monitoring__Sources__CompositeSource -down-> "1" Monitoring__Sources__RiskTrendSource
+Monitoring__Sources__CertificationSource .down.> Certifications__Composite
+legend bottom
+Capas: Jobs y Services → Models. Punteada = usa; flecha = agrega. El lazo sigue con Planner y Executor (figura siguiente).
+endlegend
+@enduml
+@startuml clases-cu-003-lazo-ejecucion
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 8
+skinparam ranksep 40
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-003: núcleo del lazo MAPE-K (plan y ejecución)
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Services" {
+  class "ControlLoop" as Monitoring__ControlLoop <<service>> {
+    + initialize(entity: AerialEntity, trigger: String,
+    {method}       trigger_ref: String = nil, run: MonitoringRun = nil)
+    + run(): MonitoringRun
+  }
+  class "Planner" as Monitoring__Planner <<service>> {
+    + initialize(knowledge: Knowledge)
+    + plan(symptoms: Array<Symptom>): Hash
+  }
+  class "Executor" as Monitoring__Executor <<service>> {
+    + initialize(scope: Scope, run: MonitoringRun,
+    {method}       knowledge: Knowledge)
+    + execute(plan_record: ActionPlan,
+    {method}       open_symptoms: Array<Symptom>,
+    {method}       resolved_symptoms: Array<Symptom>): Hash
+  }
+  class "Planning::GeminiPlanner" as Monitoring__Planning__GeminiPlanner <<service>> {
+    + initialize(knowledge: Knowledge)
+    + plan(symptoms: Array<Symptom>): Hash
+  }
+  class "Planning::RuleBasedPlanner" as Monitoring__Planning__RuleBasedPlanner <<service>> {
+    + initialize(knowledge: Knowledge)
+    + plan(symptoms: Array<Symptom>): Hash
+    + text_for(symptom: Symptom): String
+    {static} + text_for(knowledge_rule: Rule,
+    {method}       symptom: Symptom): String
+  }
+  class "Planning::ActionCatalog" as Monitoring__Planning__ActionCatalog <<service>> <<module>> {
+    {static} + for(symptom: Symptom): Array<String>
+  }
+  class "Effectors::ReservationHolder" as Monitoring__Effectors__ReservationHolder <<service>> {
+    + initialize(scope: Scope, knowledge: Knowledge)
+    + sync!(open_symptoms: Array<Symptom>,
+    {method}       resolved_symptoms: Array<Symptom>): Hash
+    + release_orphaned!(): Hash
+    {static} + override!(hold: ReservationHold, by: User,
+    {method}       reason: String): ReservationHold
+  }
+  class "Effectors::Notifier" as Monitoring__Effectors__Notifier <<service>> {
+    + initialize(scope: Scope, knowledge: Knowledge)
+    + notify_pending!(open_symptoms: Array<Symptom>): Integer
+    + escalate_due!(open_symptoms: Array<Symptom>): Hash
+    + notify_resolved!(resolved_symptoms: Array<Symptom>): Integer
+  }
+  class "IaService" as IaService <<service>> {
+    + initialize(timeout: Integer = 25)
+    + generate(prompt: String, response_schema: Hash = nil,
+    {method}       inline_data: Hash = nil, temperature: Float = 0.2,
+    {method}       max_output_tokens: Integer = 1024): Hash
+  }
+  class "Planning::ResponseSchema" as Monitoring__Planning__ResponseSchema <<service>> <<module>> {
+    + {static} SCHEMA: Hash
+  }
+  class "Planning::ImpactResolver" as Monitoring__Planning__ImpactResolver <<service>> {
+    + initialize(scope: Scope)
+    + reservations_for(symptom: Symptom): Array<Reservation>
+  }
+}
+package "Models" {
+  class "ActionPlan" as ActionPlan <<model>> {
+    - summary: String
+    - ia_available: Boolean
+    - generated_at: Time
+  }
+  class "PlanAction" as PlanAction <<model>> {
+    - action_type: String
+    - priority: Integer
+    - status: String
+  }
+  class "Notification" as Notification <<model>> {
+    - notification_type: String
+    - title: String
+    - severity: String
+    --
+    {static} + unread(): Relation
+    {static} + for_user(user: User): Relation
+  }
+  class "ReservationHold" as ReservationHold <<model>> {
+    - kind: String
+    - status: String
+    - reason: String
+    - override_reason: String
+    --
+    {static} + active(): Relation
+    {static} + current(): Relation
+  }
+}
+PlanAction -[hidden]down- Notification
+Notification -[hidden]down- ReservationHold
+Monitoring__ControlLoop .down.> Monitoring__Planner
+Monitoring__ControlLoop .down.> Monitoring__Executor
+Monitoring__ControlLoop .down.> Monitoring__Planning__ActionCatalog
+Monitoring__ControlLoop .down.> ActionPlan
+Monitoring__Planner .down.> Monitoring__Planning__GeminiPlanner
+Monitoring__Planner .down.> Monitoring__Planning__RuleBasedPlanner
+Monitoring__Planning__GeminiPlanner .down.> IaService
+Monitoring__Planning__GeminiPlanner .down.> Monitoring__Planning__ResponseSchema
+Monitoring__Executor .down.> Monitoring__Effectors__ReservationHolder
+Monitoring__Executor .down.> Monitoring__Effectors__Notifier
+Monitoring__Effectors__ReservationHolder .down.> Monitoring__Planning__ImpactResolver
+Monitoring__Effectors__ReservationHolder .down.> ReservationHold
+Monitoring__Effectors__Notifier .down.> Notification
+ActionPlan "1" *-down- "0..*" PlanAction
+legend bottom
+Capas: Services → Models. Punteada = usa; rombo = has_many dependent: :destroy. Planner, Executor y efectores reciben Knowledge por constructor.
+endlegend
+@enduml
+@startuml clases-cu-003-datos
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 90
+skinparam ranksep 32
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-003: datos y API de monitoreo (corridas, síntomas, planes y holds)
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  together {
+    class "SymptomsController" as Api__V1__SymptomsController <<controller>> {
+      + index(): void
+      + show(): void
+    }
+    class "SymptomPolicy" as SymptomPolicy <<policy>> {
+      + index?(): Boolean
+      + show?(): Boolean
+    }
+  }
+  together {
+    class "ReservationHoldsController" as Api__V1__ReservationHoldsController <<controller>> {
+      + index(): void
+      + override(): void
+    }
+    class "ReservationHoldPolicy" as ReservationHoldPolicy <<policy>> {
+      + index?(): Boolean
+      + override?(): Boolean
+    }
+  }
+  together {
+    class "MonitoringRunsController" as Api__V1__MonitoringRunsController <<controller>> {
+      + index(): void
+      + show(): void
+      + create(): void
+    }
+    class "MonitoringRunPolicy" as MonitoringRunPolicy <<policy>> {
+      + index?(): Boolean
+      + show?(): Boolean
+      + create?(): Boolean
+    }
+  }
+}
+package "Services" {
+  class "Effectors::ReservationHolder" as Monitoring__Effectors__ReservationHolder <<service>> {
+    + initialize(scope: Scope, knowledge: Knowledge)
+    + sync!(open_symptoms: Array<Symptom>,
+    {method}       resolved_symptoms: Array<Symptom>): Hash
+    + release_orphaned!(): Hash
+    {static} + override!(hold: ReservationHold, by: User,
+    {method}       reason: String): ReservationHold
+  }
+  class "ReservationGuard" as Monitoring__ReservationGuard <<service>> {
+    + initialize(reservation: Reservation)
+    + status(): String
+    + summary(): Hash
+    {static} + summaries_for(reservations: Array<Reservation>): Hash
+  }
+  class "Monitoring::RunRequester" as Monitoring__RunRequester <<service>> {
+    + initialize(user: User)
+    + call(): MonitoringRun
+  }
+}
+package "Models" {
+  class "ReservationHold" as ReservationHold <<model>> {
+    - kind: String
+    - status: String
+    - reason: String
+    - override_reason: String
+    --
+    {static} + active(): Relation
+    {static} + current(): Relation
+  }
+  class "Reservation" as Reservation <<model>> {
+    - origin_code: String
+    - destination_code: String
+    - scheduled_at: Time
+    - status: String
+    --
+    + latest_evaluation(): PreFlightEvaluation
+    + cancel!(): Boolean
+    + complete!(): Boolean
+  }
+  class "MonitoringRun" as MonitoringRun <<model>> {
+    - trigger: String
+    - status: String
+    - dry_run: Boolean
+    - ia_available: Boolean
+  }
+  class "Symptom" as Symptom <<model>> {
+    - rule_key: String
+    - severity: String
+    - effect: String
+    - status: String
+    --
+    {static} + open(): Relation
+    {static} + resolved(): Relation
+    + resolve!(at: Time = Time.current): Boolean
+  }
+  class "ActionPlan" as ActionPlan <<model>> {
+    - summary: String
+    - ia_available: Boolean
+    - generated_at: Time
+  }
+  class "PlanAction" as PlanAction <<model>> {
+    - action_type: String
+    - priority: Integer
+    - status: String
+  }
+}
+Api__V1__SymptomsController .right.> SymptomPolicy : autoriza
+Api__V1__ReservationHoldsController .right.> ReservationHoldPolicy : autoriza
+Api__V1__MonitoringRunsController .right.> MonitoringRunPolicy : autoriza
+Api__V1__SymptomsController .down.> Symptom
+Api__V1__ReservationHoldsController .down.> Monitoring__Effectors__ReservationHolder
+Monitoring__Effectors__ReservationHolder .down.> ReservationHold
+Reservation "1" *-left- "0..*" ReservationHold
+Symptom "1" *-up- "0..*" ReservationHold
+Api__V1__MonitoringRunsController .down.> Monitoring__RunRequester
+Api__V1__MonitoringRunsController .down.> MonitoringRun
+Monitoring__RunRequester .down.> MonitoringRun
+MonitoringRun "1" *-down- "0..*" ActionPlan
+ActionPlan "1" *-down- "0..*" PlanAction
+Symptom "1" *-down- "0..*" PlanAction
+legend bottom
+Capas: Controllers y Policies → Services → Models. Punteada = usa; rombo = has_many/has_one con dependent: :destroy.
+endlegend
+@enduml
+@startuml clases-cu-003-operacion
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 35
+skinparam ranksep 30
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-003: datos y API de operación (bitácora, mantenimiento y notificaciones)
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  together {
+    class "MaintenanceRecordsController" as Api__V1__MaintenanceRecordsController <<controller>> {
+      + index(): void
+      + create(): void
+    }
+    class "MaintenanceRecordPolicy" as MaintenanceRecordPolicy <<policy>> {
+      + index?(): Boolean
+      + create?(): Boolean
+    }
+  }
+  together {
+    class "FlightLogEntriesController" as Api__V1__FlightLogEntriesController <<controller>> {
+      + create(): void
+      + show(): void
+      + update(): void
+    }
+    class "FlightLogEntryPolicy" as FlightLogEntryPolicy <<policy>> {
+      + show?(): Boolean
+      + update?(): Boolean
+    }
+  }
+  together {
+    class "NotificationsController" as Api__V1__NotificationsController <<controller>> {
+      + index(): void
+      + update(): void
+    }
+    class "NotificationPolicy" as NotificationPolicy <<policy>> {
+      + index?(): Boolean
+      + update?(): Boolean
+    }
+  }
+}
+package "Services" {
+  class "MaintenanceRecords::Recorder" as MaintenanceRecords__Recorder <<service>> {
+    + initialize(aircraft: Aircraft)
+    + call(attrs: Hash): MaintenanceRecord
+  }
+  class "MaintenanceRecords::AnnualInspection" as MaintenanceRecords__AnnualInspection <<service>> {
+    {static} + due_on(performed_on: Date): Date
+    {static} + latest_record(aircraft: Aircraft): MaintenanceRecord
+    {static} + dates_for(aircraft: Aircraft): Hash
+    {static} + sync!(aircraft: Aircraft): void
+  }
+  class "FlightLogs::Editor" as FlightLogs__Editor <<service>> {
+    + initialize(entry: FlightLogEntry, edited_by: User)
+    + call(attrs: Hash): Result
+  }
+  class "FlightLogs::Closer" as FlightLogs__Closer <<service>> {
+    + initialize(reservation: Reservation, closed_by: User)
+    + call(attrs: Hash): Result
+  }
+  class "FlightLogs::EngineHours" as FlightLogs__EngineHours <<service>> <<module>> {
+    {static} + add(aircraft: Aircraft,
+    {method}       delta: BigDecimal): Array<String>
+  }
+  class "Observers::MonitoringTrigger" as Observers__MonitoringTrigger <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+}
+package "Models" {
+  class "Aircraft" as Aircraft <<model>> {
+    - registration: String
+    - status: String
+    - engine_hours: BigDecimal
+    - fuel_capacity: BigDecimal
+    --
+    {static} + active(): Relation
+    + to_s(): String
+    - emit_aircraft_changed(): void
+  }
+  class "FlightLogEntry" as FlightLogEntry <<model>> {
+    - flown_on: Date
+    - hours: BigDecimal
+    - day_landings: Integer
+    - night_landings: Integer
+    --
+    - emit_flight_closed(): void
+  }
+  class "Reservation" as Reservation <<model>> {
+    - origin_code: String
+    - destination_code: String
+    - scheduled_at: Time
+    - status: String
+    --
+    + latest_evaluation(): PreFlightEvaluation
+    + cancel!(): Boolean
+    + complete!(): Boolean
+  }
+  class "MaintenanceRecord" as MaintenanceRecord <<model>> {
+    - record_type: String
+    - performed_at: Date
+    - next_due_at: Date
+    --
+    {static} + recent(): Relation
+    - emit_maintenance_recorded(): void
+  }
+  class "Notification" as Notification <<model>> {
+    - notification_type: String
+    - title: String
+    - severity: String
+    --
+    {static} + unread(): Relation
+    {static} + for_user(user: User): Relation
+  }
+  class "Certification" as Certification <<model>> {
+    - certification_type: String
+    - expires_at: Date
+    - status: String
+    --
+    - emit_certification_changed(): void
+  }
+  class "Observable" as Observable <<model>> <<module>> {
+    {static} + add_observer(observer: Class): void
+    + notify_observers(event: Symbol, data: Hash = {}): void
+  }
+}
+Api__V1__MaintenanceRecordsController .right.> MaintenanceRecordPolicy : autoriza
+Api__V1__FlightLogEntriesController .right.> FlightLogEntryPolicy : autoriza
+Api__V1__NotificationsController .right.> NotificationPolicy : autoriza
+Api__V1__MaintenanceRecordsController .down.> MaintenanceRecords__Recorder
+Api__V1__FlightLogEntriesController .down.> FlightLogs__Editor
+Api__V1__FlightLogEntriesController .down.> FlightLogs__Closer
+Api__V1__NotificationsController .down.> Notification
+MaintenanceRecords__Recorder .down.> MaintenanceRecords__AnnualInspection
+FlightLogs__Editor .down.> FlightLogs__EngineHours
+FlightLogs__Closer .down.> FlightLogs__EngineHours
+FlightLogs__Closer .down.> FlightLogEntry
+MaintenanceRecords__AnnualInspection .down.> Aircraft
+FlightLogs__EngineHours .down.> Aircraft
+Aircraft "1" *-right- "0..*" FlightLogEntry
+Reservation "1" *-left- "0..1" FlightLogEntry
+Aircraft "1" *-down- "0..*" MaintenanceRecord
+Aircraft .down.|> Observable : include
+FlightLogEntry .down.|> Observable : include
+MaintenanceRecord .down.|> Observable : include
+Certification .down.|> Observable : include
+Observable .down.> Observers__MonitoringTrigger : notifica
+legend bottom
+Capas: Controllers y Policies → Services → Models. Punteada = usa; rombo = has_many/has_one con dependent: :destroy.
+endlegend
+@enduml

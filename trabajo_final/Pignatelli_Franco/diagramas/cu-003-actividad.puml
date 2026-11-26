@@ -1,0 +1,91 @@
+@startuml cu-003-actividad
+!include estilo.iuml
+skinparam wrapWidth 300
+skinparam ActivityFontSize 12
+' CU-003 — Monitorear vencimientos normativos: una corrida del lazo de monitoreo (Monitor, Analyze, Plan, Execute y Knowledge).
+' Camino básico y alternativos de las fichas CU-003.001 a CU-003.004; secuencias cu-003-secuencia-1 a -3.
+
+partition "Corrida del monitoreo" {
+  start
+  if (¿Qué dispara la corrida?) then (programación diaria)
+    :Programación diaria inicia la corrida
+    de cada aeroclub activo (06:00);
+  elseif () then (pedido del Gestor)
+    :El Gestor presiona «Correr monitoreo ahora»
+    en Monitoreo (reutiliza la corrida en espera
+    o en curso de menos de 5 min);
+  else (evento de la operación)
+    :Un cambio de la operación pide una corrida
+    (vuelo, mantenimiento, aeronave, certificación,
+    reserva o riesgo alto) y se espera 10 s
+    para agrupar los cambios seguidos;
+  endif
+  if (¿Otra corrida del aeroclub en curso?) then (sí)
+    :Reintentar a los 30 s, hasta 5 veces;
+    stop
+  else (no)
+    :Registrar la corrida con su disparador
+    y anotar si el modo de prueba está activo;
+  endif
+}
+
+partition "Monitor" {
+  :Observar las certificaciones, la aeronavegabilidad,
+  la experiencia reciente y la tendencia de riesgo;
+  if (¿Falla alguna fuente?) then (sí)
+    :Marcar la corrida como fallida sin resolver
+    ningún hallazgo abierto;
+    detach
+  else (no)
+  endif
+}
+
+partition "Analyze" {
+  :Comparar cada dato con su regla del Knowledge;
+  note right
+    Knowledge: reglas con su cita normativa.
+    Regla sin verificar: no bloquea.
+    Dato faltante: hallazgo desconocido.
+  end note
+  if (¿Hay hallazgo?) then (sí)
+    :Abrir el síntoma con su efecto y su cita,
+    o actualizarlo y escalarlo si cambió de nivel;
+  else (no)
+    :Resolver el síntoma, si estaba abierto;
+  endif
+}
+
+partition "Plan" {
+  if (¿Modo de prueba activo o sin hallazgos nuevos?) then (sí)
+    :No armar el plan;
+  else (no)
+    if (¿La IA respondió con un resultado válido?) then (sí)
+      :Priorizar y redactar con IA;
+    else (no)
+      :Usar las plantillas de las reglas\n(plan «sin IA»);
+    endif
+    :Fijar las acciones con el catálogo según el efecto de la regla;
+  endif
+}
+
+partition "Execute" {
+  if (¿Modo de prueba activo?) then (sí)
+    :Solo liberar los bloqueos cuya causa ya no existe;
+  else (no)
+    :Bloquear o marcar las reservas futuras afectadas
+    y liberar las de los hallazgos resueltos;
+    split
+      :Notificar con su severidad si el hallazgo
+      se abrió o cambió de nivel;
+    split again
+      :Escalar al gestor si sigue sin atender
+      (2 días el bloqueo, 7 la advertencia);
+    split again
+      :Avisar una sola vez la resolución
+      de un bloqueo o una advertencia;
+    end split
+  endif
+  :Completar la corrida y registrar sus contadores;
+  stop
+}
+@enduml

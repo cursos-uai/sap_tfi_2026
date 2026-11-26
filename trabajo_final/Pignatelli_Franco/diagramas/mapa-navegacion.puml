@@ -1,0 +1,80 @@
+@startuml mapa-navegacion
+!include estilo.iuml
+top to bottom direction
+skinparam defaultFontSize 15
+skinparam nodesep 10
+skinparam ranksep 28
+skinparam wrapWidth 150
+hide stereotype
+skinparam defaultTextAlignment center
+skinparam rectangle<<core>> {
+  BackgroundColor #DDE6F5
+  BorderColor #1E3A5F
+  BorderThickness 3
+}
+' Mapa de navegación — punto 10.5.1 del documento funcional (09-09, D-13).
+' Fuente de verdad: frontend/src/App.tsx (una caja por cada Route) y
+' frontend/src/components/layout/navConfig.ts (barra inferior, menú «Más» y menú lateral).
+' Las cajas con borde grueso son las pantallas de los casos de uso core y llevan el nombre del boundary de la robustez.
+' Se lee de arriba hacia abajo: ingreso, menús de navegación y, debajo, las pantallas.'
+
+rectangle "/login\nIngreso" as login
+rectangle "~*  (comodín)\nCualquier otra dirección\nRedirige a /" as comodin
+
+rectangle "Navegación del Layout (sólo con sesión)" as nav {
+  rectangle "Barra inferior (teléfono)\nInicio · Reservas · Vuelo · Monitoreo · Más" as bottom
+  rectangle "Menú «Más» (teléfono)\nCertificaciones · Escanear certificación · Waypoints · Notificaciones · Pilotos · Aeronaves" as more
+  rectangle "Menú lateral (pantallas anchas)\nInicio · Reservas · Evaluación pre-vuelo · Planificar navegación · Monitoreo · Certificaciones · Waypoints · Notificaciones · Pilotos · Aeronaves" as side
+}
+
+rectangle "Rutas protegidas (requieren sesión)\nLayout con barra superior y navegación" as protegidas {
+  rectangle "/\nInicio" as home
+  rectangle "/flight\nVuelo\n(selector entre CU-001 y CU-002)" as flight
+  rectangle "/pre-flight-evaluation\nEvaluación pre-vuelo\n(con Historial de evaluaciones)" <<core>> as pre
+  rectangle "/navigation-plan\nPlanificar navegación\nDatos del vuelo · Elegí una ruta · Tramos y confirmación" <<core>> as navp
+  rectangle "/waypoints\nWaypoints" <<core>> as wp
+  rectangle "/monitoring\nMonitoreo (gestión)\nMi cumplimiento (piloto)" <<core>> as mon
+  rectangle "/monitoring/symptoms/:id\nDetalle del síntoma\n(con el diálogo Autorizar igual)" <<core>> as sint
+  rectangle "/certifications\nCertificaciones" <<core>> as cert
+  rectangle "/certifications/scan\nCargar certificación\nElegí el tipo · Subí el documento · Confirmá los datos" <<core>> as scan
+  rectangle "/reservations\nReservas" as res
+  rectangle "/reservations/:id\nDetalle de reserva" as resid
+  rectangle "/notifications\nNotificaciones" as notif
+  rectangle "/pilots\nPilotos\n(sólo admin o manager)" as pil
+  rectangle "/aircraft\nAeronaves\n(sólo admin o manager)" as air
+}
+
+login --> home : ingreso\nválido
+comodin ..> home
+
+bottom --> home
+bottom --> res
+bottom --> flight
+bottom --> mon
+bottom --> more : Más
+side ..> bottom : mismas entradas
+more --> cert
+more --> scan
+more --> wp
+more --> notif
+more --> pil
+more --> air
+
+
+flight --> pre
+flight --> navp
+cert --> scan
+mon --> sint : Ver detalle
+notif --> sint
+res --> resid
+pre --> resid
+navp --> res : Ver mis reservas
+
+note bottom of nav
+  «Vuelo» es el selector entre la Evaluación pre-vuelo (CU-001) y Planificar navegación (CU-002).
+  «Monitoreo» es una sola ruta: admin, manager e instructor ven la gestión;
+  el resto de los roles ve «Mi cumplimiento».
+  Sin sesión iniciada, toda ruta protegida redirige a /login.
+  Pilotos y Aeronaves figuran sólo para los roles admin y manager.
+end note
+@enduml

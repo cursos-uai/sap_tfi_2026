@@ -1,0 +1,93 @@
+@startuml cu-003-casos-de-uso
+!include estilo.iuml
+left to right direction
+skinparam defaultFontSize 14
+skinparam nodesep 22
+skinparam ranksep 55
+skinparam linetype polyline
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam actor {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #333333
+
+actor "Planificador diario\n(tarea programada)" as Planificador
+actor "Gestor\n(administrador o gestor)" as Gestor
+actor "Instructor" as Instructor
+actor "Piloto" as Piloto
+actor "Modelo de IA\n(Gemini)" as IA
+
+rectangle "Monitorear el cumplimiento operativo del\naeroclub (lazo MAPE-K)" {
+  usecase "CU-003.001\nDisparar una corrida\ndel lazo" as S1
+  usecase "CU-003.002\nMonitorear y\nanalizar el\ncumplimiento" as S2
+  usecase "CU-003.003\nPlanificar las\nacciones" as S3
+  usecase "CU-003.004\nEjecutar las\nacciones" as S4
+  usecase "CU-003.005\nConsultar el\ncumplimiento y\nautorizar una\nadvertencia" as S5
+  usecase "Observar las\ncertificaciones" as c3i1
+  usecase "Observar la\naeronavegabilidad" as c3i2
+  usecase "Observar la\nexperiencia reciente" as c3i3
+  usecase "Observar la tendencia\nde riesgo" as c3i4
+  usecase "Evaluar contra las\nreglas del Knowledge" as c3i5
+  usecase "Aislar los datos del\naeroclub" as c3i6
+  usecase "Redactar el plan con\nIA" as c3x1
+  usecase "Usar el plan sin IA" as c3x2
+  usecase "Bloquear o marcar las\nreservas afectadas" as c3x3
+  usecase "Escalar al gestor" as c3x4
+  usecase "Avisar la resolución" as c3x5
+  usecase "Autorizar una\nadvertencia con motivo" as c3x6
+  usecase "Pedir una corrida\nmanual" as c3x7
+  usecase "Proyectar las horas\nhasta la inspección de\n100 h" as c3x8
+  usecase " " as J_S3_IA #transparent;line:transparent
+  note "Eventos disparadores:\ncerrar un vuelo, registrar mantenimiento,\ncambiar la aeronave, cambiar una\ncertificación, crear una reserva y\ngenerar una evaluación pre-vuelo de riesgo alto" as NT
+}
+
+S1 -[hidden]left-> S2
+S2 -[hidden]left-> S3
+S3 -[hidden]left-> S4
+S4 -[hidden]left-> S5
+c3i1 -[hidden]left-> c3i2
+c3i2 -[hidden]left-> c3i3
+c3i3 -[hidden]left-> c3i4
+c3i4 -[hidden]left-> c3i5
+c3i5 -[hidden]left-> c3i6
+c3i6 -[hidden]left-> c3x8
+c3x1 -[hidden]left-> c3x2
+c3x3 -[hidden]left-> c3x4
+c3x4 -[hidden]left-> c3x5
+
+Planificador -[hidden]right-> Piloto
+Gestor -[hidden]right-> Instructor
+Gestor -down--|> Piloto
+Instructor -down--|> Piloto
+Planificador -- S1
+Gestor -- S1
+Piloto -- S5
+
+S2 ..> c3i1 : <<include>>
+S2 ..> c3i2 : <<include>>
+S2 ..> c3i3 : <<include>>
+S2 ..> c3i4 : <<include>>
+S2 ..> c3i5 : <<include>>
+S2 ..> c3i6 : <<include>>
+c3x1 .up.> S3 : <<extend>>
+c3x2 .up.> S3 : <<extend>>
+c3x3 .up.> S4 : <<extend>>
+c3x4 .up.> S4 : <<extend>>
+c3x5 .up.> S4 : <<extend>>
+c3x6 .up.> S5 : <<extend>>
+c3x7 .up.> S1 : <<extend>>
+c3x8 .up.> S2 : <<extend>>
+
+S3 -- J_S3_IA
+J_S3_IA -- IA
+NT .left. S1
+
+legend right
+include = validador u obligatorio reutilizado · extend = menú, flujo u opcional
+endlegend
+@enduml
