@@ -1,0 +1,73 @@
+@startuml cu-004-er
+!include estilo.iuml
+top to bottom direction
+skinparam ranksep 15
+skinparam wrapWidth 120
+' CU-004 — modelo entidad-relación conceptual (notación IE).
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, sólo las relevantes a CU-004).
+' El documento subido y la extracción de Gemini no son tablas: el archivo se procesa en memoria y no se guarda,
+' y la extracción sólo llega a certifications cuando el piloto la confirma (estereotipo "no persistido").
+' Guardar una certificación nueva, o con otro vencimiento o estado, pide una corrida del monitoreo (CU-003) del aeroclub:
+' monitoring_runs se dibuja solo con las columnas que ese pedido escribe; no tiene clave foránea hacia certifications.
+' certifications es una sola tabla con herencia por la columna type (License, Qualification, MedicalCertificate).
+
+hide circle
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  email : string
+  role : string
+  first_name : string
+  last_name : string
+}
+
+entity "certifications" as certifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  type : string
+  certification_type : string
+  issued_at : date
+  expires_at : date
+  status : string
+  last_threshold_notified : string
+}
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "monitoring_runs" as monitoring_runs {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  trigger : string
+  trigger_ref : string
+  status : string
+}
+
+note right of certifications
+  type distingue el subtipo:
+  License (una por piloto),
+  MedicalCertificate (una por piloto) y
+  Qualification (varias por piloto).
+end note
+
+entity "Documento subido\n<<no persistido>>" as documento {
+  foto (JPG o PNG) o PDF, hasta 10 MB
+  (se procesa en memoria)
+}
+
+entity "Extracción de Gemini\n<<no persistido>>" as extraccion {
+  certification_type, issued_at, expires_at
+  (se muestra en el formulario y sólo se guarda
+  si el piloto confirma)
+}
+
+aerial_entities ||--o{ users
+aerial_entities ||--o{ monitoring_runs
+users ||--o{ certifications
+documento ||..o| extraccion
+extraccion |o..o| certifications
+@enduml

@@ -1,0 +1,64 @@
+@startuml cu-004-actividad
+!include estilo.iuml
+skinparam wrapWidth 300
+skinparam ConditionEndStyle hline
+skinparam ActivityPadding 3
+skinparam ActivityFontSize 12
+' CU-004 — Registrar una certificación leyendo su documento: carga, extracción con IA, confirmación y guardado.
+' Camino básico y alternativos de las fichas CU-004.001 a CU-004.004; secuencias cu-004-secuencia-1 a -3.
+
+|Piloto|
+start
+:Elige el subtipo (Licencia, Habilitación
+o Certificado médico), sube una foto
+o un PDF y presiona «Analizar documento»;
+|Sistema|
+if (¿Subtipo admitido, hasta 10 MB\ny JPG, PNG o PDF?) then (no)
+  :Rechaza con el motivo, sin consultar
+  a la IA: la pantalla abre el paso 3
+  con los campos vacíos;
+else (sí)
+  :Envía el documento al modelo de IA
+  (en memoria, sin almacenarlo);
+  if (¿Resultado interpretable?) then (sí)
+    |Gemini (modelo de IA)|
+    :Devuelve el tipo y las fechas
+    de emisión y de vencimiento;
+    |Sistema|
+    :Deja vacío todo campo que no
+    leyó con certeza;
+  else (no)
+    :Entrega los campos vacíos e indica
+    que el modelo no estuvo disponible;
+  endif
+  :Busca la certificación existente
+  del mismo subtipo;
+endif
+:Presenta «Confirmá los datos»;
+|Piloto|
+:Revisa, corrige o completa
+los campos a mano;
+if (¿«Confirmar y guardar»?) then (no)
+  :Presiona «Cancelar»: vuelve a
+  «Certificaciones» sin guardar;
+  stop
+else (sí)
+endif
+|Sistema|
+if (¿Puede guardar y cumple\nlas validaciones del subtipo?) then (no)
+  :Informa «No pudimos guardar
+  la certificación» y conserva los datos;
+  stop
+else (sí)
+endif
+:Crea la certificación, o actualiza
+la existente, o agrega una habilitación;
+if (¿Es nueva o cambió el\nvencimiento o el estado?) then (sí)
+  :Pide al monitoreo una corrida
+  del aeroclub (10 s de espera);
+else (no)
+endif
+:Informa «Certificación guardada»
+y actualiza «Certificaciones»;
+stop
+@enduml

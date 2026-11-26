@@ -1,0 +1,72 @@
+@startsalt boceto-02-evaluacion-pre-vuelo-respaldo
+!include estilo.iuml
+' Boceto 2 (CU-001): informe de la pantalla «Evaluación pre-vuelo» con el algoritmo de respaldo y un bloqueo del monitoreo.
+' Fuente de los rótulos: frontend/src/components/preflight/PreFlightReport.tsx y OperationalDetails.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <&arrow-left> Volver al historial
+  {+
+    <size:11>LV-XYZ — Piper PA-28
+    <size:16><b>SAAR → SAZR
+    <size:11>16 dic 2026, 15:30 · Piloto evaluado: Piloto A
+  }
+  {+
+    <&warning> Evaluación generada con algoritmo de respaldo —
+    Gemini AI no estuvo disponible. Verifique
+    manualmente.
+  }
+  {
+    {+
+      <size:10>Riesgo General
+      <b><&shield> ALTO
+    } | {+
+      <size:10>Estado Técnico
+      <b>APTO
+    }
+    {+
+      <size:10>Cert. Médico
+      <b>VENCIDO
+    } | {+
+      <size:10>Meteorología
+      <b>ADVERSO
+    }
+  }
+  {
+    {+
+      <size:10>Combustible
+      <b>80 L
+    } | {+
+      <size:10>Autonomía
+      <b>3.5 hs
+    }
+    {+
+      <size:10>Cert. Médico
+      <b>VENCIDO
+    } | {+
+      <size:10>IA
+      <b>Algoritmo respaldo
+    }
+  }
+  {+
+    <b><&x> Recomendación: NO PROCEDER
+    <size:10><b>Factores Críticos
+    <&media-record> Certificado médico vencido
+    <size:10><b>Advertencias del monitoreo
+    {+
+      <&warning> <b>Crítica
+      Certificación por vencer o vencida
+    }
+  }
+  [ <color:#999999>Proceder con el vuelo ]
+  [ Nueva Evaluación ]
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 02 · CU-001
+  Actor: Piloto
+  Pantalla: Evaluación pre-vuelo
+  Estados: alternativo
+  Escala: teléfono
+end legend
+@endsalt

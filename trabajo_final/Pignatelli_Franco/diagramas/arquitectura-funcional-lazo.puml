@@ -1,0 +1,63 @@
+@startuml arquitectura-funcional-lazo
+!include estilo.iuml
+' Vista funcional (2 de 2): subestilo de Invocacion Implicita y lazo MAPE-K del proceso job.
+' Los modelos anuncian eventos; el administrador (Observable + observers.rb) los entrega a los observers; el
+' MonitoringTrigger encola la corrida en Redis y el job ejecuta el ciclo Monitor-Analizador-Planificador-Ejecutor
+' sobre el Knowledge. Sin hosts, puertos ni secretos. Fuente: observers.rb, schedule.yml, app/services/monitoring.
+top to bottom direction
+skinparam wrapWidth 300
+skinparam nodesep 60
+skinparam ranksep 60
+skinparam linetype polyline
+skinparam defaultFontSize 15
+skinparam ArrowFontSize 13
+skinparam RectangleBorderThickness 1.5
+skinparam DatabaseBorderThickness 1.5
+
+rectangle "**Modelos ActiveRecord**\nanuncian los 6 eventos del dominio" as MOD
+
+rectangle "**Lógica de negocio · proceso web**\nInvocación implícita" as WEB {
+  rectangle "Administrador de eventos\nObservable + observers.rb\nentrega a todos los observers" as ADM
+  rectangle "Notificador\npunto de extensión" as NOT
+  rectangle "Alertador\nDeVencimientos" as ALE
+  rectangle "Monitoring\nTrigger" as MT
+}
+
+database "**Almacén auxiliar**\nRedis 7\ncola y debounce" as REDIS
+
+rectangle "**Lógica de negocio · proceso job**\nSidekiq 7.3 · sidekiq-cron" as JOB {
+  rectangle "Monitor\nfuentes" as MON
+  rectangle "Analizador\nreglas" as ANA
+  rectangle "Aerodrome\nImportJob" as IMP
+  rectangle "Knowledge\nreglas y estado\nen PostgreSQL" as KNO
+  rectangle "Ejecutor\nefectores" as EJE
+  rectangle "Planificador\nplan de acción" as PLA
+}
+
+rectangle "OurAirports\ndataset de aeródromos" as OUR
+rectangle "Gemini API" as GEM
+
+NOT -[hidden]right- ALE
+ALE -[hidden]right- MT
+ANA -[hidden]right- IMP
+
+MOD -down-> ADM : **evento :certification_changed**
+ADM -down-> NOT : **update**
+ADM -down-> ALE : **update**
+ADM -down-> MT : **update**
+MT -right-> REDIS : **protocolo Redis**\nRunJob.perform_in(10 s)
+REDIS -down-> MON : **protocolo Redis**\ncron 06:00 · toma RunJob
+
+MON -right-> ANA : observaciones
+ANA -down-> PLA : hallazgos
+PLA -left-> EJE : plan de acción
+EJE -up-> MON : próxima corrida
+
+MON -down- KNO
+ANA -down- KNO
+KNO -down- EJE
+KNO -down- PLA
+
+PLA -right-> GEM : **HTTPS · REST**\nPOST generateContent
+IMP -right-> OUR : **HTTPS · CSV**\nimportación mensual
+@enduml

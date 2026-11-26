@@ -1,0 +1,90 @@
+@startuml cu-002-casos-de-uso
+!include estilo.iuml
+left to right direction
+skinparam defaultFontSize 14
+skinparam nodesep 22
+skinparam ranksep 55
+skinparam linetype polyline
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam actor {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #333333
+
+actor "Piloto" as Piloto
+actor "Instructor" as Instructor
+actor "Gestor\n(administrador o gestor)" as Gestor
+actor "Modelo de IA\n(Gemini)" as IA
+actor "aviationweather.gov" as Wx
+actor "Open-Meteo" as OM
+actor "OpenAIP" as OA
+
+rectangle "Planificar Navegación con IA" {
+  usecase "CU-002.001\nDefinir los\nparámetros y\nsolicitar el plan" as S1
+  usecase "CU-002.002\nSeleccionar\ncandidatos y obtener\nsu clima" as S2
+  usecase "CU-002.003\nSugerir rutas con IA\ny respaldo" as S3
+  usecase "CU-002.004\nConfirmar la ruta y\ncrear la reserva" as S4
+  usecase "Autorizar la creación\ndel plan" as c2i1
+  usecase "Validar los datos del\npedido" as c2i2
+  usecase "Resolver el origen y\nel destino" as c2i3
+  usecase "Filtrar los aeródromos\npor el radio de\nautonomía" as c2i4
+  usecase "Obtener el METAR/TAF\nde cada candidato" as c2i5
+  usecase "Gestionar un destino\ntentativo fuera de\nradio" as c2x1
+  usecase "Usar waypoints\npersonalizados" as c2x2
+  usecase "Editar los tramos de\nla ruta" as c2x3
+  usecase "Indicar la autonomía\npor combustible" as c2x4
+  usecase "Superponer el espacio\naéreo" as c2x5
+  usecase "Usar el ranking de\nrespaldo" as c2x6
+  usecase " " as J_S2_Wx #transparent;line:transparent
+  usecase " " as J_S2_OM #transparent;line:transparent
+  usecase " " as J_S3_IA #transparent;line:transparent
+  usecase " " as J_S3_OA #transparent;line:transparent
+}
+
+S1 -[hidden]left-> S2
+S2 -[hidden]left-> S3
+S3 -[hidden]left-> S4
+c2i1 -[hidden]left-> c2i2
+c2i2 -[hidden]left-> c2x2
+c2x2 -[hidden]left-> c2x4
+c2i3 -[hidden]left-> c2i4
+c2i4 -[hidden]left-> c2i5
+c2i5 -[hidden]left-> c2x1
+c2x5 -[hidden]left-> c2x6
+
+Instructor -[hidden]right-> Gestor
+Instructor -down--|> Piloto
+Gestor -down--|> Piloto
+Piloto -- S1
+Piloto -- S4
+
+S1 ..> c2i1 : <<include>>
+S1 ..> c2i2 : <<include>>
+S2 ..> c2i3 : <<include>>
+S2 ..> c2i4 : <<include>>
+S2 ..> c2i5 : <<include>>
+c2x1 .up.> S2 : <<extend>>
+c2x2 .up.> S1 : <<extend>>
+c2x3 .up.> S4 : <<extend>>
+c2x4 .up.> S1 : <<extend>>
+c2x5 .up.> S3 : <<extend>>
+c2x6 .up.> S3 : <<extend>>
+
+S2 -- J_S2_Wx
+J_S2_Wx -- Wx
+S2 -- J_S2_OM
+J_S2_OM -- OM
+S3 -- J_S3_IA
+J_S3_IA -- IA
+S3 -- J_S3_OA
+J_S3_OA -- OA
+
+legend right
+include = validador u obligatorio reutilizado · extend = menú, flujo u opcional
+endlegend
+@enduml

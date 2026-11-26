@@ -1,0 +1,375 @@
+@startuml der-solucion
+!include estilo.iuml
+' DER de la solución, figura 1 de 3: aeroclub, personas, certificaciones, notificaciones, flota y bitácora (sección 10.6.4).
+' Fuente de verdad: backend/db/schema.rb. Sólo se dibujan clave primaria, claves foráneas y las columnas
+' más relevantes; el diccionario de datos lista todas.
+' Línea punteada: vínculo lógico sin clave foránea (notifications.reference_type / reference_id).
+' reservations se repite como referencia (solo su clave): sus columnas están en la figura 2.
+
+hide circle
+hide empty members
+skinparam linetype ortho
+skinparam wrapWidth 200
+skinparam EntityFontSize 12
+skinparam ClassAttributeFontSize 11
+skinparam nodesep 40
+skinparam ranksep 50
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+  --
+  name : string
+  cuit : string <<único>>
+  entity_type : string
+  home_aerodrome_code : string
+  active : boolean
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  email : string <<único>>
+  password_digest : string
+  role : string
+  first_name : string
+  last_name : string
+}
+
+entity "certifications" as certifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  type : string
+  certification_type : string
+  issued_at : date
+  expires_at : date
+  status : string
+  last_threshold_notified : string
+}
+
+entity "notifications" as notifications {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  notification_type : string
+  severity : string
+  title : string
+  read : boolean
+  reference_type : string
+  reference_id : integer
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  registration : string <<único>>
+  model : string
+  category : string
+  status : string
+  engine_hours : decimal
+  ca_expires_on : date
+  tbo_hours : decimal
+  last_inspection_at : date
+  next_inspection_at : date
+}
+
+entity "consumable_loads" as consumable_loads {
+  * id : bigint <<PK>>
+  --
+  * aircraft_id : bigint <<FK>>
+  * user_id : bigint <<FK>>
+  fuel_liters : decimal
+  oil_liters : decimal
+  loaded_at : datetime
+}
+
+entity "maintenance_records" as maintenance_records {
+  * id : bigint <<PK>>
+  --
+  * aircraft_id : bigint <<FK>>
+  record_type : string
+  performed_at : date
+  next_due_at : date
+}
+
+entity "flight_log_entries" as flight_log_entries {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * reservation_id : bigint <<FK, único>>
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * closed_by_id : bigint <<FK>>
+  flown_on : date
+  hours : decimal
+  day_takeoffs : integer
+  night_landings : integer
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+}
+
+aerial_entities ||--o{ users
+aerial_entities ||--o{ aircraft
+aerial_entities ||--o{ notifications
+aerial_entities ||--o{ flight_log_entries
+users ||--o{ flight_log_entries
+aircraft ||--o{ flight_log_entries
+reservations ||--o| flight_log_entries
+users ||--o{ certifications
+users ||--o{ notifications
+users ||--o{ consumable_loads
+aircraft ||--o{ consumable_loads
+aircraft ||--o{ maintenance_records
+certifications |o..o{ notifications
+@enduml
+
+@startuml der-solucion-operacion
+!include estilo.iuml
+' DER de la solución, figura 2 de 3: reservas, evaluaciones pre-vuelo, planes de navegación y puntos (sección 10.6.4).
+' users, aircraft y aerial_entities se repiten como referencia (sólo su clave); sus columnas están en la figura 1.
+' Línea punteada: vínculo lógico sin clave foránea (route_suggestions.reservation_id, columna única).
+' Sin tabla de espacio aéreo: OpenAIP se consulta en vivo. Los códigos OACI de origen y destino se guardan
+' como texto, sin clave foránea hacia aerodromes.
+
+hide circle
+hide empty members
+skinparam linetype ortho
+skinparam wrapWidth 200
+skinparam EntityFontSize 12
+skinparam ClassAttributeFontSize 11
+skinparam nodesep 40
+skinparam ranksep 50
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  origin_custom_waypoint_id : bigint <<FK>>
+  destination_custom_waypoint_id : bigint <<FK>>
+  origin_code : string
+  destination_code : string
+  scheduled_at : datetime
+  status : string
+  legs : jsonb
+}
+
+entity "pre_flight_evaluations" as pre_flight_evaluations {
+  * id : bigint <<PK>>
+  --
+  * reservation_id : bigint <<FK>>
+  * user_id : bigint <<FK>>
+  risk_level : string
+  weather_status : string
+  flight_recommended : boolean
+  data_snapshot : jsonb
+}
+
+entity "navigation_plans" as navigation_plans {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  origin_custom_waypoint_id : bigint <<FK>>
+  destination_hint_custom_waypoint_id : bigint <<FK>>
+  origin_code : string
+  destination_hint_code : string
+  autonomy_hours : decimal
+  status : string
+  data_snapshot : jsonb
+}
+
+entity "route_suggestions" as route_suggestions {
+  * id : bigint <<PK>>
+  --
+  * navigation_plan_id : bigint <<FK>>
+  aerodrome_id : bigint <<FK>>
+  custom_waypoint_id : bigint <<FK>>
+  reservation_id : bigint <<único>>
+  aerodrome_code : string
+  rank : integer
+  viable : boolean
+  weather_snapshot : jsonb
+}
+
+entity "aerodromes" as aerodromes {
+  * id : bigint <<PK>>
+  --
+  code_oaci : string <<único>>
+  name : string
+  latitude : decimal
+  longitude : decimal
+}
+
+entity "custom_waypoints" as custom_waypoints {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  name : string
+  latitude : decimal
+  longitude : decimal
+  scope : string
+  acts_as_aerodrome : boolean
+}
+
+users ||--o{ reservations
+users ||--o{ navigation_plans
+users ||--o{ custom_waypoints
+users ||--o{ pre_flight_evaluations
+aircraft ||--o{ reservations
+aircraft ||--o{ navigation_plans
+aerial_entities ||--o{ reservations
+aerial_entities ||--o{ navigation_plans
+aerial_entities ||--o{ custom_waypoints
+reservations ||--o{ pre_flight_evaluations
+navigation_plans ||--o{ route_suggestions
+aerodromes |o--o{ route_suggestions
+custom_waypoints |o--o{ route_suggestions
+custom_waypoints |o--o{ reservations
+custom_waypoints |o--o{ navigation_plans
+reservations |o..o| route_suggestions
+@enduml
+
+@startuml der-solucion-monitoreo
+!include estilo.iuml
+' DER de la solución, figura 3 de 3: el lazo de monitoreo (sección 10.6.4).
+' users, aircraft, reservations y aerial_entities se repiten como referencia (solo su clave); sus columnas están en las
+' figuras 1 y 2. symptoms se vincula con su sujeto por subject_type / subject_id, sin clave foránea (línea punteada,
+' hacia certifications; el sujeto también puede ser un usuario o una aeronave).
+' Claves únicas parciales: index_symptoms_unique_open_fingerprint e index_reservation_holds_unique_live_per_symptom.
+
+hide circle
+hide empty members
+skinparam linetype ortho
+skinparam wrapWidth 200
+skinparam EntityFontSize 12
+skinparam ClassAttributeFontSize 11
+skinparam nodesep 40
+skinparam ranksep 50
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+}
+
+entity "certifications" as certifications {
+  * id : bigint <<PK>>
+}
+
+entity "monitoring_rules" as monitoring_rules {
+  * id : bigint <<PK>>
+  --
+  aerial_entity_id : bigint <<FK>>
+  rule_key : string
+  source : string
+  reference : text
+  verified : boolean
+  enabled : boolean
+  version : integer
+}
+
+entity "monitoring_runs" as monitoring_runs {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  trigger : string
+  status : string
+  dry_run : boolean
+  started_at : datetime
+  finished_at : datetime
+}
+
+entity "symptoms" as symptoms {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  monitoring_run_id : bigint <<FK>>
+  user_id : bigint <<FK>>
+  aircraft_id : bigint <<FK>>
+  rule_key : string
+  subject_type : string
+  subject_id : bigint
+  severity : string
+  effect : string
+  status : string
+}
+
+entity "action_plans" as action_plans {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * monitoring_run_id : bigint <<FK>>
+  summary : text
+  ia_available : boolean
+  generated_at : datetime
+}
+
+entity "plan_actions" as plan_actions {
+  * id : bigint <<PK>>
+  --
+  * action_plan_id : bigint <<FK>>
+  * symptom_id : bigint <<FK>>
+  action_type : string
+  priority : integer
+  status : string
+}
+
+entity "reservation_holds" as reservation_holds {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  * reservation_id : bigint <<FK>>
+  * symptom_id : bigint <<FK>>
+  overridden_by_id : bigint <<FK>>
+  kind : string
+  status : string
+  reason : text
+}
+
+aerial_entities ||--o{ monitoring_runs
+aerial_entities ||--o{ symptoms
+aerial_entities ||--o{ action_plans
+aerial_entities ||--o{ reservation_holds
+aerial_entities |o--o{ monitoring_rules
+monitoring_runs |o--o{ symptoms
+monitoring_runs ||--o{ action_plans
+action_plans ||--o{ plan_actions
+symptoms ||--o{ plan_actions
+symptoms ||--o{ reservation_holds
+reservations ||--o{ reservation_holds
+users |o--o{ reservation_holds
+users |o--o{ symptoms
+aircraft |o--o{ symptoms
+certifications |o..o{ symptoms
+@enduml

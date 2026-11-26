@@ -1,0 +1,93 @@
+@startuml patron-observer
+!include estilo.iuml
+left to right direction
+skinparam linetype polyline
+skinparam wrapWidth 220
+skinparam nodesep 6
+skinparam ranksep 70
+skinparam ArrowFontSize 11
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+' Patrón Observer — notificación de eventos (sección "Documentación de la aplicación de Patrones de Diseño").
+' Fuente de verdad: backend/app/models/concerns/observable.rb (sujeto), los seis modelos que lo incluyen y anuncian su
+' evento, backend/config/initializers/observers.rb (registro, en to_prepare) y backend/app/services/observers/
+' (alertador_de_vencimientos.rb, monitoring_trigger.rb y notificador.rb). Coincide con iconix/where.json (Observer).
+' Sin detach. Notificador solo escribe en el log. Alertador y Notificador, solo en 2 sujetos; MonitoringTrigger, en los 6.
+' Alertador solo actúa con :high_risk_evaluation; con :certification_changed no hace nada. MonitoringTrigger encola Monitoring::RunJob.
+
+class "PreFlightEvaluation" as PreFlightEvaluation <<SujetoConcreto>> {
+  emite :high_risk_evaluation
+}
+class "Certification" as Certification <<SujetoConcreto>> {
+  emite :certification_changed
+}
+class "Reservation" as Reservation <<SujetoConcreto>> {
+  emite :reservation_created
+}
+class "FlightLogEntry" as FlightLogEntry <<SujetoConcreto>> {
+  emite :flight_closed
+}
+class "MaintenanceRecord" as MaintenanceRecord <<SujetoConcreto>> {
+  emite :maintenance_recorded
+}
+class "Aircraft" as Aircraft <<SujetoConcreto>> {
+  emite :aircraft_changed
+}
+
+interface "Observable" as Observable <<Sujeto>> {
+  - _observers
+  + add_observer(observer)
+  + notify_observers(event, data)
+  --
+  <i>Sin detach: un observer</i>
+  <i>registrado no se retira.</i>
+}
+
+interface "update(event, subject, data)" as Observador <<Observador>>
+
+class "Observers::AlertadorDeVencimientos" as Alertador <<ObservadorConcreto>> {
+  + update(event, subject, data)
+}
+class "Observers::Notificador" as Notificador <<ObservadorConcreto>> {
+  + update(event, subject, data)
+}
+class "Observers::MonitoringTrigger" as MonitoringTrigger <<ObservadorConcreto>> {
+  + update(event, subject, data)
+}
+
+PreFlightEvaluation ..|> Observable
+Certification ..|> Observable
+Reservation ..|> Observable
+FlightLogEntry ..|> Observable
+MaintenanceRecord ..|> Observable
+Aircraft ..|> Observable
+
+Observable --> Observador : notifica
+
+Observador <|.. Alertador
+Observador <|.. Notificador
+Observador <|.. MonitoringTrigger
+
+note right of Alertador
+  Registrado en PreFlightEvaluation
+  y Certification. Actúa solo con
+  :high_risk_evaluation (crea la
+  notificación del titular); con
+  :certification_changed no hace
+  nada.
+end note
+
+note right of Notificador
+  Registrado en PreFlightEvaluation
+  y Certification. Solo escribe
+  en el log: punto de extensión.
+end note
+
+note right of MonitoringTrigger
+  Registrado en los seis sujetos.
+  Solo encola Monitoring::RunJob
+  (corrida del lazo, con debounce
+  de 10 s por aeroclub).
+end note
+@enduml

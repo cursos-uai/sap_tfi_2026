@@ -1,0 +1,51 @@
+@startsalt boceto-09-detalle-del-sintoma
+!include estilo.iuml
+' Boceto 9 (CU-003): pantalla «Detalle del síntoma» con la regla y la cita, el plan y las reservas afectadas.
+' Fuente de los rótulos: frontend/src/pages/SymptomDetail.tsx y constants/monitoringRules.ts.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <&arrow-left> Monitoreo
+  <size:18><b>Certificación por vencer o vencida
+  <&ban> Bloqueo | Abierto
+  <size:11>Piloto A
+  {+
+    <b>Regla y cita
+    <size:11>Cita normativa | (texto de la cita de la regla)
+    <size:11>Fuente | Certificaciones
+    <size:11>Severidad | Crítica
+    <size:10>La regla del monitoreo decide el efecto sobre
+    <size:10>las reservas.
+  }
+  {+
+    <b>Plan sugerido
+    <size:10>Redactado sin IA (plan determinista)
+    <size:11>Renovar el certificado médico antes de volver a
+    <size:11>volar.
+    <size:10>El plan redacta y prioriza; no decide el bloqueo.
+  }
+  {+
+    <b>Fechas
+    <size:11>Detectado por primera vez | 14 dic 2026, 08:00
+    <size:11>Última detección | 15 dic 2026, 08:00
+    <size:11>Resuelto | —
+  }
+  <b>Reservas afectadas
+  <size:11>Un bloqueo no se autoriza a mano: se libera solo
+  <size:11>cuando la próxima corrida del monitoreo
+  <size:11>comprueba que se resolvió.
+  {+
+    <b>16 dic 2026, 15:30
+    <size:11>LV-XYZ · Piloto A
+    <&ban> Bloqueo | Vigente
+  }
+  {+ Inicio | Reservas | Vuelo | <b>Monitoreo | Más }
+}
+legend
+  Boceto 09 · CU-003
+  Actor: Gestor
+  Pantalla: Detalle del síntoma
+  Estados: principal, mensaje
+  Escala: teléfono
+end legend
+@endsalt

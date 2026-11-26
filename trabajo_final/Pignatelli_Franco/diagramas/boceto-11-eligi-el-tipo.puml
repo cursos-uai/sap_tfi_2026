@@ -1,0 +1,30 @@
+@startsalt boceto-11-eligi-el-tipo
+!include estilo.iuml
+' Boceto 11 (CU-004): paso 1 «Elegí el tipo» del asistente «Cargar certificación».
+' Fuente de los rótulos: frontend/src/pages/CertificationScan.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b><&badge> Cargar certificación
+  <size:10>Paso 1 de 3
+  <size:16><b>Elegí el tipo
+  {+
+    <back:#CCCCCC><b>Licencia | . | . | . | <&circle-check>
+  }
+  {+
+    <b>Habilitación
+  }
+  {+
+    <b>Certificado médico
+  }
+  [ Continuar ]
+  {+ Inicio | Reservas | Vuelo | Monitoreo | <b>Más }
+}
+legend
+  Boceto 11 · CU-004
+  Actor: Piloto
+  Pantalla: Elegí el tipo
+  Estados: principal
+  Escala: teléfono
+end legend
+@endsalt

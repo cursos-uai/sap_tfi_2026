@@ -1,0 +1,107 @@
+@startuml cu-004-secuencia-1
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-004: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-004), parte 1 de 2: escaneo del documento con IA.
+actor "Piloto" as piloto
+boundary "Elegí el\ntipo" as tipo
+boundary "Subí el\ndocumento" as doc
+control "CertificationScans\nController" as ctrl
+control "CertificationScan::\nIaProcessor" as ip
+control "IaService" as ia
+participant "Gemini\n(modelo de IA)" as gem #FFFFFF
+control "CertificationScan::\nDataCollector" as dc
+
+piloto -> tipo : Elige el tipo de\ncertificación
+piloto -> doc : Sube el documento
+activate doc
+  doc -> ctrl : create(tipo, archivo)
+  activate ctrl
+    ctrl -> ctrl : authorize create?
+    alt subtipo no admitido
+      ctrl --> doc : 422 subtipo no admitido
+    else sin archivo
+      ctrl --> doc : 422 falta el archivo
+    else más de 10 MB
+      ctrl --> doc : 422 supera los 10 MB
+    else formato no permitido
+      ctrl --> doc : 422 formato no admitido
+    else documento válido
+      ctrl -> ip : process()
+      activate ip
+        ip -> ia : generate(prompt y documento)
+        activate ia
+          ia -> gem : generateContent
+          gem --> ia : campos en JSON
+        ia --> ip : {success, text}
+        deactivate ia
+        opt la IA no devolvió datos
+          ip -> ip : extracción vacía
+        end
+      ip --> ctrl : campos extraídos
+      deactivate ip
+      ctrl -> dc : collect()
+      dc --> ctrl : certificación existente
+      ctrl --> doc : 200 campos extraídos
+    end
+    opt sin datos extraídos
+      doc -> doc : Muestra «No pudimos\nleer el documento»
+    end
+  deactivate ctrl
+  note over doc : Los datos pasan a «Confirmá los datos» (parte 2)
+deactivate doc
+@enduml
+@startuml cu-004-secuencia-2
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-004: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-004), parte 2 de 2: confirmación, guardado y aviso a los observadores.
+actor "Piloto" as piloto
+boundary "Confirmá los\ndatos" as pantalla
+control "Certifications\nController" as ctrl
+entity "Certification" as cert
+control "Observers::\nAlertadorDe\nVencimientos" as al
+control "Observers::\nNotificador" as nt
+control "Observers::\nMonitoring\nTrigger" as mt
+
+note over pantalla : Continúa de la parte 1
+piloto -> pantalla : Revisa y presiona\n«Guardar»
+activate pantalla
+  alt no hay certificación del tipo
+    pantalla -> ctrl : create(tipo y datos)
+    activate ctrl
+      ctrl -> ctrl : authorize create?
+      ctrl -> cert : save!()
+      activate cert
+        cert -> cert : emit_certification_changed()\nafter_commit
+        cert -> cert : notify_observers(\n:certification_changed)
+        loop por cada observador
+          cert -> al : update(event)\nsin acción para este evento
+          cert -> nt : update(event)\nregistra en el log
+          cert -> mt : update(event)\nencola RunJob\n(demora de 10 s)
+        end
+      deactivate cert
+      ctrl --> pantalla : 201 certificación guardada
+    deactivate ctrl
+  else ya existe la certificación
+    pantalla -> ctrl : update(id y datos)
+    activate ctrl
+      ctrl -> ctrl : authorize update?
+      ctrl -> cert : update!(datos)
+      note over cert : Si cambió el vencimiento o el estado,\navisa a los mismos observadores
+      ctrl --> pantalla : 200 certificación actualizada
+    deactivate ctrl
+  end
+  pantalla -> pantalla : Toast «Certificación\nguardada»
+deactivate pantalla
+@enduml

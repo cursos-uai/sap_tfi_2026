@@ -1,0 +1,71 @@
+@startuml cu-001-actividad
+!include estilo.iuml
+skinparam wrapWidth 300
+skinparam ConditionEndStyle hline
+skinparam ActivityPadding 3
+skinparam ActivityFontSize 12
+' CU-001 — Evaluar el vuelo antes de despegar: de la selección de la reserva al informe y al aviso de riesgo alto.
+' Camino básico y alternativos de las fichas CU-001.001 a CU-001.004; secuencias cu-001-secuencia-1 y -2.
+
+|Piloto|
+start
+:Abre «Evaluación pre-vuelo»;
+|Sistema|
+:Presenta las reservas próximas
+a las que tiene acceso;
+if (¿Hay reservas?) then (no)
+  :Muestra «No hay reservas»;
+  stop
+else (sí)
+endif
+|Piloto|
+:Elige una reserva y presiona
+«Evaluar Reserva Seleccionada»;
+|Sistema|
+if (¿Puede evaluar la reserva?) then (no)
+  :Rechaza y muestra «Error al
+  generar evaluación»;
+  stop
+else (sí)
+endif
+:Reúne la reserva, la aeronave, el
+historial, las certificaciones del
+piloto y los bloqueos del monitoreo;
+|aviationweather.gov|
+:Entrega el METAR y el TAF
+del origen y el METAR
+del destino;
+|Sistema|
+:Marca «no disponible» lo que
+falte y envía los datos al modelo;
+if (¿Resultado interpretable?) then (sí)
+  |Gemini (modelo de IA)|
+  :Devuelve riesgo,
+  recomendación y
+  factores;
+else (no)
+  |Sistema|
+  :Evalúa con el algoritmo
+  de respaldo (sin IA);
+endif
+|Sistema|
+:Aplica las reglas fijas (sin METAR,
+sin licencia o certificado médico,
+bloqueo activo) y guarda la evaluación;
+if (¿Riesgo alto?) then (sí)
+  :Notifica «Riesgo ALTO»
+  al piloto;
+else (no)
+endif
+:Presenta el informe: «PROCEDER»
+o «NO PROCEDER»;
+|Piloto|
+if (¿Recomendado?) then (sí)
+  :«Proceder con
+  el vuelo»;
+else (no)
+  :Solo «Nueva
+  Evaluación»;
+endif
+stop
+@enduml

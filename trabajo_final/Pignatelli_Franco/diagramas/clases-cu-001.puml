@@ -1,0 +1,228 @@
+@startuml clases-cu-001
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 50
+skinparam ranksep 38
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-001 (evaluación pre-vuelo), parte 1: controlador, policies y servicios de recopilación y análisis
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Controllers y Policies" {
+  class "ReservationPolicy" as ReservationPolicy <<policy>> {
+    + index?(): Boolean
+    + show?(): Boolean
+    + cancel?(): Boolean
+    + complete?(): Boolean
+  }
+  class "PreFlightEvaluationsController" as Api__V1__PreFlightEvaluationsController <<controller>> {
+    + create(): void
+    + show(): void
+    + index(): void
+    + destroy(): void
+  }
+  class "PreFlightEvaluationPolicy" as PreFlightEvaluationPolicy <<policy>> {
+    + index?(): Boolean
+    + create?(): Boolean
+    + show?(): Boolean
+    + update?(): Boolean
+    + destroy?(): Boolean
+  }
+}
+package "Services" {
+  class "Preflight::DataCollector" as Preflight__DataCollector <<service>> {
+    + initialize(reservation: Reservation)
+    + collect(): Hash
+  }
+  class "Preflight::IaProcessor" as Preflight__IaProcessor <<service>> {
+    + initialize(data: Hash)
+    + process(): Hash
+    - parse_response(text: String, raw: Hash): Hash
+    - fallback_evaluation(): Hash
+    - apply_missing_metar_rule(parsed: Hash): Hash
+    - apply_active_hold_rule(parsed: Hash,
+    {method}       keep_recommendation: Boolean = false): Hash
+  }
+  class "Preflight::ReportBuilder" as Preflight__ReportBuilder <<service>> {
+    + initialize(reservation: Reservation, ai_result: Hash,
+    {method}       raw_data: Hash)
+    + build(): PreFlightEvaluation
+  }
+  class "Certifications::Composite" as Certifications__Composite <<service>> {
+    + initialize(user: User)
+    + missing_required(): Array<String>
+    + valid_certification?(): Boolean
+    + expired?(): Boolean
+    + days_to_expiration(): Integer
+    + status(): String
+    + to_summary(): Hash
+  }
+  class "Aviation::WeatherService" as Aviation__WeatherService <<service>> {
+    + initialize()
+    + fetch_metar(oaci_code: String): Hash
+    + fetch_taf(oaci_code: String): Hash
+  }
+  class "Preflight::MonitoringFindings" as Preflight__MonitoringFindings <<service>> {
+    {static} + display_text(finding: Hash): String
+    {static} + active_block?(finding: Hash): Boolean
+    {static} + warnings(findings: Array<Hash>,
+    {method}       critical_factors: Array<String> = []): Array<Hash>
+    {static} + for_evaluation(evaluation: PreFlightEvaluation): Array<Hash>
+  }
+  class "IaService" as IaService <<service>> {
+    + initialize(timeout: Integer = 25)
+    + generate(prompt: String, response_schema: Hash = nil,
+    {method}       inline_data: Hash = nil, temperature: Float = 0.2,
+    {method}       max_output_tokens: Integer = 1024): Hash
+  }
+  class "ReservationGuard" as Monitoring__ReservationGuard <<service>> {
+    + initialize(reservation: Reservation)
+    + summary(): Hash
+  }
+}
+Api__V1__PreFlightEvaluationsController .left.> ReservationPolicy : autoriza
+Api__V1__PreFlightEvaluationsController .right.> PreFlightEvaluationPolicy : autoriza
+Api__V1__PreFlightEvaluationsController .down.> Preflight__DataCollector
+Api__V1__PreFlightEvaluationsController .down.> Preflight__IaProcessor
+Api__V1__PreFlightEvaluationsController .down.> Preflight__ReportBuilder
+Preflight__DataCollector .down.> Certifications__Composite
+Preflight__DataCollector .down.> Aviation__WeatherService
+Preflight__IaProcessor .down.> IaService
+Preflight__IaProcessor .down.> Preflight__MonitoringFindings
+Preflight__DataCollector .down.> Monitoring__ReservationGuard
+legend bottom
+Capas: Controllers y Policies → Services. Punteada = usa.
+endlegend
+@enduml
+@startuml clases-cu-001-datos
+!include estilo.iuml
+skinparam classAttributeIconSize 0
+hide circle
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 50
+skinparam ranksep 38
+skinparam ArrowFontSize 10
+' Diagrama de clases CU-001 (evaluación pre-vuelo), parte 2: informe, observadores y datos
+' Fuente de verdad: backend/app (clases, firmas y relaciones comprobadas por lint_evidencia.py sobre clases.json).
+package "Services" {
+  class "Preflight::ReportBuilder" as Preflight__ReportBuilder <<service>> {
+    + initialize(reservation: Reservation, ai_result: Hash,
+    {method}       raw_data: Hash)
+    + build(): PreFlightEvaluation
+  }
+  class "Observers::AlertadorDeVencimientos" as Observers__AlertadorDeVencimientos <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+    {static} + notify_high_risk(subject: PreFlightEvaluation): void
+    {static} + notify_certification_expiring(subject: Certification,
+    {method}       threshold: String): void
+  }
+  class "Observers::MonitoringTrigger" as Observers__MonitoringTrigger <<service>> {
+    {static} + update(event: Symbol, subject: Object,
+    {method}       data: Hash = {}): void
+  }
+  class "Certifications::Composite" as Certifications__Composite <<service>> {
+    + initialize(user: User)
+    + missing_required(): Array<String>
+    + valid_certification?(): Boolean
+    + expired?(): Boolean
+    + days_to_expiration(): Integer
+    + status(): String
+    + to_summary(): Hash
+  }
+}
+package "Models" {
+  class "Observable" as Observable <<model>> <<module>> {
+    {static} + add_observer(observer: Class): void
+    + notify_observers(event: Symbol, data: Hash = {}): void
+  }
+  class "Notification" as Notification <<model>> {
+    - notification_type: String
+    - title: String
+    - severity: String
+    --
+    {static} + unread(): Relation
+    {static} + for_user(user: User): Relation
+  }
+  class "PreFlightEvaluation" as PreFlightEvaluation <<model>> {
+    - risk_level: String
+    - technical_status: String
+    - weather_status: String
+    - flight_recommended: Boolean
+    - ia_available: Boolean
+    - critical_factors: JSONB
+    --
+    - notify_on_high_risk(): void
+  }
+  class "Reservation" as Reservation <<model>> {
+    - origin_code: String
+    - destination_code: String
+    - scheduled_at: Time
+    - status: String
+    --
+    + latest_evaluation(): PreFlightEvaluation
+    + cancel!(): Boolean
+    + complete!(): Boolean
+  }
+  class "Aircraft" as Aircraft <<model>> {
+    - registration: String
+    - status: String
+    - engine_hours: BigDecimal
+    - fuel_capacity: BigDecimal
+    --
+    {static} + active(): Relation
+    + to_s(): String
+  }
+  class "ConsumableLoad" as ConsumableLoad <<model>> {
+    - fuel_liters: BigDecimal
+    - oil_liters: BigDecimal
+    - loaded_at: Time
+    --
+    {static} + recent(): Relation
+  }
+  class "MaintenanceRecord" as MaintenanceRecord <<model>> {
+    - record_type: String
+    - performed_at: Date
+    - next_due_at: Date
+    --
+    {static} + recent(): Relation
+  }
+  class "Certification" as Certification <<model>> {
+    - certification_type: String
+    - expires_at: Date
+    - status: String
+    --
+    + valid_certification?(): Boolean
+    + expired?(): Boolean
+    + days_to_expiration(): Integer
+    {static} + expiring_soon(): Relation
+  }
+  class "License" as License <<model>> {
+    {static} TYPES: Array<String>
+  }
+  class "Qualification" as Qualification <<model>> {
+    {static} TYPES: Array<String>
+  }
+  class "MedicalCertificate" as MedicalCertificate <<model>> {
+    {static} TYPES: Array<String>
+  }
+}
+Preflight__ReportBuilder .down.> PreFlightEvaluation
+Observers__AlertadorDeVencimientos .down.> Notification
+Certifications__Composite .down.> Certification
+Aircraft "1" *-down- "0..*" ConsumableLoad
+Aircraft "1" *-down- "0..*" MaintenanceRecord
+Aircraft "1" *-left- "0..*" Reservation
+Reservation "1" *-left- "0..*" PreFlightEvaluation
+Certification <|-down- License
+Certification <|-down- Qualification
+Certification <|-down- MedicalCertificate
+PreFlightEvaluation .down.|> Observable : include
+Observable .down.> Observers__AlertadorDeVencimientos : notifica
+Observable .down.> Observers__MonitoringTrigger : notifica
+legend bottom
+Punteada = usa; rombo = has_many dependent: :destroy; triángulo = STI; punteada con triángulo = include.
+endlegend
+@enduml

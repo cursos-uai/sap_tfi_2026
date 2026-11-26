@@ -1,0 +1,66 @@
+@startuml cu-002-robustez
+!include estilo.iuml
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 90
+skinparam defaultFontSize 13
+skinparam defaultTextAlignment center
+skinparam BoundaryBackgroundColor #F5F5F5
+skinparam BoundaryBorderColor #333333
+skinparam ControlBackgroundColor #F5F5F5
+skinparam ControlBorderColor #333333
+skinparam EntityBackgroundColor #F5F5F5
+skinparam EntityBorderColor #333333
+skinparam ActorBackgroundColor #F5F5F5
+skinparam ActorBorderColor #333333
+' CU-002: generado por gen_robustez.py desde iconix/robustez.json (no editar a mano).
+
+actor "Piloto" as A1
+boundary "   Datos del vuelo   " as B1
+boundary "   aviationweather.gov   " as B2
+boundary "   Elegí una ruta   " as B3
+boundary "   Gemini (modelo   \n   de IA)   " as B4
+boundary "   Tramos y   \n   confirmación   " as B5
+control "   Definir los   \n   parámetros del vuelo   " as C1
+control "   Obtener el METAR y   \n   el TAF de cada   \n   candidato   " as C2
+control "   Sugerir rutas con IA   " as C3
+control "   Confirmar la ruta y   \n   crear la reserva   " as C4
+entity "   Plan de   \n   navegación   " as E1
+entity "   Aeródromo   " as E2
+entity "   Informe   \n   meteorológico   " as E3
+entity "   Ruta sugerida   " as E4
+entity "   Reserva   " as E5
+
+A1 -- B1
+A1 -- B3
+A1 -- B5
+B1 -- C1
+C1 -- E1
+C1 -- E2
+B2 -- C2
+C2 -- E2
+C2 -- E3
+B3 -- C3
+B4 -- C3
+C3 -- E4
+B5 -- C4
+C4 -- E4
+C4 -- E5
+
+' Orden de lectura de cada columna (enlaces ocultos, solo ubicacion)
+B1 -[hidden]right- B2
+B2 -[hidden]right- B3
+B3 -[hidden]right- B4
+B4 -[hidden]right- B5
+C1 -[hidden]right- C2
+C2 -[hidden]right- C3
+C3 -[hidden]right- C4
+E1 -[hidden]right- E2
+E2 -[hidden]right- E3
+E3 -[hidden]right- E4
+E4 -[hidden]right- E5
+
+legend right
+Actor, frontera (pantalla), control (verbo del camino básico) y entidad (concepto del dominio). Las líneas no indican orden.
+endlegend
+@enduml

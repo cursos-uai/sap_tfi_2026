@@ -1,0 +1,55 @@
+@startsalt boceto-06-tramos-y-confirmacion
+!include estilo.iuml
+' Boceto 6 (CU-002): paso 3 «Tramos y confirmación» con el aviso de la reserva creada.
+' Fuente de los rótulos: LegsStep.tsx, LegEditor.tsx y NavigationPlan.tsx (aviso al confirmar).
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  {+
+    <&check> Reserva creada con 1 tramo guardado — vas a
+    poder verla en tu listado de reservas Ver mis
+    reservas
+  }
+  <size:18><b><&map> Planificar navegación
+  {<&check> | <&check> | <b>(3) }
+  <size:16><b>Paso 3 de 3 · Tramos y confirmación
+  <&arrow-left> Volver a rutas
+  {+
+    <b>#1 SAAV — Aeródromo A | . | {+ VIABLE }
+    <size:11>18 NM · 0.3 h estimadas
+  }
+  {+
+    <size:11>Intercalá aeródromos o waypoints entre el origen
+    <size:11>y el destino elegido, antes de confirmar la
+    <size:11>reserva. Confirmar sin tramos sigue siendo
+    <size:11>directo.
+    {+ <b>Rumbo geográfico | <color:#999999>Rumbo magnético }
+    <size:11>SAAR → 6.0 NM · TC 045°
+    <size:11>→ Cruce del río → 12.0 NM · TC 040°
+    <size:11>→ <b>SAAV
+    <size:10>Los rumbos mostrados son geográficos, medidos
+    <size:10>desde el norte verdadero.
+    {+
+      <&menu> 1 Cruce del río (waypoint) | <&arrow-top> | <&arrow-bottom> | <&trash>
+    }
+    Aeródromo
+    "Elegí un aeródromo…        " | [ <&plus> Agregar ]
+    Waypoint propio
+    "Elegí un waypoint…         " | [ <&plus> Agregar ]
+    [ <&cursor-move> Agregar haciendo click en el mapa ]
+    Nombre del punto
+    "Ej. Cruce del río          " | [ <&plus> Agregar tramo ]
+    {+ <i>Mapa de la ruta }
+    [ Confirmar reserva ] | [ Cancelar ]
+    <size:10>Cancelar descarta los tramos armados.
+  }
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 06 · CU-002
+  Actor: Piloto
+  Pantalla: Tramos y confirmación
+  Estados: principal, confirmacion
+  Escala: teléfono
+end legend
+@endsalt

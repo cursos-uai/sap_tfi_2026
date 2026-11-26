@@ -1,0 +1,125 @@
+@startuml casos-de-uso-general
+!include estilo.iuml
+left to right direction
+skinparam defaultFontSize 14
+skinparam nodesep 10
+skinparam ranksep 32
+skinparam linetype polyline
+skinparam usecase {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam actor {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+}
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #333333
+
+actor "Piloto" as Piloto
+actor "Instructor" as Instructor
+actor "Gestor\n(administrador o gestor)" as Gestor
+actor "Planificador diario\n(tarea programada)" as Planificador
+actor "Modelo de IA\n(Gemini)" as IA
+actor "aviationweather.gov" as Wx
+
+rectangle "AeroMentor" {
+  rectangle " " as BG1 #transparent;line:transparent {
+    usecase "CU-001\nGenerar recomendación\noperativa pre-vuelo" as G1
+    usecase "Verificar las\ncertificaciones\nrequeridas" as c1i2
+    usecase "Verificar el METAR de\norigen" as c1i3
+    usecase "Usar el algoritmo de\nrespaldo" as c1x3
+    usecase "Notificar el riesgo\nalto" as c1x4
+    usecase " " as J_G1_IA #transparent;line:transparent
+    usecase " " as J_G1_Wx #transparent;line:transparent
+  }
+  rectangle " " as BG2 #transparent;line:transparent {
+    usecase "CU-002\nPlanificar navegación\ncon IA" as G2
+    usecase "Filtrar los aeródromos\npor el radio de\nautonomía" as c2i4
+    usecase "Obtener el METAR/TAF\nde cada candidato" as c2i5
+    usecase "Superponer el espacio\naéreo" as c2x5
+    usecase "Usar el ranking de\nrespaldo" as c2x6
+    usecase " " as J_G2_Wx #transparent;line:transparent
+    usecase " " as J_G2_IA #transparent;line:transparent
+  }
+  rectangle " " as BG4 #transparent;line:transparent {
+    usecase "CU-004\nRegistrar certificación\npor lectura de documento" as G4
+    usecase "Validar el subtipo" as c4i2
+    usecase "Validar el tamaño\n(10 MB)" as c4i3
+    usecase "Actualizar la\ncertificación\nexistente" as c4x1
+    usecase "Cargar a mano si la IA\nno extrae" as c4x3
+    usecase " " as J_G4_IA #transparent;line:transparent
+  }
+  rectangle " " as BG3 #transparent;line:transparent {
+    usecase "CU-003\nMonitorear el\ncumplimiento" as G3
+    usecase "Observar las\ncertificaciones" as c3i1
+    usecase "Evaluar contra las\nreglas del Knowledge" as c3i5
+    usecase "Redactar el plan con\nIA" as c3x1
+    usecase "Pedir una corrida\nmanual" as c3x7
+    usecase " " as J_G3_IA #transparent;line:transparent
+  }
+}
+
+c1i2 -[hidden]left-> c1i3
+c1i3 -[hidden]left-> J_G1_IA
+J_G1_IA -[hidden]left-> J_G1_Wx
+J_G1_Wx -[hidden]left-> c1x3
+c1x3 -[hidden]left-> c1x4
+c2i4 -[hidden]left-> c2i5
+c2i5 -[hidden]left-> J_G2_Wx
+J_G2_Wx -[hidden]left-> J_G2_IA
+J_G2_IA -[hidden]left-> c2x5
+c2x5 -[hidden]left-> c2x6
+c4i2 -[hidden]left-> c4i3
+c4i3 -[hidden]left-> J_G4_IA
+J_G4_IA -[hidden]left-> c4x1
+c4x1 -[hidden]left-> c4x3
+c3i1 -[hidden]left-> c3i5
+c3i5 -[hidden]left-> J_G3_IA
+J_G3_IA -[hidden]left-> c3x1
+c3x1 -[hidden]left-> c3x7
+Piloto -[hidden]right-> Planificador
+Instructor -[hidden]right-> Gestor
+Instructor -down--|> Piloto
+Gestor -down--|> Piloto
+Piloto -- G1
+Piloto -- G2
+Planificador -- G3
+Piloto -- G3
+Piloto -- G4
+
+G1 ..> c1i2 : <<include>>
+G1 ..> c1i3 : <<include>>
+G2 ..> c2i4 : <<include>>
+G2 ..> c2i5 : <<include>>
+G3 ..> c3i1 : <<include>>
+G3 ..> c3i5 : <<include>>
+G4 ..> c4i2 : <<include>>
+G4 ..> c4i3 : <<include>>
+c1x3 .up.> G1 : <<extend>>
+c1x4 .up.> G1 : <<extend>>
+c2x5 .up.> G2 : <<extend>>
+c2x6 .up.> G2 : <<extend>>
+c3x1 .up.> G3 : <<extend>>
+c3x7 .up.> G3 : <<extend>>
+c4x1 .up.> G4 : <<extend>>
+c4x3 .up.> G4 : <<extend>>
+
+G1 -- J_G1_IA
+J_G1_IA -- IA
+G1 -- J_G1_Wx
+J_G1_Wx -- Wx
+G2 -- J_G2_Wx
+J_G2_Wx -- Wx
+G2 -- J_G2_IA
+J_G2_IA -- IA
+G4 -- J_G4_IA
+J_G4_IA -- IA
+G3 -- J_G3_IA
+J_G3_IA -- IA
+Wx -[hidden]down-> IA
+
+legend right
+include = validador u obligatorio reutilizado · extend = menú, flujo u opcional
+endlegend
+@enduml

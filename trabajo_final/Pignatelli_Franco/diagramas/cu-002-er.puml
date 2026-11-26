@@ -1,0 +1,210 @@
+@startuml cu-002-er
+!include estilo.iuml
+top to bottom direction
+skinparam nodesep 5
+skinparam ranksep 15
+skinparam linetype ortho
+' CU-002 — modelo entidad-relación conceptual (notación IE).
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, sólo las relevantes a CU-002).
+' "Pronóstico por candidato", "Respuesta de IA" y "Zona de espacio aéreo" no son tablas: los dos primeros viajan en
+' las columnas jsonb data_snapshot, weather_snapshot y ai_raw_response; las zonas de espacio aéreo se consultan en
+' vivo a OpenAIP y no se guardan (estereotipo "no persistido").
+' Una ruta sugerida apunta a un aeródromo o a un waypoint (exactamente uno de los dos).
+' Línea punteada: vínculo lógico sin clave foránea (route_suggestions.reservation_id, columna única).
+' La figura 2 muestra las tablas de apoyo (usuarios, aeronaves, puntos propios y reservas) con sus columnas.
+hide circle
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+}
+
+entity "aerodromes" as aerodromes {
+  * id : bigint <<PK>>
+  --
+  code_oaci : string
+  name : string
+  province : string
+  latitude : decimal
+  longitude : decimal
+  active : boolean
+}
+
+entity "custom_waypoints" as custom_waypoints {
+  * id : bigint <<PK>>
+}
+
+entity "navigation_plans" as navigation_plans {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  origin_custom_waypoint_id : bigint <<FK>>
+  destination_hint_custom_waypoint_id : bigint <<FK>>
+  origin_code : string
+  origin_type : string
+  destination_hint_code : string
+  destination_hint_type : string
+  autonomy_hours : decimal
+  scheduled_at : datetime
+  radius_km : decimal
+  cruise_speed_kmh : decimal
+  ia_available : boolean
+  status : string
+  data_snapshot : jsonb
+  ai_raw_response : jsonb
+  generated_at : datetime
+}
+
+entity "route_suggestions" as route_suggestions {
+  * id : bigint <<PK>>
+  --
+  * navigation_plan_id : bigint <<FK>>
+  aerodrome_id : bigint <<FK>>
+  custom_waypoint_id : bigint <<FK>>
+  reservation_id : bigint <<único>>
+  aerodrome_code : string
+  rank : integer
+  viable : boolean
+  justification : text
+  distance_km : decimal
+  estimated_duration_hours : decimal
+  estimated_arrival_at : datetime
+  night_arrival : boolean
+  storm_risk : boolean
+  destination_hint : boolean
+  weather_snapshot : jsonb
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+}
+
+entity "Pronóstico por candidato\n<<no persistido>>" as pronostico {
+  METAR, TAF, viento, CAPE y crepúsculo
+  (viaja en data_snapshot y weather_snapshot)
+}
+
+entity "Respuesta de IA\n<<no persistido>>" as respuesta {
+  ranking de Gemini (viaja en ai_raw_response)
+}
+
+entity "Zona de espacio aéreo\n<<no persistido>>" as zona {
+  CTR, TMA, CTA y zonas restringidas, peligrosas
+  y prohibidas, consultadas en vivo a OpenAIP
+}
+
+aerial_entities ||--o{ navigation_plans
+users ||--o{ navigation_plans
+aircraft ||--o{ navigation_plans
+navigation_plans ||--o{ route_suggestions
+aerodromes |o--o{ route_suggestions
+custom_waypoints |o--o{ route_suggestions
+custom_waypoints |o--o{ navigation_plans
+reservations |o..o| route_suggestions
+navigation_plans ||..o| pronostico
+navigation_plans ||..o| respuesta
+route_suggestions ||..o| pronostico
+@enduml
+
+@startuml cu-002-er-parte-2
+!include estilo.iuml
+top to bottom direction
+skinparam nodesep 5
+skinparam ranksep 15
+' CU-002 — modelo entidad-relación conceptual (notación IE).
+' Fuente de verdad: backend/db/schema.rb (columnas de las tablas persistidas, sólo las relevantes a CU-002).
+' "Pronóstico por candidato", "Respuesta de IA" y "Zona de espacio aéreo" no son tablas: los dos primeros viajan en
+' las columnas jsonb data_snapshot, weather_snapshot y ai_raw_response; las zonas de espacio aéreo se consultan en
+' vivo a OpenAIP y no se guardan (estereotipo "no persistido").
+' Figura 2 de 2: las tablas de apoyo de la planificación; navigation_plans y route_suggestions están en la figura 1.
+hide circle
+
+entity "aerial_entities" as aerial_entities {
+  * id : bigint <<PK>>
+  --
+  name : string
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  email : string
+  role : string
+  first_name : string
+  last_name : string
+}
+
+entity "aircraft" as aircraft {
+  * id : bigint <<PK>>
+  --
+  * aerial_entity_id : bigint <<FK>>
+  registration : string
+  model : string
+  status : string
+  fuel_capacity : decimal
+  fuel_consumption_lph : decimal
+}
+
+entity "custom_waypoints" as custom_waypoints {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  name : string
+  latitude : decimal
+  longitude : decimal
+  scope : string
+  acts_as_aerodrome : boolean
+  description : string
+}
+
+entity "navigation_plans" as navigation_plans {
+  * id : bigint <<PK>>
+}
+
+entity "route_suggestions" as route_suggestions {
+  * id : bigint <<PK>>
+}
+
+entity "reservations" as reservations {
+  * id : bigint <<PK>>
+  --
+  * user_id : bigint <<FK>>
+  * aircraft_id : bigint <<FK>>
+  * aerial_entity_id : bigint <<FK>>
+  origin_custom_waypoint_id : bigint <<FK>>
+  destination_custom_waypoint_id : bigint <<FK>>
+  origin_code : string
+  destination_code : string
+  scheduled_at : datetime
+  duration_hours : decimal
+  category : string
+  status : string
+  legs : jsonb
+}
+
+aerial_entities ||--o{ users
+aerial_entities ||--o{ aircraft
+aerial_entities ||--o{ custom_waypoints
+aerial_entities ||--o{ navigation_plans
+aerial_entities ||--o{ reservations
+users ||--o{ custom_waypoints
+users ||--o{ navigation_plans
+users ||--o{ reservations
+aircraft ||--o{ navigation_plans
+aircraft ||--o{ reservations
+custom_waypoints |o--o{ route_suggestions
+custom_waypoints |o--o{ navigation_plans
+custom_waypoints |o--o{ reservations
+reservations |o..o| route_suggestions
+@enduml

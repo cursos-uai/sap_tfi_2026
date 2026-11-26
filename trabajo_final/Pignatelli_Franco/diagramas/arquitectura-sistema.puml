@@ -1,0 +1,72 @@
+@startuml arquitectura-sistema
+!include estilo.iuml
+' Vista del sistema (despliegue): nodos y tecnologias. Fuente: config/deploy.yml (solo roles y accesorios de Kamal),
+' despliegue.puml. Sin equipo del desarrollador, direcciones, puertos, nombres de host ni secretos.
+' Un unico servidor: sin replicas. OpenAIP: (c) OpenAIP, licencia CC BY-NC 4.0.
+top to bottom direction
+skinparam wrapWidth 260
+skinparam nodesep 60
+skinparam ranksep 50
+skinparam linetype polyline
+skinparam defaultFontSize 14
+skinparam ArrowFontSize 12
+skinparam NodeBackgroundColor #FFFFFF
+skinparam NodeBorderColor #333333
+skinparam NodeBorderThickness 1.5
+skinparam ArtifactBackgroundColor #F5F5F5
+skinparam ArtifactBorderColor #333333
+skinparam CloudBackgroundColor #FFFFFF
+skinparam CloudBorderColor #333333
+skinparam FolderBackgroundColor #F5F5F5
+skinparam FolderBorderColor #333333
+skinparam RectangleBorderThickness 1.5
+skinparam DatabaseBorderThickness 1.5
+
+node "Navegador o teléfono del usuario\nAplicación web React 19" as NAV
+artifact "Kamal 2\nmecanismo de despliegue" as KAMAL
+
+node "Cloud Server de DonWeb\nUbuntu 24.04 · x86_64 · 2 vCPU · 4 GB" as SRV {
+  node "Docker" as DOCKER {
+    artifact "kamal-proxy\nHTTPS con certificado\nHTTP redirige" as PROXY
+    rectangle "Roles de la aplicación" as APPS {
+      artifact "job\nSidekiq 7.3\nsidekiq-cron" as JOB
+      artifact "web\nRails 7.2 (Puma)\nAPI y SPA" as WEB
+    }
+    rectangle "Accesorios de Kamal\nsin puertos publicados" as ACC {
+      database "PostgreSQL 16" as PG
+      database "Redis 7" as REDIS
+    }
+  }
+  artifact "Copia diaria\n(pg_dump)" as BACKUP
+  folder "Carpeta de copias\nretención de 14 días" as DIR
+}
+
+rectangle "Servicios externos" as EXT {
+  artifact "Gemini API" as GEM
+  artifact "aviationweather.gov\nMETAR y TAF" as AWC
+  artifact "Open-Meteo\nviento y CAPE" as OME
+  artifact "OpenAIP\nespacio aéreo\n© OpenAIP, CC BY-NC 4.0" as OAI
+  artifact "OurAirports\naeródromos\n(importación mensual)" as OUR
+}
+cloud "Let's Encrypt\ncertificados" as LE
+cloud "OpenStreetMap\nmosaicos del mapa" as OSM
+
+JOB -[hidden]right- WEB
+PG -[hidden]right- REDIS
+GEM -[hidden]right- AWC
+AWC -[hidden]right- OME
+OAI -[hidden]right- OUR
+GEM -[hidden]down- OAI
+BACKUP -[hidden]right- DIR
+KAMAL -[hidden]right- NAV
+
+NAV -down-> PROXY : **HTTPS**
+NAV -right-> OSM : **HTTPS**
+PROXY -right-> LE : **emite y renueva**
+PROXY -down-> WEB : **HTTP interno**
+APPS -down-> ACC : **SQL/TCP · protocolo Redis**
+WEB -down-> EXT : **HTTPS · REST**\n(web y job)
+BACKUP -up-> PG : **pg_dump**
+BACKUP -right-> DIR
+KAMAL -down-> SRV : **despliega por SSH**
+@enduml

@@ -1,0 +1,51 @@
+@startsalt boceto-05-eligi-una-ruta
+!include estilo.iuml
+' Boceto 5 (CU-002): paso 2 «Elegí una ruta» con un destino tentativo no recomendado y un METAR no disponible.
+' Fuente de los rótulos: NavigationPlanResults.tsx, DestinationHintBanner.tsx, RouteSuggestionCard.tsx y AerodromeCandidateCard.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b><&map> Planificar navegación
+  {<&check> | <b>(2) | (3) }
+  <size:16><b>Paso 2 de 3 · Elegí una ruta
+  Planificar otro vuelo
+  <size:16><b>Rutas sugeridas
+  <size:11>Una ruta sugerida más la del destino elegido.
+  {+
+    <&map-marker> <b>Tu destino tentativo — SAZS
+    {+ No recomendada }
+    <size:11>Aparece entre los resultados porque lo pediste
+    <size:11>como destino, aunque el sistema no te lo esté
+    <size:11>recomendando.
+  }
+  {+
+    {+ Mejor rankeada }
+    <b><size:16>#1 SAAV | . | {+ VIABLE }
+    <size:11>18 NM · 0.3 h estimadas
+    [ <&map> Ver en mapa ] | [ Elegir esta ruta ]
+  }
+  {+
+    {+ Tu destino tentativo }
+    <b><size:16>#2 SAZS | . | {+ No recomendada }
+    <size:11>212 NM · 2.4 h estimadas
+    [ <&map> Ver en mapa ] | [ Elegir esta ruta ]
+  }
+  <b>Ocultar aeródromos alcanzables
+  {+
+    <b>SAAV — Aeródromo A
+    <size:11>18 NM · 0.3 h estimadas
+    <size:10>METAR
+    <size:10>METAR no disponible
+    <size:10>TAF
+    <size:10>TAF no disponible
+  }
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 05 · CU-002
+  Actor: Piloto
+  Pantalla: Elegí una ruta
+  Estados: alternativo
+  Escala: teléfono
+end legend
+@endsalt

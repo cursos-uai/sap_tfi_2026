@@ -1,0 +1,74 @@
+@startuml dominio-general
+!pragma layout elk
+' Vista general ampliada (19 conceptos): layout ELK (líneas ortogonales) porque Graphviz cruza demasiadas flechas con este tamaño.
+' Aristas = unión de las de dominio-cu-001..004 más el núcleo del aeroclub; mismos verbos que las vistas por CU.
+!include estilo.iuml
+top to bottom direction
+skinparam defaultFontSize 14
+skinparam nodesep 50
+skinparam ranksep 70
+skinparam classAttributeIconSize 0
+hide circle
+show empty members
+skinparam ClassFontStyle bold
+skinparam ClassBorderThickness 1.5
+
+class "Gestor" as GE
+class "Aeroclub" as AE
+class "Piloto" as PI
+class "Aeronave" as AN
+class "Certificación" as CE
+class "Licencia" as LI
+class "Habilitación" as HB
+class "Certificado médico" as CM
+class "Documento de certificación" as DC
+class "Reserva" as RE
+class "Aeródromo" as AD
+class "Evaluación pre-vuelo" as EV
+class "Informe meteorológico" as IM
+class "Notificación" as NO
+class "Plan de navegación" as PN
+class "Ruta sugerida" as RS
+class "Regla normativa" as RN
+class "Hallazgo" as HA
+class "Bloqueo o advertencia" as BA
+
+GE -right-> AE : gestiona
+AE "1" -down-> "*" PI : agrupa a
+AE "1" -down-> "*" AN : tiene
+PI "1" -down-> "*" RE : hace
+RE -right-> AN : usa
+RE -down-> AD : sale de\ny llega a
+
+PI -left-> DC : carga
+DC -down-> CE : da lugar a
+PI -down-> CE : posee
+CE <|-down- LI
+CE <|-down- HB
+CE <|-down- CM
+
+RE -down-> EV : se evalúa en
+EV -down-> CE : revisa
+EV -down-> AN : revisa
+EV -down-> IM : considera
+EV -down-> NO : genera
+
+PI -right-> PN : solicita
+PN -right-> RS : propone
+RS -down-> AD : llega a
+RS -down-> RE : se confirma como
+
+RN -down-> HA : origina
+HA -down-> BA : genera
+HA -down-> NO : genera
+HA -down-> PI : afecta a
+HA -down-> AN : afecta a
+BA -down-> RE : marca a
+
+NO -[hidden]right- AN
+AN -[hidden]right- IM
+
+legend bottom
+Modelo conceptual: sin atributos (ver 10.4.4.2); flechas de un solo sentido.
+endlegend
+@enduml

@@ -1,0 +1,45 @@
+@startsalt boceto-01-evaluacion-pre-vuelo
+!include estilo.iuml
+' Boceto 1 (CU-001): pantalla «Evaluación pre-vuelo», lista de reservas, a escala de teléfono.
+' Fuente de los rótulos: frontend/src/pages/PreFlightEvaluation.tsx y components/preflight/ReservationCard.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b><&shield> Evaluación Pre-vuelo
+  <size:11>Seleccioná una reserva para evaluar
+  {+
+    {
+      <b>LV-ABC | . | {+ INSTRUCCION }
+      <size:11>Cessna 152 | . | .
+    }
+    <size:16><b>SAAR → SAAV
+    <size:11>15 dic 2026, 10:00
+  }
+  {+
+    {
+      <back:#CCCCCC><b>LV-XYZ | . | {+ NAVEGACION }
+      <back:#CCCCCC><size:11>Piper PA-28 | . | .
+    }
+    <back:#CCCCCC><size:16><b>SAAR → SAZR
+    <back:#CCCCCC><size:11>16 dic 2026, 15:30
+    <back:#CCCCCC><size:11><color:#2E7D32>Evaluación disponible
+  }
+  {+
+    {
+      <b>LV-DEF | . | {+ PRIVADO }
+      <size:11>Cessna 172 | . | .
+    }
+    <size:16><b>SAAR
+    <size:11>18 dic 2026, 09:00
+  }
+  [ Evaluar Reserva Seleccionada ]
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 01 · CU-001
+  Actor: Piloto
+  Pantalla: Evaluación pre-vuelo
+  Estados: principal
+  Escala: teléfono
+end legend
+@endsalt

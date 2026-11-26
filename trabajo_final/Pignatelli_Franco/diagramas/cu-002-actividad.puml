@@ -1,0 +1,75 @@
+@startuml cu-002-actividad
+!include estilo.iuml
+skinparam wrapWidth 300
+skinparam ConditionEndStyle hline
+skinparam ActivityPadding 3
+skinparam ActivityFontSize 12
+' CU-002 — Planificar una navegación: parámetros, candidatos por autonomía, clima, ranking, elección de ruta y reserva.
+' Camino básico y alternativos de las fichas CU-002.001 a CU-002.004; secuencias cu-002-secuencia-1 a -3.
+
+|Piloto|
+start
+:Completa «Datos del vuelo» (origen,
+destino, aeronave, autonomía y salida)
+y presiona «Buscar rutas»;
+|Sistema|
+:Autoriza y valida el pedido, ubica origen
+y destino y elige hasta cinco candidatos
+dentro del radio de autonomía;
+if (¿Pedido válido y con candidatos?) then (no)
+  :Rechaza con el motivo o informa
+  «No hay aeródromos alcanzables»;
+  stop
+else (sí)
+endif
+|aviationweather.gov|
+:Entrega el METAR
+y el TAF de
+cada candidato;
+|Open-Meteo|
+:Entrega el pronóstico
+en tres puntos del tramo
+hacia cada candidato;
+|Sistema|
+:Determina por candidato el viento, la
+tormenta y la llegada nocturna (lo que
+falta queda sin dato, sin suponer riesgo);
+if (¿El modelo ordenó rutas válidas?) then (sí)
+  |Gemini (modelo de IA)|
+  :Ordena hasta tres
+  rutas por viabilidad
+  y las justifica;
+else (no)
+  |Sistema|
+  :Ordena por riesgo y
+  distancia (sin IA);
+endif
+|Sistema|
+:Completa las rutas con distancia, tiempo
+y llegada, y las presenta;
+|Piloto|
+:Presiona «Elegir esta ruta», intercala
+tramos si quiere y presiona «Confirmar reserva»;
+|Sistema|
+if (¿Titular del plan o Gestor del aeroclub?) then (no)
+  :Responde «No autorizado
+  para esta acción»;
+  stop
+else (sí)
+endif
+if (¿Ya estaba confirmada?) then (sí)
+  :Devuelve la misma reserva
+  sin crear otra;
+  stop
+else (no)
+endif
+if (¿Aeronave activa y tramos válidos?) then (no)
+  :Rechaza con el motivo
+  y no crea la reserva;
+  stop
+else (sí)
+  :Crea la reserva confirmada
+  e informa «Reserva creada»;
+  stop
+endif
+@enduml

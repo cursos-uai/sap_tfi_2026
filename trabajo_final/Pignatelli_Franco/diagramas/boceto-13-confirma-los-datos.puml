@@ -1,0 +1,37 @@
+@startsalt boceto-13-confirma-los-datos
+!include estilo.iuml
+' Boceto 13 (CU-004): paso 3 «Confirmá los datos» con el aviso de certificación existente y el aviso de guardado.
+' El aviso «Certificación guardada» llega al confirmar; se dibuja arriba como en el boceto 7.
+' Fuente de los rótulos: frontend/src/pages/CertificationScan.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  {+
+    <&check> Certificación guardada
+  }
+  <size:18><b><&badge> Cargar certificación
+  <size:10>Paso 3 de 3
+  <size:16><b>Confirmá los datos
+  {+
+    <&warning> Ya tenés una licencia cargada. ¿Querés
+    actualizarla con estos datos?
+    <size:10>Certificación actual: PRIVADO
+    [ Actualizar existente ]
+  }
+  Tipo de certificación
+  ^PRIVADO^
+  Fecha de emisión
+  "10/03/2024                 "
+  Fecha de vencimiento
+  "10/03/2029                 "
+  [ Confirmar y guardar ] | [ Cancelar ]
+  {+ Inicio | Reservas | Vuelo | Monitoreo | <b>Más }
+}
+legend
+  Boceto 13 · CU-004
+  Actor: Piloto
+  Pantalla: Confirmá los datos
+  Estados: alternativo, confirmacion
+  Escala: teléfono
+end legend
+@endsalt

@@ -1,0 +1,37 @@
+@startsalt boceto-08-mi-cumplimiento
+!include estilo.iuml
+' Boceto 8 (CU-003): pantalla «Mi cumplimiento» (la ruta /monitoring con el rol de piloto) con un bloqueo.
+' Fuente de los rótulos: frontend/src/pages/Monitoring.tsx (MyComplianceView), monitoring/SymptomCard.tsx y constants/monitoringRules.ts.
+' Símbolo: <&ban> bloqueo (holdStatusTheme.ts).
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:20><b>Mi cumplimiento
+  <size:16><b>Estado general
+  <&ban> Bloqueo
+  <size:11>1 síntoma abierto
+  <size:16><b>Mis síntomas abiertos
+  {+
+    <&ban> Bloqueo | Crítica
+    <b>Certificación por vencer o vencida
+    <size:11>Fuente | Certificaciones
+    <size:11>Cita | (texto de la cita de la regla)
+    <size:11>Renovar el certificado médico antes de volver a
+    <size:11>volar.
+    <size:10>Redactado sin IA
+    <color:#2D5A9E>Ver detalle
+  }
+  <size:16><b>Mis reservas con observaciones
+  {+
+    16 dic 2026, 15:30 · LV-XYZ | <&ban> Bloqueo
+  }
+  {+ Inicio | Reservas | Vuelo | <b>Monitoreo | Más }
+}
+legend
+  Boceto 08 · CU-003
+  Actor: Piloto
+  Pantalla: Mi cumplimiento
+  Estados: alternativo
+  Escala: teléfono
+end legend
+@endsalt

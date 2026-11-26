@@ -1,0 +1,197 @@
+@startuml cu-003-secuencia-1
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-003: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-003), parte 1 de 3: vuelta 1, disparo con el botón y fase Monitor.
+actor "Gestor" as gestor
+boundary "Monitoreo" as pantalla
+control "MonitoringRuns\nController" as mrc
+control "Monitoring::\nRunRequester" as rr
+control "Monitoring::\nRunJob" as job
+control "Monitoring::\nControlLoop" as cl
+control "Monitoring::Sources::\nCertificationSource" as cs
+control "Certifications::\nComposite" as comp
+database "Base de\ndatos" as db
+
+== Vuelta 1: el Gestor pide una corrida manual ==
+gestor -> pantalla : Presiona «Correr\nmonitoreo ahora»
+activate pantalla
+  pantalla -> mrc : create()
+  activate mrc
+    mrc -> mrc : authorize create?
+    alt no es administrador ni gestor
+      mrc --> pantalla : 403 No autorizado
+    else rol habilitado
+      mrc -> rr : call()
+      activate rr
+        alt hay una corrida de los últimos 5 min
+          rr -> rr : reutiliza la corrida
+        else no hay corrida reciente
+          rr -> db : crea la corrida (manual)
+          rr -> job : perform_async
+        end
+      rr --> mrc : corrida
+      deactivate rr
+      mrc --> pantalla : 202 corrida aceptada
+    end
+  deactivate mrc
+deactivate pantalla
+job -> job : perform(entidad, manual)
+job -> cl : run()
+activate cl
+  alt lazo ocupado
+    job -> job : requeue_busy()
+  else lazo libre
+    cl -> db : corrida: en ejecución
+    group Monitor
+      cl -> cs : observe()
+      activate cs
+        cs -> db : lee certificaciones\ny usuarios activos
+        cs -> comp : missing_required(usuario)
+        comp --> cs : faltantes
+      cs --> cl : observaciones
+      deactivate cs
+    end
+    note over cl : Analyze, Plan y Execute\nsiguen en la parte 2
+  end
+deactivate cl
+@enduml
+@startuml cu-003-secuencia-2
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-003: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-003), parte 2 de 3: vuelta 1, fases Analyze, Plan y Execute.
+control "Monitoring::\nControlLoop" as cl
+control "Monitoring::\nAnalyzer" as an
+control "Monitoring::\nKnowledge" as kn
+control "Rules::\nCertification\nExpiry" as rule
+control "Monitoring::\nPlanner" as pl
+control "Planning::\nGeminiPlanner" as gp
+participant "Gemini\n(modelo de IA)" as gem #FFFFFF
+control "Monitoring::\nExecutor" as ex
+control "Effectors::\nReservation\nHolder" as rh
+control "Effectors::\nNotifier" as nt
+database "Base de\ndatos" as db
+
+note over cl : Continúa de la parte 1
+group Analyze
+  cl -> an : analyze(observaciones)
+  activate an
+    loop por cada observación
+      an -> kn : rule(rule_key)
+      kn --> an : regla
+      an -> rule : evaluate(observación)
+      rule --> an : hallazgo
+      opt hay hallazgo
+        an -> db : crea el síntoma:\nCMA vencido de\nJulieta Rivas
+      end
+    end
+  an --> cl : delta
+  deactivate an
+end
+group Plan
+  cl -> pl : plan(síntomas)
+  activate pl
+    alt Gemini respondió
+      pl -> gp : plan(síntomas)
+      activate gp
+        gp -> gem : generateContent
+        gem --> gp : JSON
+      gp --> pl : plan con IA
+      deactivate gp
+    else sin IA (plan determinista)
+      pl -> pl : plan sin IA
+    end
+  pl --> cl : plan
+  deactivate pl
+  cl -> db : crea ActionPlan y PlanAction
+end
+group Execute
+  cl -> ex : execute(plan)
+  activate ex
+    ex -> rh : sync!(síntomas)
+    activate rh
+      rh -> db : bloquea la reserva\nde Julieta Rivas
+    rh --> ex : bloqueos
+    deactivate rh
+    ex -> nt : notify_pending!(abiertos)
+    activate nt
+      nt -> db : crea la\nNotificación
+    nt --> ex : avisos
+    deactivate nt
+  ex --> cl : contadores
+  deactivate ex
+end
+@enduml
+@startuml cu-003-secuencia-3
+!include estilo.iuml
+skinparam sequenceMessageAlign center
+skinparam BoxPadding 4
+skinparam sequenceGroupBodyBackgroundColor transparent
+skinparam responseMessageBelowArrow true
+skinparam NoteFontSize 11
+autonumber
+' CU-003: generado por gen_secuencias.py desde iconix/secuencias.json (no editar a mano).
+' Diagrama de secuencia (CU-003), parte 3 de 3: vuelta 2, renovación del CMA y disparo por evento.
+control "Certifications\nController" as cctrl
+entity "Certification" as cert
+control "Observers::\nMonitoring\nTrigger" as mt
+control "Monitoring::\nControlLoop" as cl
+control "Monitoring::\nAnalyzer" as an
+control "Monitoring::\nExecutor" as ex
+control "Effectors::\nReservation\nHolder" as rh
+control "Effectors::\nNotifier" as nt
+database "Base de\ndatos" as db
+
+== Vuelta 2: la renovación del CMA dispara el lazo por evento ==
+note over cctrl : CU-004: Julieta Rivas guarda el CMA renovado\nen «Confirmá los datos»
+cctrl -> cert : update!(datos)
+activate cert
+  cert -> cert : notify_observers(\n:certification_changed)
+  cert -> mt : update(event)
+deactivate cert
+opt otros disparadores del lazo
+  note over mt : FlightLogEntry (:flight_closed),\nMaintenanceRecord (:maintenance_recorded)\ny Aircraft (:aircraft_changed)\nllaman a notify_observers
+end
+mt -> cl : RunJob#perform\n(10 s después)
+activate cl
+  cl -> cl : run()
+  group Monitor
+    cl -> db : observa de nuevo\nlas certificaciones
+  end
+  group Analyze
+    cl -> an : analyze(observaciones)
+    activate an
+      an -> an : sin hallazgo\n(CMA vigente)
+      an -> db : resuelve el síntoma
+    an --> cl : delta
+    deactivate an
+  end
+  group Execute
+    cl -> ex : execute(resueltos)
+    activate ex
+      ex -> rh : sync!(síntomas)
+      activate rh
+        rh -> db : libera el bloqueo
+      rh --> ex : bloqueos
+      deactivate rh
+      ex -> nt : notify_resolved!(resueltos)
+      activate nt
+        nt -> db : aviso de resuelto\n(una sola vez)
+      nt --> ex : avisos
+      deactivate nt
+    ex --> cl : contadores
+    deactivate ex
+  end
+deactivate cl
+@enduml

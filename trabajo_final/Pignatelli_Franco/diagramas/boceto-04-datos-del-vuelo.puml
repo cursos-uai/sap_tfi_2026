@@ -1,0 +1,43 @@
+@startsalt boceto-04-datos-del-vuelo
+!include estilo.iuml
+' Boceto 4 (CU-002): paso 1 «Datos del vuelo» de «Planificar navegación».
+' Fuente de los rótulos: frontend/src/pages/NavigationPlan.tsx y components/navigation/NavigationPlanForm.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b><&map> Planificar navegación
+  <size:11>Encontrá aeródromos alcanzables y rutas
+  <size:11>rankeadas por IA para tu próximo vuelo
+  {<b>(1) | (2) | (3) }
+  <size:16><b>Paso 1 de 3 · Datos del vuelo
+  {+
+    <b>Ruta
+    Origen
+    "SAAR  Aeroclub Rosario            "
+    Destino tentativo
+    "Seleccioná un aeródromo           "
+  }
+  {+
+    <b>Aeronave y autonomía
+    Aeronave
+    ^LV-ABC  Cessna 152^
+    <size:10>Solo se muestran aeronaves activas de tu aeroclub.
+    Autonomía
+    "2.5   " | (X) Horas | () Combustible
+  }
+  {+
+    <b>Salida
+    Fecha y hora de salida
+    "16/12/2026  10:00        "
+  }
+  [ Buscar rutas ]
+  {+ Inicio | Reservas | <b>Vuelo | Monitoreo | Más }
+}
+legend
+  Boceto 04 · CU-002
+  Actor: Piloto
+  Pantalla: Datos del vuelo
+  Estados: principal
+  Escala: teléfono
+end legend
+@endsalt

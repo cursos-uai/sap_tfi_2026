@@ -1,0 +1,36 @@
+@startsalt boceto-12-subi-el-documento
+!include estilo.iuml
+' Boceto 12 (CU-004): paso 2 «Subí el documento» con el error de formato no admitido.
+' El aviso «No pudimos leer el documento» es del paso 3 en el código; acá se anota qué pasa si el análisis no lee el documento.
+' Fuente de los rótulos: frontend/src/pages/CertificationScan.tsx.
+{+
+  {* AeroMentor | <&bell> 20 }
+  <color:#FFFFFF>........................................................
+  <size:18><b><&badge> Cargar certificación
+  <size:10>Paso 2 de 3
+  <size:16><b>Subí el documento
+  {+
+    <&cloud-upload>
+    <size:11>Arrastrá una foto o PDF acá, o tocá para elegir
+    <size:11>un archivo
+    <size:10>Máx. 10MB — JPG, PNG o PDF
+  }
+  <color:#B00020><&warning> Formato no admitido. Subí una foto (JPG o PNG) o
+  <color:#B00020>un PDF.
+  [ <color:#999999>Analizar documento ] | [ Cancelar ]
+  {+
+    <i>Si el análisis no logra leer el documento, el
+    <i>paso 3 muestra:
+    <&warning> No pudimos leer el documento. Completá los
+    campos manualmente.
+  }
+  {+ Inicio | Reservas | Vuelo | Monitoreo | <b>Más }
+}
+legend
+  Boceto 12 · CU-004
+  Actor: Piloto
+  Pantalla: Subí el documento
+  Estados: principal, error
+  Escala: teléfono
+end legend
+@endsalt
